@@ -1244,6 +1244,23 @@ tr[data-explain]:hover td:last-child::after{
   content:' ⓘ';color:var(--royal);font-size:10px;
 }
 
+/* Clickable value chain boxes */
+.vc-box[data-explain]{
+  cursor:pointer;
+  transition:transform 0.18s ease,box-shadow 0.18s ease,border-color 0.18s ease;
+}
+.vc-box[data-explain]:hover{
+  transform:scale(1.04);
+  box-shadow:0 4px 18px rgba(0,102,204,0.3);
+  border-color:var(--royal)!important;
+}
+.vc-box[data-explain]:hover::after{
+  content:' ⓘ';color:var(--royal);font-size:9px;font-weight:700;
+}
+/* Clickable gaps box */
+.vc-gaps-box{cursor:pointer;transition:background 0.18s ease}
+.vc-gaps-box:hover{background:rgba(0,102,204,0.12)!important;border-color:var(--royal)!important}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -2369,40 +2386,40 @@ tr[data-explain]:hover td:last-child::after{
         <!-- Main ENF/GF/Salwa chain -->
         <div class="vc-left">
           <div class="vc-section-lbl">Production Chain</div>
-          <div class="vc-row2"><div class="vc-box vc-ext" style="flex:1">External Suppliers<small>Saudi Arabia — Day-Old Chicks (DOCs)</small></div></div>
+          <div class="vc-row2"><div class="vc-box vc-ext" data-explain="vc-ext" style="flex:1">External Suppliers<small>Saudi Arabia — Day-Old Chicks (DOCs)</small></div></div>
           <div class="vc-vline"></div>
           <div class="vc-row2">
-            <div class="vc-box vc-salwa" style="flex:1">Salwa @ Liwa<small>Breeder Farm — 52,000 eggs/day at peak</small></div>
+            <div class="vc-box vc-salwa" data-explain="vc-salwa" style="flex:1">Salwa @ Liwa<small>Breeder Farm — 52,000 eggs/day at peak</small></div>
           </div>
           <div class="vc-vline"></div>
           <div class="vc-row2" style="gap:12px">
-            <div class="vc-box vc-gf" style="flex:1">GF Feed Mill<small>Greenfields for Feed — 35–60% utilisation</small></div>
+            <div class="vc-box vc-gf" data-explain="vc-gf" style="flex:1">GF Feed Mill<small>Greenfields for Feed — 35–60% utilisation</small></div>
             <div class="vc-arr">→</div>
-            <div class="vc-box vc-enf" style="flex:1">ENF Hatchery<small>Egg → Day-Old Chick → Broiler farm</small></div>
+            <div class="vc-box vc-enf" data-explain="vc-hatchery" style="flex:1">ENF Hatchery<small>Egg → Day-Old Chick → Broiler farm</small></div>
           </div>
           <div class="vc-vline" style="margin-left:60%"></div>
           <div class="vc-row2" style="justify-content:flex-end">
-            <div class="vc-box vc-enf" style="flex:0 0 52%">ENF Growing Farms<small>13 farms · 150K bird capacity · Excel FCR tracking</small></div>
+            <div class="vc-box vc-enf" data-explain="vc-growing" style="flex:0 0 52%">ENF Growing Farms<small>13 farms · 150K bird capacity · Excel FCR tracking</small></div>
           </div>
           <div class="vc-vline" style="margin-left:60%"></div>
           <div class="vc-row2" style="justify-content:flex-end">
-            <div class="vc-box vc-enf" style="flex:0 0 52%">ENF Slaughter &amp; Processing<small>Al Rawdah (Fresh) · Al Salwa (Frozen)</small></div>
+            <div class="vc-box vc-enf" data-explain="vc-slaughter" style="flex:0 0 52%">ENF Slaughter &amp; Processing<small>Al Rawdah (Fresh) · Al Salwa (Frozen)</small></div>
           </div>
           <div class="vc-vline" style="margin-left:60%"></div>
           <div class="vc-row2" style="justify-content:flex-end">
-            <div class="vc-box vc-mkt" style="flex:0 0 52%">Van Sales (SONIC) → Market<small>13% return rate · no root cause tracking</small></div>
+            <div class="vc-box vc-mkt" data-explain="vc-sonic" style="flex:0 0 52%">Van Sales (SONIC) → Market<small>13% return rate · no root cause tracking</small></div>
           </div>
         </div>
         <!-- ARDC separate chain -->
         <div class="vc-right">
           <div class="vc-section-lbl">Dairy Chain</div>
-          <div class="vc-box vc-ardc">ARDC Dairy<small>Al Rawabi Dairy Company<br>PP Discrete — wrong architecture</small></div>
+          <div class="vc-box vc-ardc" data-explain="vc-ardc">ARDC Dairy<small>Al Rawabi Dairy Company<br>PP Discrete — wrong architecture</small></div>
           <div class="vc-vline"></div>
-          <div class="vc-box vc-mkt">Van Sales (Ransale/RISA)<small>SAP gets end-of-day upload only</small></div>
+          <div class="vc-box vc-mkt" data-explain="vc-ransale">Van Sales (Ransale/RISA)<small>SAP gets end-of-day upload only</small></div>
           <div class="vc-vline"></div>
           <div class="vc-box vc-mkt">Market</div>
-          <div style="margin-top:16px;padding:10px 12px;background:rgba(0,102,204,0.06);border-radius:8px;border:1px solid rgba(0,102,204,0.15)">
-            <div style="font-size:10px;font-weight:700;color:var(--navy);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Key Integration Gaps</div>
+          <div class="vc-gaps-box" data-explain="vc-gaps" style="margin-top:16px;padding:10px 12px;background:rgba(0,102,204,0.06);border-radius:8px;border:1px solid rgba(0,102,204,0.15)">
+            <div style="font-size:10px;font-weight:700;color:var(--navy);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Key Integration Gaps ⓘ</div>
             <div style="font-size:10.5px;color:rgba(0,0,0,0.6);line-height:1.5">GF → ENF: no silo confirmation<br>Salwa → ENF: fixed schedule, not demand-driven<br>Group consolidation: manual Excel, 45-day lag</div>
           </div>
         </div>
@@ -3274,6 +3291,68 @@ document.addEventListener('keydown',function(e){if(e.key==='f'||e.key==='F'){if(
       what:'Most operational staff in food manufacturing, logistics, and van sales in the UAE work primarily in Arabic. Training them to use SAP in English alone almost always fails — people revert to their old ways within weeks of go-live because the training didn\'t connect with how they actually communicate and think. Effective SAP adoption requires training materials, system messages, and instruction all delivered in Arabic by Arabic-speaking trainers.',
       why:'ERG\'s farm workers at ENF and Salwa, van drivers, warehouse operators, and quality inspectors are predominantly Arabic-speaking. A conventional English-only training programme would result in low adoption — staff would bypass SAP and return to paper and Excel within months of go-live. NXSYS delivers all operational training in Arabic with native-language materials and trainers.'
     },
+    /* ── ERG Value Chain ── */
+    'vc-ext': {
+      icon:'fa-plane-arrival', tag:'External Supplier',
+      title:'External Suppliers — Saudi Arabia (DOCs)',
+      what:'ERG\'s poultry chain begins with Day-Old Chicks (DOCs) imported from Saudi Arabia. These are newly hatched chicks from parent breeder stock that will grow into the parent flocks at Salwa. The genetics, health status, and age of these DOCs when they arrive directly affect the performance of Salwa\'s entire breeding flock — and ultimately, the hatchability of eggs and the FCR of ENF\'s growing birds. A poor batch of DOCs creates a performance problem that ripples through the entire chain for months.',
+      why:'There is currently no integrated system tracking of DOC supplier quality, arrival condition, or downstream performance outcomes. ERG cannot correlate which supplier\'s DOCs produce better-performing breeder flocks. Without this data, supplier selection is based on price and availability rather than proven performance.'
+    },
+    'vc-salwa': {
+      icon:'fa-egg', tag:'Breeder Farm',
+      title:'Salwa @ Liwa — Breeder Farm',
+      what:'Salwa is ERG\'s breeder farm in Liwa, Abu Dhabi. It houses the parent flocks — the birds that produce the fertilised eggs that hatch into ENF\'s broiler chickens. At peak production Salwa produces 52,000 eggs per day. The hatchability of those eggs — what percentage successfully produce viable day-old chicks — is the most critical output metric. Every 1% drop in hatchability across 52,000 daily eggs means 520 fewer chicks per day entering ENF\'s growing farms.',
+      why:'Salwa tracks everything on paper. Flock performance, egg production by house, and mortality events have no SAP visibility. Eggs are collected on a fixed 4-day schedule regardless of ENF\'s actual hatchery demand — meaning eggs sit and age at Salwa, reducing hatchability. There is also no system feedback from ENF to Salwa on which of Salwa\'s houses is producing the best-hatching eggs.'
+    },
+    'vc-gf': {
+      icon:'fa-warehouse', tag:'Feed Mill',
+      title:'GF Feed Mill — Greenfields for Feed',
+      what:'GF is ERG\'s animal feed manufacturing entity. It sources raw materials globally — grains, proteins, minerals — and produces compound feed for ENF\'s growing farms and Salwa\'s breeder flocks. Feed accounts for 95–98% of the total cost of producing a broiler chicken. GF is therefore the single biggest cost driver across the entire ERG poultry chain. A 1% change in feed cost or feed efficiency has an immediate and significant impact on ENF\'s profitability.',
+      why:'GF\'s mill runs at only 35–60% utilisation — well below the 75–85% industry benchmark. The fixed overhead cost of the mill (depreciation, utilities, staff) is being spread across a smaller volume, meaning every kilogram of feed is more expensive than it should be. GF plans production from historical consumption, not ENF\'s forward farm schedule. When ENF needs to flex production, GF is not ready.'
+    },
+    'vc-hatchery': {
+      icon:'fa-egg', tag:'ENF Hatchery',
+      title:'ENF Hatchery',
+      what:'The hatchery is where Salwa\'s fertilised eggs are incubated for 21 days and hatched into day-old chicks. Eggs must be set in strict age order — oldest first — because egg age directly affects hatch rate. The hatchery\'s key metric is hatchability: what percentage of set eggs produce viable chicks. A hatchery managing 52,000 eggs per day must track incubator allocation, egg ages, setter/hatcher performance, and output by source flock.',
+      why:'ENF\'s hatchery is managed largely manually. There is no SAP tracking of which egg batch from which Salwa house at what age produced which hatch outcome. Without this data, ENF cannot distinguish between poor hatchability caused by Salwa (egg quality, age) versus the hatchery\'s own management. Root cause analysis requires system data that doesn\'t currently exist.'
+    },
+    'vc-growing': {
+      icon:'fa-seedling', tag:'ENF Growing Farms',
+      title:'ENF Growing Farms — 13 Farms',
+      what:'ENF\'s 13 growing farms house day-old chicks from hatch until they reach target slaughter weight — approximately 2.1kg at 35 days. This is where the Feed Conversion Ratio (FCR) is generated. Every house on every farm has slightly different conditions: ventilation, stocking density, water quality, feed access. These differences directly affect FCR, mortality, and bird uniformity — which in turn affect slaughter yield and product quality.',
+      why:'All 13 farms are tracked on paper and Excel. There is no live SAP visibility of birds on farm, daily mortality events, feed consumption, or FCR by farm or house. ENF cannot identify which of its 13 farms is driving the 0.3–0.4 FCR gap above industry benchmark — a gap worth AED 1.5–2 million per year. S/4HANA with Meat & Fish by msg tracks every house, every growing cycle, every day.'
+    },
+    'vc-slaughter': {
+      icon:'fa-industry', tag:'ENF Processing',
+      title:'ENF Slaughter & Processing',
+      what:'Live birds from the growing farms are delivered to ENF\'s slaughter and processing facility where they become Al Rawdah (fresh) and Al Salwa (frozen) branded products. The conversion of live bird to finished product involves stunning, slaughter, plucking, evisceration, chilling, and portioning or whole-bird packing. Carcass yield — the percentage of live weight that becomes saleable product — is the facility\'s key efficiency metric.',
+      why:'ENF creates production orders AFTER slaughter rather than before — recording what happened instead of planning what should happen. This reverse planning makes standard costing meaningless, prevents supply planning, and means no pre-production quality checks happen. The 13% fresh product return rate originates here: without forward traceability in SAP, returned products cannot be linked back to their source batch, growing farm, or production run.'
+    },
+    'vc-sonic': {
+      icon:'fa-truck', tag:'ENF Van Sales',
+      title:'Van Sales (SONIC) — ENF Distribution',
+      what:'ENF distributes fresh and frozen poultry to retail customers through a van sales operation using SONIC handheld devices. Drivers load vans in the morning, visit customers on their route, take orders or deliver pre-packed product, and collect payment. SONIC records these transactions. However, SONIC operates offline throughout the day — it only syncs with SAP at end of day. During the day, SAP has zero visibility of any van.',
+      why:'ENF\'s 13% fresh product return rate is 2–3 times the industry benchmark of less than 5%. Every morning, vans load with fresh product. Every evening, returns come back. Nobody in management knows during the day which routes, which customers, or which products are generating returns — because SONIC is offline and SAP sees nothing until the end-of-day sync. By then, the product is back in the warehouse and the opportunity to intervene is gone.'
+    },
+    'vc-ardc': {
+      icon:'fa-glass-cheers', tag:'ARDC Dairy',
+      title:'ARDC — Al Rawabi Dairy Company',
+      what:'ARDC is ERG\'s dairy business. It collects raw milk from farms, processes it into a full range of dairy products — fresh milk, cream, yoghurt, laban, flavoured milk — and distributes through van sales. ARDC runs on SAP but uses PP Discrete, a production planning module designed for discrete manufacturing (cars, electronics) where every unit is identical. Dairy is the opposite: every tanker of milk has a different fat%, protein%, and SNF composition.',
+      why:'SAP at ARDC has become a financial posting ledger. Every operational decision — milk balancing, demand forecasting, quality management, traceability — happens outside SAP in Excel. The production module cannot do component-based planning, milk balancing, or batch genealogy. These are not gaps that can be configured away; they require replacing PP Discrete with Dairy by msg from the ground up.'
+    },
+    'vc-ransale': {
+      icon:'fa-route', tag:'ARDC Van Sales',
+      title:'Van Sales — Ransale/RISA (ARDC)',
+      what:'ARDC\'s distribution operation is run through Ransale/RISA — a specialist van sales system that manages routes, customer orders, invoicing, collections, and delivery confirmation. Ransale/RISA is effectively the operational brain of ARDC\'s entire commercial operation. SAP is connected to Ransale/RISA but receives only an end-of-day batch upload of summarised transactions — not live order-level data.',
+      why:'Because SAP only sees ARDC\'s distribution activity at end of day, management has zero intraday visibility of what is on each van, which routes are performing, how much cash has been collected, or whether deliveries are being completed. Route profitability cannot be calculated because costs sit in SAP and revenue sits in Ransale/RISA, reconciled only at month-end. The S/4HANA integration will connect them in real time.'
+    },
+    'vc-gaps': {
+      icon:'fa-exclamation-triangle', tag:'Critical Gaps',
+      title:'Key Integration Gaps Between Entities',
+      what:'These three gaps represent the points where ERG\'s four entities fail to communicate through SAP. (1) GF delivers feed to ENF silos with only a paper delivery note — ENF never confirms receipt in SAP, so quantities are unverified. (2) Salwa collects eggs on a fixed 4-day schedule, not based on ENF hatchery demand — eggs age unnecessarily. (3) Group financials are consolidated manually in Excel — the process takes until the 15th of the following month before management sees group profit.',
+      why:'These gaps mean ERG\'s group P&L is built on estimates, manual reconciliation, and paper records rather than system-verified data. The S/4HANA programme\'s first design task is to close all three: silo receipt confirmation in SAP, demand-driven egg collection scheduling, and real-time group consolidation through SAP Group Reporting. Once closed, ERG\'s financial close moves from the 15th to the 5th of the month.'
+    },
+
     /* ── SAP Dairy by msg ── */
     'dairy-pp': {
       icon:'fa-industry', tag:'SAP Dairy by msg',
