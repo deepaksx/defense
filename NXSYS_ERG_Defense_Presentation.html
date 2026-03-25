@@ -2339,12 +2339,12 @@ tr[data-explain]:hover td:last-child::after{
         <table class="s-table">
           <thead><tr><th style="width:26%">Metric</th><th style="width:18%">ERG Current State</th><th style="width:17%">Industry Benchmark</th><th style="width:39%">Gap &amp; Implication</th></tr></thead>
           <tbody>
-            <tr><td><strong>ENF Feed Conversion Ratio</strong></td><td>1.7–1.8</td><td>1.4–1.5</td><td class="td-gap">0.3–0.4 FCR points = AED 1.5–2M/year in unrecovered feed cost</td></tr>
-            <tr><td><strong>ENF Fresh Product Return Rate</strong></td><td>13%</td><td>&lt; 5%</td><td class="td-gap">8+ percentage points above benchmark — returned with no root cause tracking</td></tr>
-            <tr><td><strong>ARDC Traceability Speed</strong></td><td>Hours (paper-based)</td><td>4 hours (regulatory)</td><td class="td-gap">Non-compliant today — ESMA enforcement risk on every product recall</td></tr>
-            <tr><td><strong>GF Mill Utilisation</strong></td><td>35–60%</td><td>75–85%</td><td class="td-gap">15–40 percentage points idle capacity embedded in ENF's feed cost</td></tr>
-            <tr><td><strong>Group Financial Close</strong></td><td>15th of next month</td><td>5th of next month</td><td class="td-gap">10-day management visibility lag on group profitability</td></tr>
-            <tr><td><strong>SAP QM Active (ARDC/ENF)</strong></td><td>0%</td><td>100%</td><td class="td-gap">Full compliance gap — daily food safety exposure across both entities</td></tr>
+            <tr data-explain="bm-fcr"><td><strong>ENF Feed Conversion Ratio</strong></td><td>1.7–1.8</td><td>1.4–1.5</td><td class="td-gap">0.3–0.4 FCR points = AED 1.5–2M/year in unrecovered feed cost</td></tr>
+            <tr data-explain="bm-return"><td><strong>ENF Fresh Product Return Rate</strong></td><td>13%</td><td>&lt; 5%</td><td class="td-gap">8+ percentage points above benchmark — returned with no root cause tracking</td></tr>
+            <tr data-explain="bm-trace"><td><strong>ARDC Traceability Speed</strong></td><td>Hours (paper-based)</td><td>4 hours (regulatory)</td><td class="td-gap">Non-compliant today — ESMA enforcement risk on every product recall</td></tr>
+            <tr data-explain="bm-mill"><td><strong>GF Mill Utilisation</strong></td><td>35–60%</td><td>75–85%</td><td class="td-gap">15–40 percentage points idle capacity embedded in ENF's feed cost</td></tr>
+            <tr data-explain="bm-close"><td><strong>Group Financial Close</strong></td><td>15th of next month</td><td>5th of next month</td><td class="td-gap">10-day management visibility lag on group profitability</td></tr>
+            <tr data-explain="bm-qm"><td><strong>SAP QM Active (ARDC/ENF)</strong></td><td>0%</td><td>100%</td><td class="td-gap">Full compliance gap — daily food safety exposure across both entities</td></tr>
           </tbody>
         </table>
       </div>
@@ -3291,6 +3291,44 @@ document.addEventListener('keydown',function(e){if(e.key==='f'||e.key==='F'){if(
       what:'Most operational staff in food manufacturing, logistics, and van sales in the UAE work primarily in Arabic. Training them to use SAP in English alone almost always fails — people revert to their old ways within weeks of go-live because the training didn\'t connect with how they actually communicate and think. Effective SAP adoption requires training materials, system messages, and instruction all delivered in Arabic by Arabic-speaking trainers.',
       why:'ERG\'s farm workers at ENF and Salwa, van drivers, warehouse operators, and quality inspectors are predominantly Arabic-speaking. A conventional English-only training programme would result in low adoption — staff would bypass SAP and return to paper and Excel within months of go-live. NXSYS delivers all operational training in Arabic with native-language materials and trainers.'
     },
+    /* ── Industry Benchmarks ── */
+    'bm-fcr': {
+      icon:'fa-seedling', tag:'Benchmark — Poultry',
+      title:'ENF Feed Conversion Ratio (FCR)',
+      what:'FCR measures how many kilograms of feed are needed to produce 1 kilogram of live bird weight. Lower is better. An FCR of 1.4 means 1.4kg of feed produces 1kg of growth. ENF\'s FCR of 1.7–1.8 means it is using 20–28% more feed than the best-performing competitors to grow the same weight of chicken. Feed is 95–98% of the total cost of producing a broiler, so FCR is the single most important efficiency number in the entire business.',
+      why:'Every 0.1 FCR point above benchmark costs approximately AED 500,000 per year in excess feed. ENF is 0.3–0.4 points above benchmark — meaning AED 1.5–2 million per year in feed that is being consumed without producing additional growth. S/4HANA with Meat & Fish by msg tracks FCR by farm, house, feed batch, and growing cycle, enabling ENF to identify and fix the specific causes of the gap.'
+    },
+    'bm-return': {
+      icon:'fa-undo-alt', tag:'Benchmark — Distribution',
+      title:'ENF Fresh Product Return Rate',
+      what:'The fresh product return rate measures what percentage of fresh poultry products loaded onto delivery vans comes back unsold at the end of the day. Industry best practice is below 5%. A return means the product was loaded, transported, not sold, brought back, and either re-sold the next day or written off. Every returned unit carries a full logistics cost with zero revenue. At 13%, ENF is returning more than 1 in 8 fresh products every single day.',
+      why:'ENF has no system visibility of returns during the day — SONIC operates offline. When vans return in the evening, nobody can identify which routes, customers, or products are driving the 13% rate. Without root cause tracking, the rate cannot be reduced. S/4HANA integration with SONIC captures every return in real time, links it to the source production batch, and enables systematic action to bring the rate below 5%.'
+    },
+    'bm-trace': {
+      icon:'fa-search-location', tag:'Benchmark — Compliance',
+      title:'ARDC Traceability Speed',
+      what:'ESMA (UAE food safety authority) requires any food producer to be able to trace a product recall — identifying which raw material batches are affected, which products were made, and where those products are now — within 4 hours of a recall request. This applies in both directions: backward to the farm, and forward to the end customer. "Hours (paper-based)" means ARDC would currently have to search through Excel files and paper records manually.',
+      why:'ARDC is non-compliant with this requirement today. If a contamination is found in a milk batch, ARDC cannot produce the ESMA traceability report within 4 hours. This is not a future risk — it is a live daily compliance failure. Every product recall that ESMA could request would expose ARDC to enforcement action. SAP Dairy by msg builds the complete traceability chain automatically from raw milk reception to finished product delivery.'
+    },
+    'bm-mill': {
+      icon:'fa-cogs', tag:'Benchmark — Operations',
+      title:'GF Feed Mill Utilisation',
+      what:'Mill utilisation is the percentage of the feed mill\'s total production capacity that is actually being used. A mill running at 40% utilisation means 60% of its physical capacity — and a proportional share of its fixed overhead costs — is sitting idle. Industry benchmark for an efficient feed mill is 75–85%. The fixed costs of running a mill (depreciation, staff, utilities, maintenance) are paid whether the mill produces at 40% or at 85%.',
+      why:'GF\'s mill running at 35–60% means its fixed overhead is being spread across a much smaller volume than it was designed for. Every kilogram of feed produced carries more overhead than a competitor\'s mill running at 80%. This excess cost is charged to ENF in every feed invoice, and embedded in every chicken ENF grows. Connecting GF\'s planning to ENF\'s actual farm schedule in SAP enables GF to produce closer to optimal capacity.'
+    },
+    'bm-close': {
+      icon:'fa-calendar-check', tag:'Benchmark — Finance',
+      title:'Group Financial Close',
+      what:'Financial close is when the finance team completes all accounting entries, reconciles intercompany transactions, and produces the group profit and loss statement for the previous month. Best-practice companies close on the 5th of the following month. ERG closes on the 15th — ten days later. During those 10 extra days, senior management is making decisions based on the previous month\'s numbers, without visibility of the most recent period.',
+      why:'ERG\'s 15th-of-month close is caused by manual Excel consolidation across four entities with no real-time intercompany reconciliation. Every month, finance staff manually collect trial balances from ARDC, ENF, GF, and Salwa, eliminate intercompany transactions, and build the group P&L by hand. SAP Group Reporting automates this entire process — the group close happens automatically as each entity posts its entries.'
+    },
+    'bm-qm': {
+      icon:'fa-shield-alt', tag:'Benchmark — Quality',
+      title:'SAP QM Active — ARDC & ENF',
+      what:'SAP Quality Management (QM) is the module that manages inspection lots, quality checks, and certificates of analysis within SAP. When QM is active and properly configured, every batch of raw material is inspected before use, every production batch has a quality result, and products cannot be released for delivery until they pass inspection. At 0% activation, quality management happens entirely outside SAP — on paper, in separate spreadsheets, or not at all.',
+      why:'Both ARDC and ENF have SAP QM installed but entirely inactive. At ARDC, products are sometimes shipped before microbiological test results are available — meaning potentially non-compliant product reaches customers. At ENF, disease traceability across 13 farms is impossible without QM. This is not a system enhancement; it is a basic food safety and regulatory compliance requirement that must be addressed in the S/4HANA implementation.'
+    },
+
     /* ── ERG Value Chain ── */
     'vc-ext': {
       icon:'fa-plane-arrival', tag:'External Supplier',
