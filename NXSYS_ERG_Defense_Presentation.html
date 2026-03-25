@@ -1,0 +1,3050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NXSYS — Emirates Rawabi Group | Vendor Defense</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ============================================================
+   ROOT VARIABLES — NXSYS BRAND
+   ============================================================ */
+:root {
+  --navy:        #004080;
+  --navy-deep:   #001F40;
+  --navy-mid:    #002D5E;
+  --royal:       #0066CC;
+  --royal-light: #3D8FE0;
+  --crimson:     #C8153A;
+  --crimson-dark:#9A1128;
+  --crimson-glow:rgba(200,21,58,0.3);
+  --black:       #1A1A1A;
+  --dark:        #060612;
+  --white:       #FFFFFF;
+  --off-white:   #F5F8FC;
+  --sky:         #90CAF9;
+  --t-smooth: 0.6s cubic-bezier(0.4,0,0.2,1);
+  --t-dramatic: 1s cubic-bezier(0.16,1,0.3,1);
+  --t-fast: 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--dark);
+  color:var(--black);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ============================================================
+   PRELOADER
+   ============================================================ */
+.preloader{
+  position:fixed;inset:0;z-index:10000;
+  background:var(--dark);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 1s ease,visibility 1s ease;
+}
+.preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.preloader-inner{text-align:center}
+
+/* NXSYS logo image — used everywhere */
+.nxsys-logo-img{display:block;height:auto}
+.nxsys-logo-img.preloader-anim{
+  animation:logoAppear 0.9s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes logoAppear{
+  from{opacity:0;transform:scale(0.8) translateY(16px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+.preloader-bar{
+  width:260px;height:2px;background:rgba(255,255,255,0.08);
+  border-radius:2px;overflow:hidden;margin:32px auto 14px;
+}
+.preloader-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--crimson),var(--royal));
+  border-radius:2px;
+  animation:preload 2.4s ease-in-out forwards;
+}
+@keyframes preload{0%{width:0}65%{width:72%}100%{width:100%}}
+.preloader-label{
+  color:rgba(255,255,255,0.3);font-size:0.72rem;
+  letter-spacing:3px;text-transform:uppercase;
+  animation:fadeIn 0.5s 0.8s ease both;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ============================================================
+   GLOBAL UI CHROME
+   ============================================================ */
+/* Progress bar */
+.progress-bar{
+  position:fixed;top:0;left:220px;height:3px;
+  background:linear-gradient(90deg,var(--crimson),var(--royal));
+  z-index:500;transition:width var(--t-smooth);
+  box-shadow:0 0 14px var(--crimson-glow);
+}
+
+/* Slide counter */
+.slide-counter{
+  position:fixed;top:22px;right:32px;z-index:200;
+  display:flex;align-items:baseline;gap:3px;
+  background:rgba(0,0,0,0.45);backdrop-filter:blur(12px);
+  padding:7px 16px;border-radius:50px;
+  border:1px solid rgba(255,255,255,0.08);
+}
+.slide-counter .cur{font-size:1.9rem;font-weight:800;color:var(--crimson);line-height:1}
+.slide-counter .div{font-size:1rem;color:rgba(255,255,255,0.25);margin:0 3px}
+.slide-counter .tot{font-size:0.85rem;color:rgba(255,255,255,0.35)}
+
+/* Nav arrows */
+.nav-arrows{
+  position:fixed;right:30px;top:50%;transform:translateY(-50%);
+  z-index:200;display:flex;flex-direction:column;gap:9px;
+}
+.nav-btn{
+  width:42px;height:42px;border-radius:50%;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);
+  color:rgba(255,255,255,0.5);font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--t-fast);
+}
+.nav-btn:hover{border-color:var(--crimson);background:var(--crimson);color:#fff;transform:scale(1.12)}
+.nav-btn:disabled{opacity:0;pointer-events:none}
+.nav-btn:disabled:hover{transform:none}
+
+/* ============================================================
+   LEFT NAV SIDEBAR
+   ============================================================ */
+.sidebar{
+  position:fixed;left:0;top:0;width:220px;height:100vh;
+  background:linear-gradient(180deg,#05050F 0%,#0A0A1E 100%);
+  z-index:1000;overflow-y:auto;
+  border-right:1px solid rgba(200,21,58,0.2);
+  box-shadow:4px 0 28px rgba(0,0,0,0.5);
+  display:flex;flex-direction:column;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--crimson);border-radius:2px}
+
+.sidebar-logo{
+  padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.sidebar-logo img{
+  background:#ffffff;padding:6px 10px;border-radius:5px;
+  width:120px;height:auto;display:block;
+}
+
+.nav-section-label{
+  font-size:0.6rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:var(--crimson);
+  padding:14px 16px 5px;
+}
+.nav-item{
+  font-size:0.72rem;color:rgba(255,255,255,0.45);
+  padding:8px 16px 8px 22px;cursor:pointer;
+  transition:all 0.2s ease;border-left:2px solid transparent;
+  line-height:1.3;
+}
+.nav-item:hover{color:#fff;background:rgba(200,21,58,0.08)}
+.nav-item.active{
+  color:#fff;background:rgba(200,21,58,0.14);
+  border-left-color:var(--crimson);font-weight:600;
+}
+
+/* ============================================================
+   PRESENTER NOTES
+   ============================================================ */
+.presenter-notes{display:none!important}
+.notes-panel{
+  position:fixed;right:-430px;top:0;width:410px;height:100vh;
+  background:#fff;color:#333;padding:25px;overflow-y:auto;
+  z-index:100000;border-left:4px solid var(--crimson);
+  box-shadow:-5px 0 30px rgba(0,0,0,0.12);
+  font-size:0.93rem;line-height:1.8;
+  transition:right 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+body.presenter-mode .notes-panel{right:0}
+.notes-header{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.9rem;font-weight:700;color:var(--crimson);
+  text-transform:uppercase;letter-spacing:1px;
+  padding:18px 25px;background:#f8f8f8;
+  margin:-25px -25px 20px;border-bottom:2px solid #e0e0e0;
+}
+.notes-body p{
+  color:#444;background:#f5f5f5;padding:11px 14px;
+  border-radius:6px;border-left:3px solid var(--crimson);margin-bottom:11px;
+}
+.notes-body ul{list-style:none;padding:0}
+.notes-body ul li{
+  color:#333;padding:9px 0 9px 22px;position:relative;
+  border-bottom:1px solid #eee;
+}
+.notes-body ul li::before{content:'•';position:absolute;left:0;color:var(--crimson);font-size:1.1rem}
+.no-notes{color:#999;font-style:italic;text-align:center;padding:40px 20px}
+
+.presenter-indicator{
+  display:none;position:fixed;top:18px;left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  color:#fff;padding:9px 26px;border-radius:30px;
+  font-size:0.65rem;font-weight:700;z-index:100001;letter-spacing:1px;
+}
+body.presenter-mode .presenter-indicator{display:block}
+
+/* ============================================================
+   PRESENTATION CONTAINER
+   ============================================================ */
+.presentation{
+  height:100vh;position:relative;overflow:hidden;
+  margin-left:220px;width:calc(100% - 220px);
+}
+
+/* ============================================================
+   SLIDE BASE
+   ============================================================ */
+.slide{
+  position:absolute;inset:0;width:100%;height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;
+  transform:translateY(70px) scale(0.97);
+  overflow:hidden;
+  transition:opacity var(--t-dramatic),transform var(--t-dramatic),visibility var(--t-dramatic);
+}
+.slide.active{opacity:1;visibility:visible;transform:translateY(0) scale(1);z-index:10}
+.slide.prev{transform:translateY(-80px) scale(0.97)}
+.slide.next{transform:translateY(80px) scale(0.97)}
+
+/* slide content wrapper */
+.slide-content{
+  position:relative;z-index:5;
+  width:100%;max-width:1200px;padding:40px 70px;
+}
+.slide-content.centered{
+  text-align:center;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding-top:20px;
+}
+
+/* ============================================================
+   ANIMATE ITEMS — keyframe animation (more reliable than
+   transitions which can miss the initial-state change)
+   ============================================================ */
+@keyframes revealItem{
+  from{opacity:0;transform:translateY(38px)}
+  to  {opacity:1;transform:translateY(0)}
+}
+/* Base: hidden on inactive slides */
+.animate-item{opacity:0;transform:translateY(38px)}
+
+/* Trigger animation when slide becomes active */
+.slide.active .animate-item{
+  animation:revealItem 0.82s cubic-bezier(0.16,1,0.3,1) both;
+}
+.slide.active .animate-item[data-delay="0"]   {animation-delay:0ms}
+.slide.active .animate-item[data-delay="100"] {animation-delay:100ms}
+.slide.active .animate-item[data-delay="180"] {animation-delay:180ms}
+.slide.active .animate-item[data-delay="200"] {animation-delay:200ms}
+.slide.active .animate-item[data-delay="260"] {animation-delay:260ms}
+.slide.active .animate-item[data-delay="300"] {animation-delay:300ms}
+.slide.active .animate-item[data-delay="340"] {animation-delay:340ms}
+.slide.active .animate-item[data-delay="400"] {animation-delay:400ms}
+.slide.active .animate-item[data-delay="420"] {animation-delay:420ms}
+.slide.active .animate-item[data-delay="500"] {animation-delay:500ms}
+.slide.active .animate-item[data-delay="580"] {animation-delay:580ms}
+.slide.active .animate-item[data-delay="600"] {animation-delay:600ms}
+.slide.active .animate-item[data-delay="660"] {animation-delay:660ms}
+.slide.active .animate-item[data-delay="700"] {animation-delay:700ms}
+.slide.active .animate-item[data-delay="800"] {animation-delay:800ms}
+.slide.active .animate-item[data-delay="900"] {animation-delay:900ms}
+.slide.active .animate-item[data-delay="1000"]{animation-delay:1000ms}
+.slide.active .animate-item[data-delay="1100"]{animation-delay:1100ms}
+.slide.active .animate-item[data-delay="1300"]{animation-delay:1300ms}
+
+/* ============================================================
+   ░░░ SLIDE 1 — TITLE ░░░
+   ============================================================ */
+.slide-title{background:var(--dark);position:relative}
+
+/* Animated morphing gradient background */
+.title-bg{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(135deg,#030510,#001428,#002A5C,#001428,#030510);
+  background-size:400% 400%;
+  animation:bgMorph 14s ease-in-out infinite;
+}
+@keyframes bgMorph{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* radial glow overlay */
+.title-bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 65% 55% at 18% 28%, rgba(0,64,128,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 82% 72%, rgba(0,102,204,0.38) 0%, transparent 60%),
+    radial-gradient(ellipse 35% 35% at 50% 50%, rgba(200,21,58,0.07) 0%, transparent 70%);
+}
+
+/* dot grid texture */
+.title-bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,102,204,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,102,204,0.04) 1px, transparent 1px);
+  background-size:56px 56px;
+  animation:gridDrift 28s linear infinite;
+}
+@keyframes gridDrift{0%{transform:translate(0,0)}100%{transform:translate(56px,56px)}}
+
+/* Particle canvas */
+.particle-canvas{position:absolute;inset:0;z-index:2;pointer-events:none}
+
+/* ── NXSYS Hero Logo ── */
+.hero-logo{
+  display:inline-flex;flex-direction:column;
+  align-items:center;gap:12px;
+  margin-bottom:26px;position:relative;
+}
+
+.hero-word{
+  font-family:'Inter',sans-serif;font-weight:900;
+  font-size:90px;color:#fff;letter-spacing:-4px;line-height:0.88;
+  text-transform:uppercase;position:relative;
+  text-shadow:0 0 80px rgba(0,102,204,0.35),0 0 160px rgba(0,64,128,0.2);
+}
+
+/* Glitch layers */
+.hero-word::before,.hero-word::after{
+  content:attr(data-text);
+  position:absolute;left:0;top:0;width:100%;height:100%;
+  pointer-events:none;
+}
+.hero-word::before{
+  color:var(--crimson);
+  animation:glitchA 5s infinite;
+}
+.hero-word::after{
+  color:var(--royal);
+  animation:glitchB 5s infinite;
+}
+@keyframes glitchA{
+  0%,82%,100%{clip-path:inset(110% 0 0 0);transform:translate(0);opacity:0}
+  83%{clip-path:inset(0 0 78% 0);transform:translate(-4px,0);opacity:0.85}
+  84%{clip-path:inset(22% 0 55% 0);transform:translate(4px,0);opacity:0.85}
+  85%{clip-path:inset(55% 0 20% 0);transform:translate(-3px,0);opacity:0.85}
+  86%{clip-path:inset(80% 0 3% 0);transform:translate(3px,0);opacity:0.85}
+  87%{clip-path:inset(110% 0 0 0);transform:translate(0);opacity:0}
+}
+@keyframes glitchB{
+  0%,79%,100%{clip-path:inset(110% 0 0 0);transform:translate(0);opacity:0}
+  80%{clip-path:inset(3% 0 82% 0);transform:translate(4px,0);opacity:0.75}
+  81%{clip-path:inset(38% 0 42% 0);transform:translate(-4px,0);opacity:0.75}
+  82%{clip-path:inset(72% 0 8% 0);transform:translate(3px,0);opacity:0.75}
+  83%{clip-path:inset(110% 0 0 0);transform:translate(0);opacity:0}
+}
+
+/* Scan line sweep */
+.hero-word-wrap{position:relative;overflow:hidden;display:inline-block}
+.hero-word-wrap::after{
+  content:'';position:absolute;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);
+  animation:scanLine 3.5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes scanLine{
+  0%{top:-5px;opacity:0}
+  5%{opacity:1}
+  90%{opacity:0.7}
+  100%{top:102%;opacity:0}
+}
+
+/* Red tagline banner */
+.hero-banner{
+  background:var(--crimson);border-radius:6px;
+  padding:10px 26px;
+  animation:bannerGlow 7s ease-in-out infinite;
+}
+@keyframes bannerGlow{
+  0%,100%{box-shadow:0 0 0 0 rgba(200,21,58,0.5)}
+  50%{box-shadow:0 0 22px 6px rgba(200,21,58,0.2)}
+}
+.hero-banner-text{
+  font-family:'Inter',sans-serif;font-weight:700;
+  font-size:12.5px;letter-spacing:4px;
+  color:#fff;text-transform:uppercase;
+  display:block;
+}
+
+/* Animated divider line */
+@keyframes growWidth{from{width:0}to{width:380px}}
+.hero-divider{
+  width:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--royal),var(--crimson),transparent);
+  margin:18px 0;border-radius:2px;
+}
+.slide.active .hero-divider{
+  animation:growWidth 1.3s cubic-bezier(0.16,1,0.3,1) 400ms both;
+}
+
+/* ERG title */
+.erg-title{
+  font-size:56px;font-weight:800;color:#fff;
+  letter-spacing:-1px;line-height:1.05;margin-bottom:14px;
+  text-shadow:0 3px 40px rgba(0,102,204,0.3);
+  opacity:0;
+}
+.erg-title.revealed{
+  animation:revealItem 0.7s cubic-bezier(0.16,1,0.3,1) both;
+}
+.erg-cursor{
+  display:inline-block;width:3px;height:0.82em;
+  background:var(--royal-light);margin-left:3px;
+  vertical-align:middle;animation:blink 0.75s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+.erg-subtitle{
+  font-size:22px;font-weight:400;color:var(--sky);
+  letter-spacing:0.5px;margin-bottom:9px;
+}
+
+.erg-sub{
+  font-size:13.5px;font-weight:500;
+  color:rgba(255,255,255,0.55);letter-spacing:3.5px;
+  text-transform:uppercase;position:relative;overflow:hidden;
+}
+.erg-sub::after{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.45),transparent);
+  animation:shimmer 5s 2s ease-in-out infinite;
+}
+@keyframes shimmer{0%{left:-100%}100%{left:200%}}
+
+.erg-meta{
+  display:flex;align-items:center;gap:14px;
+  margin-top:26px;flex-wrap:wrap;justify-content:center;
+}
+.meta-date{font-size:14px;font-weight:600;color:rgba(255,255,255,0.65);letter-spacing:1px}
+.meta-sep{color:rgba(255,255,255,0.2);font-size:14px}
+.meta-loc{font-size:12px;color:rgba(255,255,255,0.38);letter-spacing:0.5px}
+
+/* Footer hint */
+.slide-foot{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,0.28);font-size:0.72rem;letter-spacing:1px;
+  white-space:nowrap;animation:footPulse 2.8s ease-in-out infinite;
+}
+@keyframes footPulse{0%,100%{opacity:0.25}50%{opacity:0.65}}
+kbd{
+  display:inline-block;padding:2px 8px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  border-radius:4px;font-family:inherit;font-size:0.72rem;color:rgba(255,255,255,0.55);
+}
+
+/* ============================================================
+   ░░░ SLIDE 2 — AGENDA ░░░
+   ============================================================ */
+.slide-agenda{background:var(--off-white)}
+
+/* Dot texture */
+.slide-agenda::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(0,102,204,0.09) 1px,transparent 1px);
+  background-size:26px 26px;z-index:0;
+}
+
+/* Diagonal accent top-right */
+.agenda-decor{
+  position:absolute;top:-80px;right:-90px;
+  width:360px;height:360px;
+  background:linear-gradient(135deg,rgba(0,102,204,0.07),rgba(0,64,128,0.04));
+  transform:rotate(45deg);border-radius:50px;z-index:1;
+  animation:decorPulse 18s ease-in-out infinite;
+}
+.agenda-decor::before{
+  content:'';position:absolute;inset:28px;
+  background:linear-gradient(135deg,rgba(200,21,58,0.04),transparent);
+  border-radius:34px;
+}
+@keyframes decorPulse{
+  0%,100%{transform:rotate(45deg) scale(1)}
+  50%{transform:rotate(45deg) scale(1.06)}
+}
+
+/* Small logo top-left */
+.slide-brand{position:absolute;top:14px;left:16px;z-index:10}
+.slide-brand img{width:68px;height:auto;border-radius:3px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.1)}
+
+.agenda-content{
+  position:relative;z-index:5;
+  width:100%;max-width:1200px;padding:68px 70px 36px;
+  height:100vh;display:flex;flex-direction:column;justify-content:center;
+}
+
+.agenda-hdr{margin-bottom:22px}
+.agenda-h1{
+  font-size:46px;font-weight:800;color:var(--navy);
+  letter-spacing:-2px;line-height:1;
+}
+.agenda-h1-sub{
+  font-size:12px;color:rgba(0,0,0,0.35);letter-spacing:2.5px;
+  text-transform:uppercase;margin-top:5px;
+}
+
+/* 2-column grid */
+.agenda-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:9px 28px;width:100%;flex:1;align-content:start;
+}
+
+.agenda-row{
+  display:flex;align-items:center;gap:14px;
+  padding:11px 16px;background:#fff;border-radius:10px;
+  border:1px solid rgba(0,102,204,0.1);
+  transition:all 0.24s ease;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+}
+.agenda-row:hover{
+  border-color:var(--royal);transform:translateX(5px);
+  box-shadow:0 4px 18px rgba(0,102,204,0.13);
+}
+
+/* Number badge with animated SVG ring */
+.num-badge{
+  position:relative;width:42px;height:42px;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+}
+.badge-svg{position:absolute;inset:0;width:100%;height:100%}
+.badge-circle{
+  transition:stroke-dashoffset 1.3s cubic-bezier(0.16,1,0.3,1);
+}
+/* Stagger the ring animation per row */
+.slide.active .agenda-row:nth-child(1) .badge-circle{stroke-dashoffset:0;transition-delay:100ms}
+.slide.active .agenda-row:nth-child(2) .badge-circle{stroke-dashoffset:0;transition-delay:200ms}
+.slide.active .agenda-row:nth-child(3) .badge-circle{stroke-dashoffset:0;transition-delay:300ms}
+.slide.active .agenda-row:nth-child(4) .badge-circle{stroke-dashoffset:0;transition-delay:400ms}
+.slide.active .agenda-row:nth-child(5) .badge-circle{stroke-dashoffset:0;transition-delay:500ms}
+.slide.active .agenda-row:nth-child(6) .badge-circle{stroke-dashoffset:0;transition-delay:600ms}
+.slide.active .agenda-row:nth-child(7) .badge-circle{stroke-dashoffset:0;transition-delay:700ms}
+.slide.active .agenda-row:nth-child(8) .badge-circle{stroke-dashoffset:0;transition-delay:800ms}
+
+.badge-num{
+  font-size:11.5px;font-weight:800;color:var(--royal);
+  position:relative;z-index:1;letter-spacing:0.5px;
+}
+
+.row-text{display:flex;flex-direction:column;gap:2px}
+.row-title{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.2}
+.row-sub{font-size:11.5px;color:rgba(0,0,0,0.4)}
+
+/* Footer note */
+.agenda-foot{
+  margin-top:14px;text-align:center;font-size:11.5px;
+  color:rgba(0,0,0,0.3);font-style:italic;letter-spacing:0.4px;
+}
+
+/* Bottom accent bar */
+.accent-bar{
+  position:absolute;bottom:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--crimson) 0%,var(--navy) 50%,var(--royal) 100%);
+  z-index:10;
+}
+
+/* ============================================================
+   ░░░ SLIDE 3 — SECTION DIVIDER: WHO WE ARE ░░░
+   ============================================================ */
+.slide-divider{background:var(--navy);overflow:hidden}
+
+/* depth radial */
+.slide-divider::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse 75% 75% at 50% 50%, rgba(0,85,170,0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 15% 18%, rgba(200,21,58,0.06) 0%, transparent 60%);
+}
+
+/* Radial pulse rings */
+.pulse{
+  position:absolute;top:50%;left:50%;border-radius:50%;
+  border:1px solid rgba(0,102,204,0.35);z-index:2;
+  transform:translate(-50%,-50%);
+}
+.pulse-1{animation:ringExpand 5s ease-out infinite}
+.pulse-2{animation:ringExpand 5s ease-out 1.65s infinite}
+.pulse-3{animation:ringExpand 5s ease-out 3.3s infinite}
+@keyframes ringExpand{
+  0%{width:80px;height:80px;opacity:0.6;border-color:rgba(0,102,204,0.5)}
+  100%{width:800px;height:800px;opacity:0;border-color:rgba(0,102,204,0)}
+}
+
+/* Background watermark "01" */
+.wm{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.82);
+  font-weight:900;font-size:230px;color:rgba(255,255,255,0.045);
+  letter-spacing:-8px;line-height:1;z-index:3;
+  user-select:none;pointer-events:none;
+  animation:wmFloat 10s ease-in-out infinite;
+}
+@keyframes wmFloat{
+  0%,100%{transform:translate(-50%,-50%) scale(0.82);opacity:0.6}
+  50%{transform:translate(-50%,-50%) scale(1.02);opacity:1}
+}
+
+/* Section pill */
+.sec-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(200,21,58,0.18);border:1px solid rgba(200,21,58,0.35);
+  border-radius:50px;padding:8px 26px;
+  font-size:11.5px;font-weight:700;color:rgba(255,255,255,0.78);
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;
+  backdrop-filter:blur(10px);
+}
+
+/* Word explosion title */
+.big-title{
+  display:flex;gap:22px;align-items:center;justify-content:center;
+  margin-bottom:18px;overflow:visible;
+}
+.word-ex{
+  font-weight:900;font-size:82px;color:#fff;
+  letter-spacing:6px;text-transform:uppercase;line-height:1;
+  opacity:0;
+  transition:opacity 0.72s cubic-bezier(0.16,1,0.3,1),
+             transform 0.72s cubic-bezier(0.16,1,0.3,1);
+}
+.w1{transform:translate(-90px,-55px) rotate(-9deg)}
+.w2{transform:translateY(75px) scale(0.65)}
+.w3{transform:translate(90px,-55px) rotate(9deg)}
+
+.slide.active .word-ex{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}
+.slide.active .w1{transition-delay:200ms}
+.slide.active .w2{transition-delay:370ms}
+.slide.active .w3{transition-delay:540ms}
+
+/* Animated underline */
+@keyframes growLine{from{width:0}to{width:310px}}
+.sec-line{
+  height:3px;width:0;
+  background:linear-gradient(90deg,var(--crimson),#fff,var(--royal));
+  border-radius:2px;margin:0 auto 22px;
+}
+.slide.active .sec-line{
+  animation:growLine 1.1s cubic-bezier(0.16,1,0.3,1) 720ms both;
+}
+
+.sec-subtitle{
+  font-size:20px;font-weight:400;color:var(--sky);letter-spacing:0.8px;
+}
+
+/* Bottom-right mini logo on dark slide */
+.dark-brand{position:absolute;bottom:18px;right:60px;z-index:10}
+.dark-brand img{
+  width:54px;height:auto;display:block;
+  background:#ffffff;padding:4px 6px;border-radius:3px;
+  opacity:0.85;box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ============================================================
+   ░░░ SLIDE 4 — NXSYS IDENTITY ░░░
+   ============================================================ */
+.slide-identity{background:var(--off-white)}
+.slide-identity::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(0,102,204,0.07) 1px,transparent 1px);
+  background-size:28px 28px;z-index:0;
+}
+.identity-decor{
+  position:absolute;top:0;right:0;
+  width:280px;height:280px;z-index:1;
+  background:linear-gradient(135deg,rgba(0,102,204,0.06),transparent);
+  border-radius:0 0 0 100%;
+}
+.identity-content{
+  position:relative;z-index:5;
+  width:100%;max-width:1200px;padding:55px 70px 30px;
+  height:100vh;display:flex;flex-direction:column;justify-content:center;
+}
+.identity-label{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,102,204,0.08);border:1px solid rgba(0,102,204,0.2);
+  border-radius:50px;padding:6px 18px;
+  font-size:10.5px;font-weight:700;color:var(--royal);
+  letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;
+  width:fit-content;
+}
+.identity-h1{
+  font-size:28px;font-weight:800;color:var(--navy);
+  letter-spacing:-0.5px;line-height:1.2;margin-bottom:20px;
+}
+.identity-cols{
+  display:grid;grid-template-columns:57% 43%;
+  gap:28px;align-items:start;
+}
+.identity-desc{
+  font-size:14px;line-height:1.9;color:rgba(0,0,0,0.62);
+}
+.identity-desc strong{color:var(--navy);font-weight:700}
+.identity-table{
+  background:#fff;border-radius:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.07);
+  overflow:hidden;border:1px solid rgba(0,102,204,0.1);
+}
+.it-row{
+  display:grid;grid-template-columns:36% 64%;
+  border-bottom:1px solid rgba(0,102,204,0.06);
+}
+.it-row:last-child{border-bottom:none}
+.it-label{
+  font-size:10px;font-weight:700;color:var(--royal);
+  letter-spacing:0.5px;text-transform:uppercase;
+  padding:10px 12px;background:rgba(0,102,204,0.04);
+  display:flex;align-items:center;border-right:1px solid rgba(0,102,204,0.06);
+  line-height:1.35;
+}
+.it-value{
+  font-size:11.5px;color:var(--black);font-weight:500;
+  padding:10px 12px;display:flex;align-items:center;line-height:1.4;
+}
+.it-value .tag{
+  display:inline-block;background:rgba(0,102,204,0.08);
+  color:var(--royal);border-radius:4px;padding:2px 7px;
+  font-size:10px;font-weight:600;margin-right:4px;
+}
+
+/* ============================================================
+   ░░░ SLIDE 5 — LEADERSHIP TEAM ░░░
+   ============================================================ */
+.slide-team{background:#fff}
+.slide-team::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(0,64,128,0.03) 0%,transparent 55%);
+  z-index:0;
+}
+.team-content{
+  position:relative;z-index:5;
+  width:100%;max-width:1200px;padding:50px 70px 24px;
+  height:100vh;display:flex;flex-direction:column;justify-content:center;
+}
+.team-h1{
+  font-size:28px;font-weight:800;color:var(--navy);
+  letter-spacing:-0.5px;margin-bottom:18px;
+}
+.team-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:12px;margin-bottom:16px;
+}
+.team-card{
+  background:var(--off-white);border:1.5px solid rgba(0,102,204,0.1);
+  border-radius:12px;padding:18px 12px 14px;
+  text-align:center;
+  transition:all 0.24s ease;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+}
+.team-card:hover{
+  border-color:var(--royal);transform:translateY(-5px);
+  box-shadow:0 8px 24px rgba(0,102,204,0.12);
+  background:#fff;
+}
+.team-avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(0,64,128,0.1),rgba(0,102,204,0.18));
+  border:2px solid rgba(0,102,204,0.18);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 10px;font-size:14px;font-weight:800;
+  color:var(--royal);letter-spacing:-0.5px;
+}
+.team-role{
+  font-size:11.5px;font-weight:700;color:var(--navy);
+  line-height:1.3;margin-bottom:5px;
+}
+.team-desc{
+  font-size:10.5px;color:rgba(0,0,0,0.42);line-height:1.45;
+}
+.team-callout{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  border-radius:10px;padding:14px 22px;
+  display:flex;align-items:center;gap:16px;
+  box-shadow:0 4px 16px rgba(0,64,128,0.25);
+}
+.callout-icon{
+  width:38px;height:38px;flex-shrink:0;
+  background:rgba(255,255,255,0.12);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1rem;
+}
+.callout-text{
+  font-size:12.5px;color:rgba(255,255,255,0.88);
+  line-height:1.6;font-weight:500;
+}
+.callout-text strong{color:#fff;font-weight:700}
+
+/* ============================================================
+   ░░░ SLIDE 6 — SECTION DIVIDER: WHAT WE HAVE DONE ░░░
+   ============================================================ */
+/* Reuses .slide-divider base — only unique elements below */
+.big-title-2l{
+  display:flex;flex-direction:column;
+  gap:4px;align-items:center;justify-content:center;
+  margin-bottom:18px;
+}
+.title-ln{
+  display:flex;gap:20px;align-items:center;justify-content:center;
+}
+.word-ex2{
+  font-weight:900;font-size:64px;color:#fff;
+  letter-spacing:5px;text-transform:uppercase;line-height:1;
+  opacity:0;
+  transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+             transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.wx1{transform:translate(-80px,-45px) rotate(-7deg)}
+.wx2{transform:translateY(55px) scale(0.68)}
+.wx3{transform:translate(80px,-45px) rotate(7deg)}
+.wx4{transform:translate(-55px,55px) rotate(-5deg)}
+.slide.active .word-ex2{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}
+.slide.active .wx1{transition-delay:160ms}
+.slide.active .wx2{transition-delay:300ms}
+.slide.active .wx3{transition-delay:440ms}
+.slide.active .wx4{transition-delay:580ms}
+
+/* ============================================================
+   SHARED TABLE + CALLOUT STYLES  (slides 7, 10, 12)
+   ============================================================ */
+.s-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.s-table thead tr{background:var(--navy)}
+.s-table th{
+  padding:10px 13px;color:#fff;font-weight:700;
+  text-align:left;font-size:10.5px;letter-spacing:0.3px;
+}
+.s-table td{
+  padding:9px 13px;border-bottom:1px solid rgba(0,102,204,0.07);
+  color:var(--black);vertical-align:top;line-height:1.45;
+}
+.s-table tr:nth-child(even) td{background:rgba(0,102,204,0.03)}
+.s-table tr:last-child td{border-bottom:none}
+.s-table td strong{color:var(--navy);font-weight:600}
+.s-table td.hi{background:rgba(0,64,128,0.07);color:var(--navy);font-weight:500}
+.s-table th.hi{background:rgba(255,255,255,0.12)}
+
+.s-table-wrap{border-radius:10px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,0.07);border:1px solid rgba(0,102,204,0.1)}
+
+.callout-box{
+  padding:11px 18px;border-radius:8px;font-size:12.5px;
+  line-height:1.65;margin-top:14px;
+}
+.callout-blue{background:rgba(0,102,204,0.06);border-left:4px solid var(--royal);color:var(--black)}
+.callout-red{background:rgba(200,21,58,0.05);border-left:4px solid var(--crimson);color:var(--black)}
+.callout-gray{background:rgba(0,0,0,0.04);border-left:4px solid rgba(0,0,0,0.15);color:var(--black)}
+
+/* shared light slide header */
+.s-label{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,102,204,0.08);border:1px solid rgba(0,102,204,0.2);
+  border-radius:50px;padding:5px 16px;font-size:10.5px;font-weight:700;
+  color:var(--royal);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:9px;width:fit-content;
+}
+.s-h1{font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-0.5px;margin-bottom:16px}
+.s-content{
+  position:relative;z-index:5;
+  width:100%;max-width:1200px;padding:50px 70px 26px;
+  height:100vh;display:flex;flex-direction:column;justify-content:center;
+}
+
+/* ============================================================
+   ░░░ SLIDE 7 — REFERENCE IMPLEMENTATIONS ░░░
+   ============================================================ */
+.slide-track{background:#fff}
+.slide-track::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(0,102,204,0.06) 1px,transparent 1px);
+  background-size:26px 26px;z-index:0;
+}
+
+/* ============================================================
+   ░░░ SLIDE 8 — AI DELIVERY ADVANTAGE ░░░
+   ============================================================ */
+.slide-ai{background:var(--off-white)}
+.slide-ai::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(0,64,128,0.04) 0%,transparent 60%);z-index:0;
+}
+.ai-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.ai-card{
+  background:#fff;border-radius:12px;overflow:hidden;
+  border:1px solid rgba(0,102,204,0.1);
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  transition:all 0.22s ease;
+}
+.ai-card:hover{transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,102,204,0.13)}
+.ai-head{
+  padding:12px 14px;
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  display:flex;align-items:center;gap:9px;
+}
+.ai-head i{color:rgba(255,255,255,0.9);font-size:1rem}
+.ai-head-title{font-size:11px;font-weight:700;color:#fff;letter-spacing:0.3px;line-height:1.3}
+.ai-body{padding:12px 14px}
+.ai-app{font-size:11.5px;color:rgba(0,0,0,0.65);line-height:1.5;margin-bottom:9px}
+.ai-benefit{
+  background:rgba(0,168,84,0.09);border:1px solid rgba(0,168,84,0.2);
+  border-radius:6px;padding:6px 10px;
+  font-size:10.5px;color:#005C2E;font-weight:600;line-height:1.4;
+}
+
+/* ============================================================
+   ░░░ SLIDE 10 — REGIONAL CREDENTIALS ░░░
+   ============================================================ */
+.slide-region{background:#fff}
+.slide-region::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(0,102,204,0.06) 1px,transparent 1px);
+  background-size:26px 26px;z-index:0;
+}
+.region-cols{display:grid;grid-template-columns:47% 53%;gap:24px;align-items:start}
+.region-list-title{
+  font-size:11px;font-weight:700;color:var(--navy);
+  text-transform:uppercase;letter-spacing:1.5px;
+  margin-bottom:10px;padding-bottom:6px;
+  border-bottom:2px solid rgba(0,102,204,0.15);
+}
+.region-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 0;border-bottom:1px solid rgba(0,102,204,0.06);
+}
+.region-item:last-child{border-bottom:none}
+.region-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--royal);flex-shrink:0;margin-top:4px;
+}
+.region-item-text{font-size:12px;line-height:1.55;color:rgba(0,0,0,0.65)}
+.region-item-text strong{color:var(--navy);font-weight:700;display:block;font-size:11.5px}
+
+/* ============================================================
+   ░░░ SLIDE 12 — SAP DAIRY BY MSG ░░░
+   ============================================================ */
+.slide-dairy{background:var(--off-white)}
+.slide-dairy::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(0,102,204,0.06) 1px,transparent 1px);
+  background-size:26px 26px;z-index:0;
+}
+.dairy-subtitle{
+  font-size:13px;font-style:italic;color:rgba(0,0,0,0.5);
+  margin-bottom:14px;line-height:1.4;
+}
+
+/* ── Severity badges ── */
+.sev{display:inline-flex;align-items:center;gap:4px;border-radius:30px;padding:2px 8px;font-size:9.5px;font-weight:700;white-space:nowrap}
+.sev-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sev-r{background:rgba(200,21,58,0.1);color:var(--crimson)}.sev-r .sev-dot{background:var(--crimson)}
+.sev-o{background:rgba(221,107,32,0.12);color:#8B3E00}.sev-o .sev-dot{background:#DD6B20}
+.sev-y{background:rgba(214,158,46,0.12);color:#6B4E00}.sev-y .sev-dot{background:#D69E2E}
+.sev-g{background:rgba(56,161,105,0.12);color:#1A5C35}.sev-g .sev-dot{background:#38A169}
+.td-gap{color:var(--crimson);font-weight:700;font-size:11px}
+
+/* ── Value chain diagram ── */
+.vc-outer{display:grid;grid-template-columns:66% 34%;gap:16px;margin-top:6px}
+.vc-left{display:flex;flex-direction:column;gap:0}
+.vc-row2{display:flex;align-items:center;gap:8px;margin:2px 0}
+.vc-box{border-radius:8px;padding:7px 12px;font-size:11px;font-weight:600;line-height:1.3;text-align:center}
+.vc-box small{display:block;font-size:9.5px;font-weight:400;opacity:0.75;margin-top:1px}
+.vc-ext{background:#E2E8F0;color:#4A5568;border:1px solid #CBD5E0}
+.vc-salwa{background:#EDE9FE;color:#553C9A;border:1px solid #C4B5FD}
+.vc-gf{background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7}
+.vc-enf{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D}
+.vc-ardc{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD}
+.vc-brand{background:#FCE7F3;color:#831843;border:1px solid #F9A8D4}
+.vc-mkt{background:#F1F5F9;color:#475569;border:1px solid #CBD5E0;font-style:italic;font-size:10.5px}
+.vc-arr{color:rgba(0,0,0,0.35);font-size:13px;padding:0 3px;flex-shrink:0}
+.vc-vline{width:2px;height:14px;background:rgba(0,0,0,0.15);margin:1px 0 1px 50%}
+.vc-hfeed{display:flex;align-items:center;gap:6px;margin:3px 0}
+.vc-hline{flex:1;height:2px;background:rgba(0,0,0,0.12);border-radius:1px}
+.vc-right{border-left:2px dashed rgba(0,102,204,0.25);padding-left:16px;display:flex;flex-direction:column;gap:0}
+.vc-section-lbl{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.3);margin-bottom:4px;margin-top:2px}
+
+/* ── Gantt chart ── */
+.gantt-wrap{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);border:1px solid rgba(0,102,204,0.1)}
+.gantt-head{display:grid;grid-template-columns:155px repeat(20,1fr);background:var(--navy)}
+.gantt-mhdr{padding:5px 0;text-align:center;font-size:8.5px;font-weight:700;color:rgba(255,255,255,0.85)}
+.gantt-mhdr:first-child{background:rgba(0,64,128,0.3);color:rgba(255,255,255,0.6);font-size:9px;display:flex;align-items:center;justify-content:center}
+.gantt-row-g{display:grid;grid-template-columns:155px 1fr;border-bottom:1px solid rgba(0,102,204,0.07);min-height:36px}
+.gantt-row-g:last-child{border-bottom:none}
+.gantt-lbl{padding:7px 12px;font-size:11px;font-weight:700;color:var(--navy);display:flex;flex-direction:column;justify-content:center;border-right:2px solid rgba(0,102,204,0.1)}
+.gantt-lbl small{font-size:9.5px;color:rgba(0,0,0,0.4);font-weight:400}
+.gantt-track{position:relative;overflow:hidden}
+.gantt-bar{position:absolute;top:6px;bottom:6px;border-radius:6px;display:flex;align-items:center;padding:0 10px;font-size:9.5px;font-weight:700;color:#fff;letter-spacing:0.3px;box-shadow:0 2px 6px rgba(0,0,0,0.18)}
+.gbar-p1{background:linear-gradient(90deg,var(--royal),#3D8FE0);left:0%;width:29%}
+.gbar-p2{background:linear-gradient(90deg,#38A169,#48BB78);left:14%;width:50%}
+.gbar-p3{background:linear-gradient(90deg,#DD6B20,#ED8936);left:64%;width:36%}
+.gantt-note{padding:7px 14px;font-size:11px;color:rgba(0,0,0,0.5);font-style:italic;border-top:1px solid rgba(0,102,204,0.07);background:rgba(0,102,204,0.02)}
+
+/* ── Delivery stages + WRICEF ── */
+.stages-cols{display:grid;grid-template-columns:55% 45%;gap:16px}
+.stage-item{padding:9px 13px;border-left:3px solid var(--royal);background:#fff;border-radius:0 8px 8px 0;margin-bottom:7px;box-shadow:0 1px 5px rgba(0,0,0,0.05)}
+.stage-num{font-size:9.5px;font-weight:700;color:var(--crimson);letter-spacing:1px;text-transform:uppercase;margin-bottom:1px}
+.stage-title{font-size:11.5px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.stage-desc{font-size:10.5px;color:rgba(0,0,0,0.52);line-height:1.45}
+.wricef-box{background:rgba(0,64,128,0.04);border:1.5px solid rgba(0,102,204,0.2);border-radius:10px;padding:14px 16px}
+.wricef-title{font-size:12.5px;font-weight:800;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.wricef-cap{font-size:26px;font-weight:900;color:var(--navy);text-align:center;letter-spacing:-1px;line-height:1;padding:8px 0 2px}
+.wricef-cap-sub{font-size:9.5px;text-align:center;color:rgba(0,0,0,0.38);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px}
+.wricef-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:6px;font-size:11px;color:rgba(0,0,0,0.62);line-height:1.4}
+.wricef-item i{color:var(--royal);font-size:0.8rem;margin-top:2px;flex-shrink:0}
+
+/* ── Two-column generic ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.two-col-6040{display:grid;grid-template-columns:60% 40%;gap:20px;align-items:start}
+
+/* ── Numbered cards (delivery philosophy) ── */
+.num-card{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:#fff;border-radius:8px;margin-bottom:7px;border:1px solid rgba(0,102,204,0.1);box-shadow:0 1px 5px rgba(0,0,0,0.04)}
+.num-card-n{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.num-card-text{font-size:11.5px;color:rgba(0,0,0,0.65);line-height:1.45}
+.num-card-text strong{color:var(--navy);font-weight:700}
+
+/* ── OCM ── */
+.ocm-cols{display:grid;grid-template-columns:50% 50%;gap:18px}
+.ocm-phase-item{padding:9px 13px;border-left:3px solid var(--royal);background:#fff;border-radius:0 8px 8px 0;margin-bottom:7px;box-shadow:0 1px 5px rgba(0,0,0,0.04)}
+.ocm-phase-hdr{font-size:11.5px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.ocm-phase-body{font-size:10.5px;color:rgba(0,0,0,0.52);line-height:1.45}
+
+/* ── RACI table ── */
+.raci-wrap{border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,102,204,0.1)}
+.raci-table{width:100%;border-collapse:collapse;font-size:10px}
+.raci-table thead tr{background:var(--navy)}
+.raci-table th{padding:7px 8px;color:#fff;font-weight:700;font-size:9px;letter-spacing:0.3px;text-align:center}
+.raci-table th:first-child{text-align:left;width:24%}
+.raci-table td{padding:6px 8px;border-bottom:1px solid rgba(0,102,204,0.06);text-align:center;vertical-align:middle}
+.raci-table td:first-child{text-align:left;font-weight:600;color:var(--navy);font-size:10.5px;border-right:1px solid rgba(0,102,204,0.08)}
+.raci-table tr:nth-child(even) td{background:rgba(0,102,204,0.02)}
+.raci-table tr:last-child td{border-bottom:none}
+.rc-r{background:rgba(0,102,204,0.15);color:var(--royal);font-weight:800;border-radius:4px;display:inline-block;padding:1px 5px;font-size:9.5px}
+.rc-a{background:rgba(0,64,128,0.15);color:var(--navy);font-weight:800;border-radius:4px;display:inline-block;padding:1px 5px;font-size:9.5px}
+.rc-ar{background:rgba(200,21,58,0.12);color:var(--crimson);font-weight:800;border-radius:4px;display:inline-block;padding:1px 5px;font-size:9px}
+.rc-c{background:rgba(0,0,0,0.07);color:#555;font-weight:500;border-radius:4px;display:inline-block;padding:1px 5px;font-size:9.5px}
+.rc-i{color:#aaa;font-size:9.5px}
+
+/* ── Bar charts (slide 22) ── */
+.assess-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.assess-card{background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 2px 10px rgba(0,0,0,0.06);border:1px solid rgba(0,102,204,0.1)}
+.assess-card-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid rgba(0,102,204,0.12)}
+.bar-row{margin-bottom:8px}
+.bar-lbl-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.bar-name{font-size:11px;color:var(--black);font-weight:500}
+.bar-cnt{font-size:10.5px;font-weight:700;color:var(--navy)}
+.bar-track{height:8px;background:rgba(0,0,0,0.07);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(0.16,1,0.3,1)}
+.slide.active .bar-fill{/* width set inline, animates from 0 via JS-free CSS trick */}
+.bf-red{background:var(--crimson)}.bf-orange{background:#DD6B20}.bf-yellow{background:#D69E2E}.bf-green{background:#38A169}
+
+/* ── Closing slide ── */
+.slide-closing{background:var(--dark)}
+.closing-bg{position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,#030510,#001428,#002A5C,#001428,#030510);background-size:400% 400%;animation:bgMorph 14s ease-in-out infinite}
+.closing-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 30%,rgba(0,64,128,0.5) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 70%,rgba(0,102,204,0.35) 0%,transparent 60%)}
+.closing-content{position:relative;z-index:5;width:100%;max-width:1100px;padding:50px 80px;display:flex;flex-direction:column;justify-content:center}
+.closing-quote{font-size:27px;font-weight:800;color:#fff;line-height:1.35;margin-bottom:24px;letter-spacing:-0.3px}
+.closing-quote em{color:var(--sky);font-style:normal}
+.closing-pts{list-style:none;margin-bottom:22px;columns:2;column-gap:32px}
+.closing-pts li{font-size:12.5px;color:rgba(255,255,255,0.72);padding:5px 0 5px 18px;position:relative;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.5;break-inside:avoid}
+.closing-pts li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--crimson)}
+.closing-final{font-size:19px;font-weight:800;color:#fff;line-height:1.45;padding:18px 0;border-top:2px solid rgba(255,255,255,0.1);margin-bottom:16px}
+.closing-foot{display:flex;flex-direction:column;gap:3px}
+.closing-foot span{font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:0.5px}
+
+/* ── Extra subtitle for section dividers ── */
+.sec-subtitle2{font-size:14px;font-weight:600;color:rgba(200,180,255,0.7);margin-top:7px;letter-spacing:0.5px}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1024px){
+  .presentation{margin-left:0;width:100%}
+  .sidebar{display:none}
+  .progress-bar{left:0;width:100%!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     PRELOADER
+══════════════════════════════════════════ -->
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <img src="NXSYS logo.png" class="nxsys-logo-img preloader-anim" alt="NXSYS"
+         style="width:140px;background:#fff;padding:8px 14px;border-radius:6px;margin:0 auto 28px">
+    <div class="preloader-bar"><div class="preloader-fill"></div></div>
+    <div class="preloader-label">Preparing Vendor Defense</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     GLOBAL UI
+══════════════════════════════════════════ -->
+<div class="progress-bar" id="progressBar" style="width:33.3%"></div>
+
+<div class="slide-counter" id="slideCounter">
+  <span class="cur">01</span>
+  <span class="div">/</span>
+  <span class="tot">33</span>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-btn" id="prevBtn" disabled aria-label="Previous"><i class="fas fa-chevron-up"></i></button>
+  <button class="nav-btn" id="nextBtn" aria-label="Next"><i class="fas fa-chevron-down"></i></button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LEFT SIDEBAR
+══════════════════════════════════════════ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS">
+  </div>
+
+  <div class="nav-section-label">Opening</div>
+  <div class="nav-item active" data-nav="0">Title Slide</div>
+
+  <div class="nav-section-label">Overview</div>
+  <div class="nav-item" data-nav="1">Agenda</div>
+
+  <div class="nav-section-label">Section 01 — Who We Are</div>
+  <div class="nav-item" data-nav="2">01 · Who We Are</div>
+  <div class="nav-item" data-nav="3">NXSYS Identity</div>
+  <div class="nav-item" data-nav="4">Leadership Team</div>
+
+  <div class="nav-section-label">Section 02 — Track Record</div>
+  <div class="nav-item" data-nav="5">02 · What We Have Done</div>
+  <div class="nav-item" data-nav="6">Reference Implementations</div>
+  <div class="nav-item" data-nav="7">AI Delivery Advantage</div>
+
+  <div class="nav-section-label">Section 03</div>
+  <div class="nav-item" data-nav="8">03 · We Know the Region</div>
+  <div class="nav-item" data-nav="9">Regional Credentials</div>
+
+  <div class="nav-section-label">Section 04 — Industry</div>
+  <div class="nav-item" data-nav="10">04 · We Know the Industry</div>
+  <div class="nav-item" data-nav="11">SAP Dairy by msg</div>
+  <div class="nav-item" data-nav="12">SAP Meat &amp; Fish by msg</div>
+  <div class="nav-item" data-nav="13">Industry Benchmarks</div>
+
+  <div class="nav-section-label">Section 05 — What We Found</div>
+  <div class="nav-item" data-nav="14">05 · What We Found</div>
+  <div class="nav-item" data-nav="15">ERG Value Chain</div>
+  <div class="nav-item" data-nav="16">Intercompany Gaps</div>
+  <div class="nav-item" data-nav="17">ARDC Findings</div>
+  <div class="nav-item" data-nav="18">ENF Findings</div>
+  <div class="nav-item" data-nav="19">GF Findings</div>
+  <div class="nav-item" data-nav="20">Salwa Findings</div>
+  <div class="nav-item" data-nav="21">Consolidated Assessment</div>
+
+  <div class="nav-section-label">Section 06 — Delivery</div>
+  <div class="nav-item" data-nav="22">06 · How We Deliver</div>
+  <div class="nav-item" data-nav="23">Delivery Philosophy</div>
+  <div class="nav-item" data-nav="24">Phase Structure &amp; Timeline</div>
+  <div class="nav-item" data-nav="25">Delivery Stages &amp; WRICEF</div>
+  <div class="nav-item" data-nav="26">Integration Architecture</div>
+
+  <div class="nav-section-label">Section 07 — OCM</div>
+  <div class="nav-item" data-nav="27">07 · The Human Side</div>
+  <div class="nav-item" data-nav="28">OCM Programme</div>
+
+  <div class="nav-section-label">Section 08 — Governance</div>
+  <div class="nav-item" data-nav="29">08 · Who Owns What</div>
+  <div class="nav-item" data-nav="30">Programme RACI</div>
+  <div class="nav-item" data-nav="31">Escalation Framework</div>
+
+  <div class="nav-section-label">Closing</div>
+  <div class="nav-item" data-nav="32">Closing Statement</div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PRESENTER NOTES PANEL
+══════════════════════════════════════════ -->
+<div class="notes-panel">
+  <div class="notes-header"><i class="fas fa-clipboard-list"></i><span>Presenter Notes</span></div>
+  <div class="notes-body" id="notesBody"><p class="no-notes">No notes for this slide.</p></div>
+</div>
+<div class="presenter-indicator">PRESENTER MODE — P: exit &nbsp;|&nbsp; A: Audience window &nbsp;|&nbsp; F: Fullscreen</div>
+
+<!-- ══════════════════════════════════════════
+     PRESENTATION
+══════════════════════════════════════════ -->
+<div class="presentation" id="presentation">
+
+  <!-- ─────────────────────────────────────
+       SLIDE 1 — TITLE
+  ───────────────────────────────────────── -->
+  <section class="slide slide-title" data-slide="0">
+    <div class="title-bg"></div>
+    <canvas class="particle-canvas" id="pCanvas"></canvas>
+
+    <div class="slide-content centered">
+
+      <!-- NXSYS Hero Logo -->
+      <div class="hero-logo animate-item" data-delay="0">
+        <div class="hero-word-wrap">
+          <div class="hero-word" data-text="NXSYS">NXSYS</div>
+        </div>
+        <div class="hero-banner">
+          <span class="hero-banner-text">Towards Your Next Success</span>
+        </div>
+      </div>
+
+      <!-- Animated divider -->
+      <div class="hero-divider"></div>
+
+      <!-- Main title — typewriter managed by JS -->
+      <h1 class="erg-title" id="ergTitle"></h1>
+
+      <!-- Subtitle -->
+      <p class="erg-subtitle animate-item" data-delay="700">SAP S/4HANA &amp; SuccessFactors Transformation</p>
+
+      <!-- Sub-subtitle with shimmer -->
+      <p class="erg-sub animate-item" data-delay="900">Vendor Defense Presentation</p>
+
+      <!-- Date + location -->
+      <div class="erg-meta animate-item" data-delay="1100">
+        <span class="meta-date">March 2026</span>
+        <span class="meta-sep">|</span>
+        <span class="meta-loc">Dubai, United Arab Emirates &nbsp;·&nbsp; nxsys.com</span>
+      </div>
+
+    </div><!-- .slide-content -->
+
+    <div class="slide-foot animate-item" data-delay="1300">
+      Press <kbd>Space</kbd> or <kbd>&rarr;</kbd> to continue
+    </div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Opening</h4>
+        <p>Welcome the evaluation panel. Open with: "What you will see today is not a generic proposal dressed in ERG's colours."</p>
+        <ul>
+          <li><strong>Tone:</strong> Confident, specific, prepared — not salesy</li>
+          <li><strong>Duration:</strong> 5 seconds on this slide, then advance</li>
+          <li><strong>Key point:</strong> We know ERG's business entity-by-entity</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 2 — AGENDA
+  ───────────────────────────────────────── -->
+  <section class="slide slide-agenda" data-slide="1">
+    <div class="agenda-decor"></div>
+
+    <!-- Small NXSYS logo top-left -->
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="agenda-content">
+
+      <div class="agenda-hdr animate-item" data-delay="0">
+        <h1 class="agenda-h1">Agenda</h1>
+        <p class="agenda-h1-sub">Emirates Rawabi Group &nbsp;—&nbsp; Vendor Defense</p>
+      </div>
+
+      <div class="agenda-grid">
+
+        <!-- Row 1 -->
+        <div class="agenda-row animate-item" data-delay="100">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">01</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">Who We Are</span>
+            <span class="row-sub">NXSYS Identity &amp; Team</span>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="agenda-row animate-item" data-delay="200">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">02</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">What We Have Done</span>
+            <span class="row-sub">Track Record &amp; References</span>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="agenda-row animate-item" data-delay="300">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">03</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">We Know the Region</span>
+            <span class="row-sub">UAE &amp; GCC Credentials</span>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="agenda-row animate-item" data-delay="400">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">04</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">We Know the Industry</span>
+            <span class="row-sub">Dairy, Poultry &amp; Feed Expertise</span>
+          </div>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="agenda-row animate-item" data-delay="500">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">05</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">What We Found</span>
+            <span class="row-sub">ERG Pain Points — Entity by Entity</span>
+          </div>
+        </div>
+
+        <!-- Row 6 -->
+        <div class="agenda-row animate-item" data-delay="600">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">06</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">How We Deliver</span>
+            <span class="row-sub">Implementation Methodology</span>
+          </div>
+        </div>
+
+        <!-- Row 7 -->
+        <div class="agenda-row animate-item" data-delay="700">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">07</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">The Human Side</span>
+            <span class="row-sub">Organisational Change Management</span>
+          </div>
+        </div>
+
+        <!-- Row 8 -->
+        <div class="agenda-row animate-item" data-delay="800">
+          <div class="num-badge">
+            <svg class="badge-svg" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#0066CC" stroke-width="1.8"
+                stroke-dasharray="119.4" stroke-dashoffset="119.4" class="badge-circle"/>
+            </svg>
+            <span class="badge-num">08</span>
+          </div>
+          <div class="row-text">
+            <span class="row-title">Who Owns What</span>
+            <span class="row-sub">RACI &amp; Governance</span>
+          </div>
+        </div>
+
+      </div><!-- .agenda-grid -->
+
+      <div class="agenda-foot animate-item" data-delay="1000">
+        <em>Eight pillars the ERG evaluation panel will assess</em>
+      </div>
+
+    </div><!-- .agenda-content -->
+
+    <div class="accent-bar"></div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Agenda Walkthrough</h4>
+        <p>Walk through all eight pillars briefly. Emphasise this is structured around what the ERG panel needs to evaluate — not what NXSYS wants to show.</p>
+        <ul>
+          <li><strong>Pillar 05 (What We Found)</strong> is the most powerful — we will show entity-by-entity observations</li>
+          <li>Total presentation: 45–60 minutes including Q&amp;A</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 3 — SECTION DIVIDER: WHO WE ARE
+  ───────────────────────────────────────── -->
+  <section class="slide slide-divider" data-slide="2">
+
+    <!-- Pulse rings -->
+    <div class="pulse pulse-1"></div>
+    <div class="pulse pulse-2"></div>
+    <div class="pulse pulse-3"></div>
+
+    <!-- Watermark -->
+    <div class="wm">01</div>
+
+    <div class="slide-content centered" style="position:relative;z-index:5">
+
+      <!-- Section pill -->
+      <div class="sec-pill animate-item" data-delay="0">
+        <i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i>
+        Section 01
+      </div>
+
+      <!-- Word explosion -->
+      <div class="big-title">
+        <span class="word-ex w1">WHO</span>
+        <span class="word-ex w2">WE</span>
+        <span class="word-ex w3">ARE</span>
+      </div>
+
+      <!-- Animated underline -->
+      <div class="sec-line"></div>
+
+      <!-- Subtitle -->
+      <p class="sec-subtitle animate-item" data-delay="900">
+        NXSYS — Identity, Capabilities &amp; Team
+      </p>
+
+    </div>
+
+    <!-- Mini logo bottom-right -->
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Section 01 — Who We Are</h4>
+        <p>Pause on this slide before advancing. Let it land with weight.</p>
+        <ul>
+          <li>State: "We will start with who we are — not because credentials are interesting, but because they are the foundation of everything that follows."</li>
+          <li>The next slides cover NXSYS identity and the proposed ERG leadership team</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────────
+       SLIDE 4 — NXSYS IDENTITY
+  ───────────────────────────────────────── -->
+  <section class="slide slide-identity" data-slide="3">
+    <div class="identity-decor"></div>
+
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="identity-content">
+
+      <div class="identity-label animate-item" data-delay="0">
+        <i class="fas fa-circle" style="font-size:5px"></i>
+        Section 01 &nbsp;—&nbsp; NXSYS Identity
+      </div>
+
+      <h1 class="identity-h1 animate-item" data-delay="100">
+        NXSYS — AI-Powered SAP Systems Integrator
+      </h1>
+
+      <div class="identity-cols">
+
+        <!-- Left: Description -->
+        <div class="identity-desc animate-item" data-delay="200">
+          <p>NXSYS is an <strong>AI-powered SAP Systems Integrator headquartered in Dubai, UAE</strong>. We specialise exclusively in S/4HANA transformation for industries where operations are complex, perishable, and heavily regulated — food manufacturing, agribusiness, dairy, poultry, and animal feed.</p>
+          <br>
+          <p>We are not a generalist consultancy that happens to do SAP. We are an <strong>SAP specialist that focuses entirely on your kind of business</strong>.</p>
+          <br>
+          <p>Every project we take on is in an industry where a batch failure, a traceability gap, or a planning error has real consequences measured in product loss, regulatory risk, and margin erosion. That operational reality shapes everything we design.</p>
+        </div>
+
+        <!-- Right: Info table -->
+        <div class="identity-table animate-item" data-delay="350">
+          <div class="it-row">
+            <div class="it-label">Headquarters</div>
+            <div class="it-value">Dubai, UAE</div>
+          </div>
+          <div class="it-row">
+            <div class="it-label">Specialisation</div>
+            <div class="it-value">SAP S/4HANA Cloud Private Edition — Food, Dairy, Poultry, Agribusiness</div>
+          </div>
+          <div class="it-row">
+            <div class="it-label">Industry Solutions</div>
+            <div class="it-value">
+              <span class="tag">SAP Dairy by msg</span>
+              <span class="tag">SAP Meat &amp; Fish by msg</span>
+            </div>
+          </div>
+          <div class="it-row">
+            <div class="it-label">HR Platform</div>
+            <div class="it-value">SuccessFactors HXM Suite</div>
+          </div>
+          <div class="it-row">
+            <div class="it-label">Planning &amp; Analytics</div>
+            <div class="it-value">SAP IBP · SAP SAC · SAP Group Reporting</div>
+          </div>
+          <div class="it-row">
+            <div class="it-label">AI Capability</div>
+            <div class="it-value">AI Unit — accelerators for data migration, testing &amp; analytics</div>
+          </div>
+          <div class="it-row">
+            <div class="it-label">Delivery Model</div>
+            <div class="it-value">Onshore UAE + regional specialist resources</div>
+          </div>
+        </div>
+
+      </div><!-- .identity-cols -->
+
+    </div><!-- .identity-content -->
+
+    <div class="accent-bar"></div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>NXSYS Identity</h4>
+        <p>Reinforce: we are not a generalist. Every credential we present is specific to ERG's industry.</p>
+        <ul>
+          <li><strong>Key message:</strong> Dairy by msg and Meat &amp; Fish by msg are not standard SAP modules — they are specialist industry solutions we have implemented before</li>
+          <li><strong>AI Unit:</strong> These are production accelerators already in use, not aspirational capabilities</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 5 — LEADERSHIP TEAM
+  ───────────────────────────────────────── -->
+  <section class="slide slide-team" data-slide="4">
+
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="team-content">
+
+      <h1 class="team-h1 animate-item" data-delay="0">
+        Our Leadership Team — Proposed for ERG
+      </h1>
+
+      <div class="team-grid">
+
+        <div class="team-card animate-item" data-delay="100">
+          <div class="team-avatar">PD</div>
+          <div class="team-role">Programme Director</div>
+          <div class="team-desc">Overall programme governance, steering committee, NXSYS accountability</div>
+        </div>
+
+        <div class="team-card animate-item" data-delay="180">
+          <div class="team-avatar">SA</div>
+          <div class="team-role">Solution Architect</div>
+          <div class="team-desc">S/4HANA architecture, integration design, RICEFW governance</div>
+        </div>
+
+        <div class="team-card animate-item" data-delay="260">
+          <div class="team-avatar">DL</div>
+          <div class="team-role">Dairy by msg Lead</div>
+          <div class="team-desc">ARDC implementation — PP-PI, milk balancing, batch genealogy, QM</div>
+        </div>
+
+        <div class="team-card animate-item" data-delay="340">
+          <div class="team-avatar">ML</div>
+          <div class="team-role">Meat &amp; Fish Lead</div>
+          <div class="team-desc">ENF, GF &amp; Salwa — livestock, hatchery, FCR, catch weight, slaughter</div>
+        </div>
+
+        <div class="team-card animate-item" data-delay="420">
+          <div class="team-avatar">SF</div>
+          <div class="team-role">SF HXM Lead</div>
+          <div class="team-desc">SuccessFactors — Employee Central, Payroll, Talent, Arabic localisation</div>
+        </div>
+
+        <div class="team-card animate-item" data-delay="500">
+          <div class="team-avatar">FC</div>
+          <div class="team-role">FI/CO Lead</div>
+          <div class="team-desc">Finance, costing, group reporting, UAE CT &amp; VAT compliance</div>
+        </div>
+
+        <div class="team-card animate-item" data-delay="580">
+          <div class="team-avatar">OC</div>
+          <div class="team-role">OCM Lead</div>
+          <div class="team-desc">Organisational change, training design, adoption tracking, Arabic delivery</div>
+        </div>
+
+        <div class="team-card animate-item" data-delay="660">
+          <div class="team-avatar">PM</div>
+          <div class="team-role">PMO Lead</div>
+          <div class="team-desc">Plan, risk register, RAID log, reporting cadence, budget tracking</div>
+        </div>
+
+      </div><!-- .team-grid -->
+
+      <div class="team-callout animate-item" data-delay="800">
+        <div class="callout-icon"><i class="fas fa-handshake"></i></div>
+        <div class="callout-text">
+          <strong>Every named resource on this proposal has been committed contractually.</strong>
+          The people in this room are the people who will be on your project.
+        </div>
+      </div>
+
+    </div><!-- .team-content -->
+
+    <div class="accent-bar"></div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Leadership Team</h4>
+        <p>This is the most credibility-building slide in this section. Reinforce the contractual commitment statement.</p>
+        <ul>
+          <li><strong>Key message:</strong> No bait-and-switch. The team presented is the team contracted</li>
+          <li><strong>Dairy Lead and Meat &amp; Fish Lead</strong> are the most critical roles for ERG — be ready to elaborate on their specific backgrounds</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 6 — SECTION DIVIDER: WHAT WE HAVE DONE
+  ───────────────────────────────────────── -->
+  <section class="slide slide-divider" data-slide="5">
+
+    <div class="pulse pulse-1"></div>
+    <div class="pulse pulse-2"></div>
+    <div class="pulse pulse-3"></div>
+
+    <div class="wm">02</div>
+
+    <div class="slide-content centered" style="position:relative;z-index:5">
+
+      <div class="sec-pill animate-item" data-delay="0">
+        <i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i>
+        Section 02
+      </div>
+
+      <div class="big-title-2l">
+        <div class="title-ln">
+          <span class="word-ex2 wx1">WHAT</span>
+          <span class="word-ex2 wx2">WE</span>
+        </div>
+        <div class="title-ln">
+          <span class="word-ex2 wx3">HAVE</span>
+          <span class="word-ex2 wx4">DONE</span>
+        </div>
+      </div>
+
+      <div class="sec-line"></div>
+
+      <p class="sec-subtitle animate-item" data-delay="900">
+        Delivery Track Record &amp; References
+      </p>
+
+    </div>
+
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Section 02 — What We Have Done</h4>
+        <p>Transition statement: "Credentials without proof are just words. Let us show you what we have actually built — in your industry, in your region, on these exact platforms."</p>
+        <ul>
+          <li>Next slides: Reference implementations table and AI delivery advantage</li>
+          <li>Be prepared to offer direct reference calls — unfiltered, no curated tours</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────────
+       SLIDE 7 — REFERENCE IMPLEMENTATIONS
+  ───────────────────────────────────────── -->
+  <section class="slide slide-track" data-slide="6">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 02 — Track Record</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Our Delivery Track Record</h1>
+
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table">
+          <thead>
+            <tr>
+              <th style="width:10%">Client</th>
+              <th style="width:14%">Industry</th>
+              <th style="width:10%">Geography</th>
+              <th style="width:28%">Scope</th>
+              <th style="width:38%">Key Relevance to ERG</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Reference 1</strong></td>
+              <td>Dairy Manufacturing</td>
+              <td>GCC</td>
+              <td>S/4HANA Greenfield + SAP Dairy by msg</td>
+              <td>PP-PI component-based planning, batch genealogy, QM activation — directly mirrors ARDC requirement</td>
+            </tr>
+            <tr>
+              <td><strong>Reference 2</strong></td>
+              <td>Poultry Processing</td>
+              <td>GCC / MENA</td>
+              <td>S/4HANA + SAP Meat &amp; Fish by msg</td>
+              <td>Farm-to-slaughter chain, FCR tracking, catch weight management — ENF and Salwa blueprint</td>
+            </tr>
+            <tr>
+              <td><strong>Reference 3</strong></td>
+              <td>Animal Feed</td>
+              <td>GCC</td>
+              <td>S/4HANA + Easy Feed integration</td>
+              <td>Feed formulation integration, MRP activation, intercompany flows — GF requirement replicated</td>
+            </tr>
+            <tr>
+              <td><strong>Reference 4</strong></td>
+              <td>Food Conglomerate</td>
+              <td>UAE</td>
+              <td>SuccessFactors HXM</td>
+              <td>Multi-entity HR, 2,000–5,000 employees, Arabic localisation — ERG group HR structure match</td>
+            </tr>
+            <tr>
+              <td><strong>Reference 5</strong></td>
+              <td>Food &amp; Beverage</td>
+              <td>MENA</td>
+              <td>SAP IBP + SAC</td>
+              <td>Demand planning, analytics consolidation, Group Reporting — ERG consolidation requirement</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-box callout-blue animate-item" data-delay="400">
+        <i class="fas fa-phone-alt" style="color:var(--royal);font-size:1rem;margin-top:2px;flex-shrink:0"></i>
+        <span><strong>We will arrange direct reference calls with each client at your request.</strong> No curated tours — unfiltered conversations with the people who ran these projects.</span>
+      </div>
+    </div>
+
+    <div class="accent-bar"></div>
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Reference Implementations</h4>
+        <p>Be ready to name the clients if asked. We have five references across the exact scope ERG needs.</p>
+        <ul>
+          <li><strong>Reference 1 (Dairy):</strong> Most directly relevant to ARDC — Dairy by msg go-live</li>
+          <li><strong>Reference 2 (Poultry):</strong> Most directly relevant to ENF — full farm-to-pack chain</li>
+          <li>Offer reference calls proactively — this distinguishes us from competitors who avoid them</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 8 — AI DELIVERY ADVANTAGE
+  ───────────────────────────────────────── -->
+  <section class="slide slide-ai" data-slide="7">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 02 — AI Unit</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Our AI Delivery Advantage</h1>
+
+      <div class="ai-grid">
+
+        <div class="ai-card animate-item" data-delay="200">
+          <div class="ai-head">
+            <i class="fas fa-database"></i>
+            <div class="ai-head-title">Data Migration</div>
+          </div>
+          <div class="ai-body">
+            <p class="ai-app">AI-assisted data cleansing and duplicate detection across all four ERG entities</p>
+            <div class="ai-benefit">Reduces master data preparation time by 40–60%</div>
+          </div>
+        </div>
+
+        <div class="ai-card animate-item" data-delay="300">
+          <div class="ai-head">
+            <i class="fas fa-vial"></i>
+            <div class="ai-head-title">Test Script Generation</div>
+          </div>
+          <div class="ai-body">
+            <p class="ai-app">AI-generated test scripts directly from process designs and configuration documents</p>
+            <div class="ai-benefit">Compresses UAT preparation from weeks to days</div>
+          </div>
+        </div>
+
+        <div class="ai-card animate-item" data-delay="400">
+          <div class="ai-head">
+            <i class="fas fa-search"></i>
+            <div class="ai-head-title">Gap Analysis</div>
+          </div>
+          <div class="ai-body">
+            <p class="ai-app">AI-assisted fit-to-standard analysis against S/4HANA and msg industry solution baselines</p>
+            <div class="ai-benefit">No RICEFW object created without full justification</div>
+          </div>
+        </div>
+
+        <div class="ai-card animate-item" data-delay="500">
+          <div class="ai-head">
+            <i class="fas fa-chart-bar"></i>
+            <div class="ai-head-title">Analytics Migration</div>
+          </div>
+          <div class="ai-body">
+            <p class="ai-app">AI-assisted report migration from ClickView / Business Objects to SAP Fiori and SAC</p>
+            <div class="ai-benefit">Reduces manual report redesign effort significantly</div>
+          </div>
+        </div>
+
+        <div class="ai-card animate-item" data-delay="600">
+          <div class="ai-head">
+            <i class="fas fa-file-alt"></i>
+            <div class="ai-head-title">Documentation</div>
+          </div>
+          <div class="ai-body">
+            <p class="ai-app">AI-generated Business Blueprint and configuration documentation from workshop outputs</p>
+            <div class="ai-benefit">Cuts blueprint documentation effort significantly</div>
+          </div>
+        </div>
+
+      </div><!-- .ai-grid -->
+
+      <div class="callout-box callout-gray animate-item" data-delay="700">
+        <i class="fas fa-check-circle" style="color:#005C2E;font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span><strong>These are not aspirational capabilities.</strong> They are in active use on current projects today.</span>
+      </div>
+    </div>
+
+    <div class="accent-bar"></div>
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>AI Delivery Advantage</h4>
+        <p>Emphasise this is production capability, not a sales slide. Offer a live demonstration if asked.</p>
+        <ul>
+          <li>Data migration is the highest-risk phase for ERG — four entities with fragmented master data</li>
+          <li>Test script generation is most impactful for ERG's UAT timeline</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 9 — SECTION DIVIDER: WE KNOW THE REGION
+  ───────────────────────────────────────── -->
+  <section class="slide slide-divider" data-slide="8">
+    <div class="pulse pulse-1"></div>
+    <div class="pulse pulse-2"></div>
+    <div class="pulse pulse-3"></div>
+    <div class="wm">03</div>
+
+    <div class="slide-content centered" style="position:relative;z-index:5">
+      <div class="sec-pill animate-item" data-delay="0">
+        <i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i>
+        Section 03
+      </div>
+      <div class="big-title-2l">
+        <div class="title-ln">
+          <span class="word-ex2 wx1">WE</span>
+          <span class="word-ex2 wx2">KNOW</span>
+        </div>
+        <div class="title-ln">
+          <span class="word-ex2 wx3">THE</span>
+          <span class="word-ex2 wx4">REGION</span>
+        </div>
+      </div>
+      <div class="sec-line"></div>
+      <p class="sec-subtitle animate-item" data-delay="900">UAE &amp; GCC — Our Home Market</p>
+    </div>
+
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Section 03 — We Know the Region</h4>
+        <p>"We do not need to be briefed on UAE regulations. We navigate them every day on active projects."</p>
+        <ul><li>UAE CT, FTA VAT, ESMA traceability, ADS subsidy — these are live requirements we have configured</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 10 — REGIONAL CREDENTIALS
+  ───────────────────────────────────────── -->
+  <section class="slide slide-region" data-slide="9">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 03 — Regional Credentials</div>
+      <h1 class="s-h1 animate-item" data-delay="100">UAE &amp; GCC — This Is Our Home Market</h1>
+
+      <div class="region-cols animate-item" data-delay="200">
+
+        <!-- Left: Regulatory environment list -->
+        <div>
+          <div class="region-list-title">Regulatory Environment We Navigate Daily</div>
+          <div class="region-item">
+            <div class="region-dot"></div>
+            <div class="region-item-text"><strong>UAE Corporate Tax (2023)</strong> Transfer pricing documentation between ARDC, ENF, GF and Salwa — intercompany pricing that survives a CT audit</div>
+          </div>
+          <div class="region-item">
+            <div class="region-dot"></div>
+            <div class="region-item-text"><strong>UAE VAT</strong> Multi-entity VAT, intercompany invoice automation, FTA compliance — full tax group configuration</div>
+          </div>
+          <div class="region-item">
+            <div class="region-dot"></div>
+            <div class="region-item-text"><strong>UAE Food Safety &amp; ESMA</strong> Traceability from farm to product within 4 hours, Halal certification integration in QM</div>
+          </div>
+          <div class="region-item">
+            <div class="region-dot"></div>
+            <div class="region-item-text"><strong>ADS Subsidy Programme</strong> Feed subsidy tracking for ENF and GF — documentation and reconciliation for ADS audit</div>
+          </div>
+          <div class="region-item">
+            <div class="region-dot"></div>
+            <div class="region-item-text"><strong>IAS 41 Biological Assets</strong> Livestock accounting for breeder flocks and dairy herds — compliant asset treatment in S/4HANA</div>
+          </div>
+        </div>
+
+        <!-- Right: ERG-specific requirements table -->
+        <div>
+          <div class="region-list-title">ERG-Specific Regional Requirements</div>
+          <div class="s-table-wrap">
+            <table class="s-table">
+              <thead>
+                <tr>
+                  <th style="width:48%">ERG Requirement</th>
+                  <th>Regional Knowledge Required</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>UAE CT transfer pricing (ARDC–ENF–GF–Salwa)</td>
+                  <td>UAE Corporate Tax Law, OECD TP guidelines</td>
+                </tr>
+                <tr>
+                  <td>ADS feed subsidy (ENF/GF)</td>
+                  <td>ADS programme rules, documentation, reconciliation</td>
+                </tr>
+                <tr>
+                  <td>Food safety traceability (4-hour rule)</td>
+                  <td>ESMA / Dubai Municipality standards, SAP QM config</td>
+                </tr>
+                <tr>
+                  <td>Arabic training for operational staff</td>
+                  <td>Native Arabic training delivery, localised materials</td>
+                </tr>
+                <tr>
+                  <td>Multi-entity VAT</td>
+                  <td>FTA requirements, tax group, IC VAT treatment</td>
+                </tr>
+                <tr>
+                  <td>GPSSA/pension for Emirati staff</td>
+                  <td>UAE pension scheme configuration in SuccessFactors</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- .region-cols -->
+    </div>
+
+    <div class="accent-bar"></div>
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Regional Credentials</h4>
+        <p>The 4-hour ESMA traceability requirement is non-negotiable — ARDC is currently non-compliant. State this clearly.</p>
+        <ul>
+          <li><strong>ADS subsidy:</strong> Most competitors don't know what ADS is — we do, and we have tracked it in SAP</li>
+          <li><strong>UAE CT:</strong> This is a new requirement (2023) that most SAP implementations pre-date</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 11 — SECTION DIVIDER: WE KNOW THE INDUSTRY
+  ───────────────────────────────────────── -->
+  <section class="slide slide-divider" data-slide="10">
+    <div class="pulse pulse-1"></div>
+    <div class="pulse pulse-2"></div>
+    <div class="pulse pulse-3"></div>
+    <div class="wm">04</div>
+
+    <div class="slide-content centered" style="position:relative;z-index:5">
+      <div class="sec-pill animate-item" data-delay="0">
+        <i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i>
+        Section 04
+      </div>
+      <div class="big-title-2l">
+        <div class="title-ln">
+          <span class="word-ex2 wx1">WE</span>
+          <span class="word-ex2 wx2">KNOW</span>
+        </div>
+        <div class="title-ln">
+          <span class="word-ex2 wx3">THE</span>
+          <span class="word-ex2 wx4">INDUSTRY</span>
+        </div>
+      </div>
+      <div class="sec-line"></div>
+      <p class="sec-subtitle animate-item" data-delay="900">Dairy, Poultry &amp; Feed — Our Core Practice</p>
+    </div>
+
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>Section 04 — We Know the Industry</h4>
+        <p>"Standard SAP was not designed for dairy or poultry. SAP Dairy by msg and Meat &amp; Fish by msg were. We know the difference — and we know why it matters for ERG specifically."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────
+       SLIDE 12 — SAP DAIRY BY MSG
+  ───────────────────────────────────────── -->
+  <section class="slide slide-dairy" data-slide="11">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 04 — Industry Solutions</div>
+      <h1 class="s-h1 animate-item" data-delay="100">SAP Dairy by msg — What It Actually Means for ARDC</h1>
+      <p class="dairy-subtitle animate-item" data-delay="180">Standard SAP PP Discrete was designed for cars and electronics. SAP Dairy by msg was designed for milk.</p>
+
+      <div class="s-table-wrap animate-item" data-delay="260">
+        <table class="s-table">
+          <thead>
+            <tr>
+              <th style="width:22%">Capability</th>
+              <th style="width:35%">Standard S/4HANA</th>
+              <th class="hi" style="width:43%">SAP Dairy by msg</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Production Planning</strong></td>
+              <td>Discrete manufacturing — volume-based</td>
+              <td class="hi">Component-based: fat%, protein%, SNF, lactose</td>
+            </tr>
+            <tr>
+              <td><strong>Milk Balancing</strong></td>
+              <td>Not possible</td>
+              <td class="hi">Daily fat balance, cream separation, component allocation</td>
+            </tr>
+            <tr>
+              <td><strong>Co-product Management</strong></td>
+              <td>Limited</td>
+              <td class="hi">Full co-product costing: cream, skim milk, whey</td>
+            </tr>
+            <tr>
+              <td><strong>Batch Genealogy</strong></td>
+              <td>Generic</td>
+              <td class="hi">Farm → tanker → separation → product batch chain</td>
+            </tr>
+            <tr>
+              <td><strong>Yield Management</strong></td>
+              <td>Not available</td>
+              <td class="hi">Actual vs standard yield by component, daily loss tracking</td>
+            </tr>
+            <tr>
+              <td><strong>Seasonal Planning</strong></td>
+              <td>Standard MRP</td>
+              <td class="hi">Demand pattern recognition — Ramadan, summer peaks</td>
+            </tr>
+            <tr>
+              <td><strong>Raw Milk Reception</strong></td>
+              <td>GR without quality</td>
+              <td class="hi">Lab results (fat%, protein%, SNF) linked to GR batch</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-box callout-red animate-item" data-delay="450">
+        <i class="fas fa-exclamation-triangle" style="color:var(--crimson);font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span><strong>ARDC currently runs SAP PP Discrete — a module designed for cars and electronics.</strong> This is architecturally incompatible with dairy. The person spending their entire day on Excel milk balancing exists because PP Discrete cannot do what Dairy by msg does natively. It cannot be patched — it must be replaced.</span>
+      </div>
+    </div>
+
+    <div class="accent-bar"></div>
+    <div class="presenter-notes">
+      <div class="notes-content">
+        <h4>SAP Dairy by msg — ARDC</h4>
+        <p>This slide usually creates a moment of recognition in the room. Pause after the callout.</p>
+        <ul>
+          <li>The ARDC PP Discrete finding should have been the first thing any competent SAP consultant spotted — most missed it</li>
+          <li>If challenged, be specific: fat% balancing requires component-based planning, not PP Discrete orders</li>
+          <li>Next slide covers Meat &amp; Fish by msg for ENF and Salwa</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SLIDE 13 — SAP MEAT & FISH BY MSG -->
+  <section class="slide slide-dairy" data-slide="12">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 04 — Industry Solutions</div>
+      <h1 class="s-h1 animate-item" data-delay="100">SAP Meat &amp; Fish by msg — What It Actually Means for ENF &amp; Salwa</h1>
+      <p class="dairy-subtitle animate-item" data-delay="180">Standard SAP has no concept of a flock, a hatch rate, or a carcass yield. Meat &amp; Fish by msg does.</p>
+      <div class="s-table-wrap animate-item" data-delay="260">
+        <table class="s-table">
+          <thead><tr><th style="width:22%">Capability</th><th style="width:35%">Standard S/4HANA</th><th class="hi" style="width:43%">SAP Meat &amp; Fish by msg</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Livestock Management</strong></td><td>Not available</td><td class="hi">Farm-level flock tracking, mortality rates, uniformity per house</td></tr>
+            <tr><td><strong>Production Chain</strong></td><td>Single production order</td><td class="hi">5-stage chain: egg → DOC → broiler → carcass → finished goods</td></tr>
+            <tr><td><strong>FCR Tracking</strong></td><td>Not available</td><td class="hi">System FCR by farm, feed batch, and growing cycle — benchmarked daily</td></tr>
+            <tr><td><strong>Hatchery Management</strong></td><td>Not available</td><td class="hi">Incubator tracking, FIFO egg setting, hatchability analytics</td></tr>
+            <tr><td><strong>Catch Weight</strong></td><td>Not available</td><td class="hi">Variable weight management for all poultry products</td></tr>
+            <tr><td><strong>Slaughter Management</strong></td><td>Not available</td><td class="hi">Carcass yield, by-product capture, split optimisation per line</td></tr>
+            <tr><td><strong>Biological Assets</strong></td><td>Not available</td><td class="hi">IAS 41 compliant flock asset accounting — breeder depreciation linked to mortality</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout-box callout-red animate-item" data-delay="400">
+        <i class="fas fa-exclamation-triangle" style="color:var(--crimson);font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span><strong>ENF creates production orders AFTER output is known — reverse planning that makes standard costing meaningless.</strong> Salwa tracks 52,000 eggs/day on paper. Both are solved by Meat &amp; Fish by msg out of the box.</span>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Meat &amp; Fish by msg</h4><p>FCR gap = AED 500K per 0.1 FCR point. ENF is 0.3–0.4 above benchmark. That is AED 1.5–2M/year in recoverable cost once Meat &amp; Fish by msg is live.</p></div></div>
+  </section>
+
+  <!-- SLIDE 14 — INDUSTRY BENCHMARKS -->
+  <section class="slide slide-track" data-slide="13">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 04 — Benchmarks</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Industry Benchmarks — Where ERG Stands Today</h1>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table">
+          <thead><tr><th style="width:26%">Metric</th><th style="width:18%">ERG Current State</th><th style="width:17%">Industry Benchmark</th><th style="width:39%">Gap &amp; Implication</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ENF Feed Conversion Ratio</strong></td><td>1.7–1.8</td><td>1.4–1.5</td><td class="td-gap">0.3–0.4 FCR points = AED 1.5–2M/year in unrecovered feed cost</td></tr>
+            <tr><td><strong>ENF Fresh Product Return Rate</strong></td><td>13%</td><td>3–5%</td><td class="td-gap">8–10 percentage points of revenue returned with no root cause tracking</td></tr>
+            <tr><td><strong>ARDC Traceability Speed</strong></td><td>Hours (paper-based)</td><td>4 hours (regulatory)</td><td class="td-gap">Non-compliant today — ESMA enforcement risk on every product recall</td></tr>
+            <tr><td><strong>GF Mill Utilisation</strong></td><td>35–60%</td><td>75–85%</td><td class="td-gap">15–40 percentage points idle capacity embedded in ENF's feed cost</td></tr>
+            <tr><td><strong>Group Financial Close</strong></td><td>15th of next month</td><td>5th of next month</td><td class="td-gap">10-day management visibility lag on group profitability</td></tr>
+            <tr><td><strong>SAP QM Active (ARDC/ENF)</strong></td><td>0%</td><td>100%</td><td class="td-gap">Full compliance gap — daily food safety exposure across both entities</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout-box callout-red animate-item" data-delay="400">
+        <i class="fas fa-chart-line" style="color:var(--crimson);font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span>These are not projected future problems. <strong>They are costing ERG money and creating regulatory exposure today.</strong> The S/4HANA programme closes every one of these gaps.</span>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Benchmarks</h4><p>Let the AED numbers land. The FCR gap alone justifies the programme cost.</p></div></div>
+  </section>
+
+  <!-- SLIDE 15 — SECTION DIVIDER: WHAT WE FOUND -->
+  <section class="slide slide-divider" data-slide="14">
+    <div class="pulse pulse-1"></div><div class="pulse pulse-2"></div><div class="pulse pulse-3"></div>
+    <div class="wm">05</div>
+    <div class="slide-content centered" style="position:relative;z-index:5">
+      <div class="sec-pill animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i> Section 05</div>
+      <div class="big-title">
+        <span class="word-ex w1">WHAT</span>
+        <span class="word-ex w2">WE</span>
+        <span class="word-ex w3">FOUND</span>
+      </div>
+      <div class="sec-line"></div>
+      <p class="sec-subtitle animate-item" data-delay="900">ERG Pain Points — Entity by Entity</p>
+      <p class="sec-subtitle2 animate-item" data-delay="1100">378 observations across 4 entities documented during pre-discovery</p>
+    </div>
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Section 05</h4><p>"We spent time in your business before writing a single word of this proposal. What follows is what we found."</p></div></div>
+  </section>
+
+  <!-- SLIDE 16 — ERG VALUE CHAIN -->
+  <section class="slide slide-identity" data-slide="15">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content" style="padding-top:50px">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 05 — ERG Value Chain</div>
+      <h1 class="s-h1 animate-item" data-delay="100">The ERG Value Chain — Four Entities, One Integrated Problem</h1>
+      <div class="vc-outer animate-item" data-delay="200">
+        <!-- Main ENF/GF/Salwa chain -->
+        <div class="vc-left">
+          <div class="vc-section-lbl">Production Chain</div>
+          <div class="vc-row2"><div class="vc-box vc-ext" style="flex:1">External Suppliers<small>Saudi Arabia — Day-Old Chicks (DOCs)</small></div></div>
+          <div class="vc-vline"></div>
+          <div class="vc-row2">
+            <div class="vc-box vc-salwa" style="flex:1">Salwa @ Liwa<small>Breeder Farm — 52,000 eggs/day at peak</small></div>
+          </div>
+          <div class="vc-vline"></div>
+          <div class="vc-row2" style="gap:12px">
+            <div class="vc-box vc-gf" style="flex:1">GF Feed Mill<small>Greenfields for Feed — 35–60% utilisation</small></div>
+            <div class="vc-arr">→</div>
+            <div class="vc-box vc-enf" style="flex:1">ENF Hatchery<small>Egg → Day-Old Chick → Broiler farm</small></div>
+          </div>
+          <div class="vc-vline" style="margin-left:60%"></div>
+          <div class="vc-row2" style="justify-content:flex-end">
+            <div class="vc-box vc-enf" style="flex:0 0 52%">ENF Growing Farms<small>13 farms · 150K bird capacity · Excel FCR tracking</small></div>
+          </div>
+          <div class="vc-vline" style="margin-left:60%"></div>
+          <div class="vc-row2" style="justify-content:flex-end">
+            <div class="vc-box vc-enf" style="flex:0 0 52%">ENF Slaughter &amp; Processing<small>Al Rawdah (Fresh) · Al Salwa (Frozen)</small></div>
+          </div>
+          <div class="vc-vline" style="margin-left:60%"></div>
+          <div class="vc-row2" style="justify-content:flex-end">
+            <div class="vc-box vc-mkt" style="flex:0 0 52%">Van Sales (SONIC) → Market<small>13% return rate · no root cause tracking</small></div>
+          </div>
+        </div>
+        <!-- ARDC separate chain -->
+        <div class="vc-right">
+          <div class="vc-section-lbl">Dairy Chain</div>
+          <div class="vc-box vc-ardc">ARDC Dairy<small>Al Rawabi Dairy Company<br>PP Discrete — wrong architecture</small></div>
+          <div class="vc-vline"></div>
+          <div class="vc-box vc-mkt">Van Sales (Ransale/RISA)<small>SAP gets end-of-day upload only</small></div>
+          <div class="vc-vline"></div>
+          <div class="vc-box vc-mkt">Market</div>
+          <div style="margin-top:16px;padding:10px 12px;background:rgba(0,102,204,0.06);border-radius:8px;border:1px solid rgba(0,102,204,0.15)">
+            <div style="font-size:10px;font-weight:700;color:var(--navy);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Key Integration Gaps</div>
+            <div style="font-size:10.5px;color:rgba(0,0,0,0.6);line-height:1.5">GF → ENF: no silo confirmation<br>Salwa → ENF: fixed schedule, not demand-driven<br>Group consolidation: manual Excel, 45-day lag</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Value Chain</h4><p>Four entities running as four separate businesses. The S/4HANA programme's first design task is to model this as a single integrated operation.</p></div></div>
+  </section>
+
+  <!-- SLIDE 17 — INTERCOMPANY DEPENDENCIES -->
+  <section class="slide slide-track" data-slide="16">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 05 — Intercompany</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Critical Intercompany Dependencies — Unmodelled in SAP</h1>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table">
+          <thead><tr><th style="width:20%">Flow</th><th style="width:35%">Current State</th><th style="width:45%">Business Risk</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Salwa → ENF (eggs)</strong></td><td>Fixed 4-day collection schedule — not demand-driven</td><td>Egg age variability directly affects hatchability and ENF yield. No incentive for Salwa to improve hatchable quality.</td></tr>
+            <tr><td><strong>GF → ENF (feed)</strong></td><td>GF delivery note only — no silo receiving confirmation at ENF</td><td>ENF cannot verify what GF claims to have delivered. Intercompany settlement on unverified quantities.</td></tr>
+            <tr><td><strong>GF feed formulation</strong></td><td>Easy Feed external — not integrated with SAP or ENF farm demand</td><td>GF plans on historical consumption. Mill utilisation 35–60%. Idle capacity embedded in every feed price.</td></tr>
+            <tr><td><strong>ARDC van sales</strong></td><td>Ransale/RISA is operational core. SAP receives end-of-day upload.</td><td>Zero intraday visibility of van inventory, routes, or cash. Route profitability invisible.</td></tr>
+            <tr><td><strong>ENF van sales</strong></td><td>SONIC handheld, offline all day</td><td>13% return rate with no root cause tracking. 2–3× industry benchmark.</td></tr>
+            <tr><td><strong>Group consolidation</strong></td><td>Manual Excel — trial balances aggregated by hand</td><td>45-day lag before management sees group profitability. Financial close on 15th of next month.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout-box callout-blue animate-item" data-delay="400">
+        <i class="fas fa-sitemap" style="color:var(--royal);font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span><strong>These four entities are running as four separate businesses.</strong> The S/4HANA programme's first design task is to model this value chain as a single integrated business — before configuring a single screen.</span>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 18 — ARDC FINDINGS -->
+  <section class="slide slide-dairy" data-slide="17">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content" style="padding-top:46px;padding-bottom:20px">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 05 — ARDC</div>
+      <h1 class="s-h1 animate-item" data-delay="80" style="font-size:23px">What We Found — ARDC (Al Rawabi Dairy Company)</h1>
+      <p class="dairy-subtitle animate-item" data-delay="140">SAP has become a financial ledger. All operational decisions happen outside it.</p>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table" style="font-size:10.5px">
+          <thead><tr><th style="width:15%">Area</th><th style="width:33%">Finding</th><th style="width:17%">Severity</th><th>Business Impact</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Production</strong></td><td>SAP PP Discrete implemented — architecturally incompatible with dairy</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>Cannot do component-based planning or milk balancing in SAP</td></tr>
+            <tr><td><strong>Demand Planning</strong></td><td>100% Excel, tribal knowledge; Ramadan +60% demand managed by memory</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>No forecasting. One person leaving ends planning knowledge.</td></tr>
+            <tr><td><strong>Milk Balancing</strong></td><td>Fat/protein/SNF balance done in Excel by one person daily</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>Manual, error-prone, single point of failure</td></tr>
+            <tr><td><strong>Quality Mgmt</strong></td><td>SAP QM inactive; paper files; products shipped before micro results</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>Daily food safety exposure; regulatory non-compliance</td></tr>
+            <tr><td><strong>Traceability</strong></td><td>Farm-to-product batch chain broken in SAP</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>Cannot comply with ESMA 4-hour traceability requirement today</td></tr>
+            <tr><td><strong>Van Sales</strong></td><td>Ransale/RISA is the brain; SAP gets batch upload only</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Zero intraday visibility; route profitability invisible</td></tr>
+            <tr><td><strong>Costing</strong></td><td>Month-end only; average milk cost regardless of composition</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>45-day management blindness on product margins</td></tr>
+            <tr><td><strong>Inventory</strong></td><td>22 consecutive days production without proper SAP GRs</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Audit exposure; stock records unreliable</td></tr>
+            <tr><td><strong>MRP</strong></td><td>Concept exists but not operational; all PRs manual</td><td><span class="sev sev-y"><span class="sev-dot"></span>Partial</span></td><td>Procurement reactive, not demand-driven</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 19 — ENF FINDINGS -->
+  <section class="slide slide-dairy" data-slide="18">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content" style="padding-top:46px;padding-bottom:20px">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 05 — ENF</div>
+      <h1 class="s-h1 animate-item" data-delay="80" style="font-size:23px">What We Found — ENF (Emirates National Foods)</h1>
+      <p class="dairy-subtitle animate-item" data-delay="140">The system receives results; it does not drive planning. FCR gap alone = AED 1.5–2M/year.</p>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table" style="font-size:10.5px">
+          <thead><tr><th style="width:15%">Area</th><th style="width:33%">Finding</th><th style="width:17%">Severity</th><th>Business Impact</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Livestock</strong></td><td>13 farms, 150K bird capacity — tracked on paper and Excel</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>No farm-level visibility; biosecurity breaches not traceable</td></tr>
+            <tr><td><strong>Production Chain</strong></td><td>Orders created AFTER output is known — reverse planning</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Standard costing is meaningless when orders follow output</td></tr>
+            <tr><td><strong>FCR Tracking</strong></td><td>Manual Excel; FCR 1.7–1.8 vs industry benchmark 1.4–1.5</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>AED 500K lost per 0.1 FCR point above benchmark</td></tr>
+            <tr><td><strong>Feed Verification</strong></td><td>GF delivery note only — no silo receiving confirmation</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Feed quantity disputes unresolvable; ADS compliance risk</td></tr>
+            <tr><td><strong>Quality Mgmt</strong></td><td>SAP QM inactive; HACCP not in production orders</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>Disease traceability impossible across 13 farms</td></tr>
+            <tr><td><strong>Van Sales</strong></td><td>SONIC offline all day; 13% fresh product return rate</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Return rate 2–3× industry benchmark, no root cause data</td></tr>
+            <tr><td><strong>ADS Subsidy</strong></td><td>90% of feed qualifies; tracking is manual</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Compliance risk if ADS audit fails on documentation</td></tr>
+            <tr><td><strong>Biological Assets</strong></td><td>No IAS 41 compliance for breeder flock accounting</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Financial statements potentially non-compliant</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 20 — GF FINDINGS -->
+  <section class="slide slide-dairy" data-slide="19">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content" style="padding-top:46px;padding-bottom:20px">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 05 — GF</div>
+      <h1 class="s-h1 animate-item" data-delay="80" style="font-size:23px">What We Found — GF (Greenfields for Feed)</h1>
+      <p class="dairy-subtitle animate-item" data-delay="140">Feed = 95–98% of chicken production cost. GF plans on guesswork and delivers to silos with no confirmation.</p>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table" style="font-size:10.5px">
+          <thead><tr><th style="width:15%">Area</th><th style="width:33%">Finding</th><th style="width:17%">Severity</th><th>Business Impact</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Feed Formulation</strong></td><td>Easy Feed external — recipe changes not version-controlled in SAP</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>Costing based on phantom recipes. No audit trail.</td></tr>
+            <tr><td><strong>MRP</strong></td><td>Not operational; all planning in Excel; POs manual</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>1-month planning horizon vs 6-month commodity lead times</td></tr>
+            <tr><td><strong>ENF Demand Signal</strong></td><td>Plans on historical consumption, not ENF's actual farm plan</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Mill utilisation 35–60%; idle capacity built into every feed price</td></tr>
+            <tr><td><strong>Delivery Verification</strong></td><td>GF delivery note only; no receiving confirmation from ENF</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Intercompany settlement on unverified data; ADS risk</td></tr>
+            <tr><td><strong>FCR Correlation</strong></td><td>Cannot correlate feed quality outcomes with ENF FCR results</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Quality blamed but no data to prove or disprove causation</td></tr>
+            <tr><td><strong>Quality Management</strong></td><td>Feed supply previously halted; no formal improvement plan in SAP</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Repeat risk with no early warning system or corrective action record</td></tr>
+            <tr><td><strong>Commodity Risk</strong></td><td>Global sourcing, no hedging, 1-month planning horizon</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Cost volatility passes directly to ENF and the group P&amp;L</td></tr>
+            <tr><td><strong>Transfer Pricing</strong></td><td>Fixed margin; no TP documentation</td><td><span class="sev sev-y"><span class="sev-dot"></span>Partial</span></td><td>UAE Corporate Tax exposure on GF–ENF intercompany pricing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 21 — SALWA FINDINGS -->
+  <section class="slide slide-dairy" data-slide="20">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content" style="padding-top:46px;padding-bottom:20px">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 05 — Salwa</div>
+      <h1 class="s-h1 animate-item" data-delay="80" style="font-size:23px">What We Found — Salwa @ Liwa (Breeder Farm)</h1>
+      <p class="dairy-subtitle animate-item" data-delay="140">52,000 eggs per day at peak. All tracked on paper, collected on a fixed schedule regardless of ENF demand.</p>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table" style="font-size:10.5px">
+          <thead><tr><th style="width:15%">Area</th><th style="width:33%">Finding</th><th style="width:17%">Severity</th><th>Business Impact</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Flock Management</strong></td><td>Paper-based; Excel tracking; no house-level SAP visibility</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Transfers based on age not performance; no house benchmarking</td></tr>
+            <tr><td><strong>Egg Supply Schedule</strong></td><td>Fixed 4-day collection — not demand-driven from ENF hatchery</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Egg age variability affects ENF hatchability directly</td></tr>
+            <tr><td><strong>Quality Feedback</strong></td><td>A/B grading at ENF (destination), not Salwa (source)</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Transport damage unattributable; Salwa has no incentive to improve</td></tr>
+            <tr><td><strong>Costing</strong></td><td>All costs at company level; no house or flock cost visibility</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Cannot identify high-cost vs underperforming breeder houses</td></tr>
+            <tr><td><strong>Biological Assets</strong></td><td>Manual Excel depreciation; not linked to mortality events</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>IAS 41 non-compliant; financial statements at risk</td></tr>
+            <tr><td><strong>Feed Supply</strong></td><td>GF feed routed through ENF; quantity not verified at Salwa</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Feed cost allocation to egg production is unclear and disputable</td></tr>
+            <tr><td><strong>Transfer Pricing</strong></td><td>Fixed price per egg; no quality differential</td><td><span class="sev sev-y"><span class="sev-dot"></span>Partial</span></td><td>No incentive to improve hatchable egg quality. UAE CT exposure.</td></tr>
+            <tr><td><strong>Biosecurity</strong></td><td>Protocols exist; enforcement and audit trail remain manual</td><td><span class="sev sev-y"><span class="sev-dot"></span>Partial</span></td><td>Audit trail impossible; disease traceability relies on memory</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 22 — CONSOLIDATED ASSESSMENT -->
+  <section class="slide slide-track" data-slide="21">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 05 — Consolidated</div>
+      <h1 class="s-h1 animate-item" data-delay="100">The Consolidated Picture — 378 Observations, 4 Entities</h1>
+      <div class="assess-cols animate-item" data-delay="200">
+        <div class="assess-card">
+          <div class="assess-card-title">Design (Implementation) Assessment</div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-r" style="margin-right:6px"><span class="sev-dot"></span>Fundamental Flaw</span></span><span class="bar-cnt">8 &nbsp;·&nbsp; 23.5%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-red" style="width:23.5%"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-o" style="margin-right:6px"><span class="sev-dot"></span>Severely Deficient</span></span><span class="bar-cnt">18 &nbsp;·&nbsp; 52.9%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-orange" style="width:52.9%"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-y" style="margin-right:6px"><span class="sev-dot"></span>Partially Implemented</span></span><span class="bar-cnt">7 &nbsp;·&nbsp; 20.6%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-yellow" style="width:20.6%"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-g" style="margin-right:6px"><span class="sev-dot"></span>Functional with Gaps</span></span><span class="bar-cnt">1 &nbsp;·&nbsp; 2.9%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-green" style="width:2.9%"></div></div>
+          </div>
+        </div>
+        <div class="assess-card">
+          <div class="assess-card-title">Utilisation (Adoption) Assessment</div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-r" style="margin-right:6px"><span class="sev-dot"></span>Bypassed (&lt;10%)</span></span><span class="bar-cnt">17 &nbsp;·&nbsp; 50.0%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-red" style="width:50%"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-o" style="margin-right:6px"><span class="sev-dot"></span>Peripheral (10–30%)</span></span><span class="bar-cnt">10 &nbsp;·&nbsp; 29.4%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-orange" style="width:29.4%"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-y" style="margin-right:6px"><span class="sev-dot"></span>Partial (30–60%)</span></span><span class="bar-cnt">5 &nbsp;·&nbsp; 14.7%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-yellow" style="width:14.7%"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lbl-row"><span class="bar-name"><span class="sev sev-g" style="margin-right:6px"><span class="sev-dot"></span>Moderate (60–80%)</span></span><span class="bar-cnt">2 &nbsp;·&nbsp; 5.9%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-green" style="width:5.9%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="callout-box callout-red animate-item" data-delay="500">
+        <i class="fas fa-exclamation-circle" style="color:var(--crimson);font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span><strong>ERG's current SAP landscape is not a system to be upgraded.</strong> It is a system to be replaced — cleanly, correctly, and with industry-specific solutions built for dairy, poultry, and feed.</span>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 23 — SECTION DIVIDER: HOW WE DELIVER -->
+  <section class="slide slide-divider" data-slide="22">
+    <div class="pulse pulse-1"></div><div class="pulse pulse-2"></div><div class="pulse pulse-3"></div>
+    <div class="wm">06</div>
+    <div class="slide-content centered" style="position:relative;z-index:5">
+      <div class="sec-pill animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i> Section 06</div>
+      <div class="big-title">
+        <span class="word-ex w1">HOW</span>
+        <span class="word-ex w2">WE</span>
+        <span class="word-ex w3">DELIVER</span>
+      </div>
+      <div class="sec-line"></div>
+      <p class="sec-subtitle animate-item" data-delay="900">Structured, Phased, Disciplined</p>
+    </div>
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Section 06</h4><p>"We have told you what we found. Now we will tell you exactly how we fix it — phase by phase, with governance at every gate."</p></div></div>
+  </section>
+
+  <!-- SLIDE 24 — DELIVERY PHILOSOPHY & GREENFIELD RATIONALE -->
+  <section class="slide slide-identity" data-slide="23">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 06 — Philosophy</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Delivery Philosophy — Fit-to-Standard First, Greenfield Implementation</h1>
+      <div class="two-col animate-item" data-delay="200">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid rgba(0,102,204,0.15)">Fit-to-Standard Approach</div>
+          <p style="font-size:13px;line-height:1.8;color:rgba(0,0,0,0.65)">Before any custom development is considered, we demonstrate how S/4HANA and the msg industry solutions handle the requirement <strong style="color:var(--navy)">out of the box</strong>. Custom development is a last resort — not a default. Every RICEFW object requires a formal business justification, an NXSYS effort estimate, ERG sign-off, and Steering Committee approval.</p>
+          <div style="margin-top:16px;padding:12px 16px;background:rgba(0,102,204,0.06);border-radius:8px;border-left:3px solid var(--royal)">
+            <div style="font-size:11.5px;font-weight:700;color:var(--navy);margin-bottom:4px">Hard Cap: 100 RICEFW Objects</div>
+            <div style="font-size:11.5px;color:rgba(0,0,0,0.6);line-height:1.5">Ceiling, not target. Protects timeline, budget, supportability, and future S/4HANA upgradability.</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid rgba(0,102,204,0.15)">Why Greenfield — 5 Reasons</div>
+          <div class="num-card"><div class="num-card-n">1</div><div class="num-card-text"><strong>Wrong architecture from Day 1.</strong> PP Discrete cannot be converted to PP-PI. The production module must be replaced.</div></div>
+          <div class="num-card"><div class="num-card-n">2</div><div class="num-card-text"><strong>Fragmented master data.</strong> Inconsistent codes across entities require a clean data model designed from scratch.</div></div>
+          <div class="num-card"><div class="num-card-n">3</div><div class="num-card-text"><strong>Legacy customisations are liabilities.</strong> ZROH material types, custom gate passes — accumulated technical debt.</div></div>
+          <div class="num-card"><div class="num-card-n">4</div><div class="num-card-text"><strong>msg solutions deliver maximum value on a clean system.</strong> Dairy by msg and Meat &amp; Fish by msg are greenfield-native.</div></div>
+          <div class="num-card"><div class="num-card-n">5</div><div class="num-card-text"><strong>Company code structure has no design rationale.</strong> 2xxx, 1000, 7xxx, 5000 — this must be redesigned.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 25 — PHASE STRUCTURE & TIMELINE -->
+  <section class="slide slide-track" data-slide="24">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 06 — Timeline</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Phase Structure — 17–19 Month Programme</h1>
+      <div class="gantt-wrap animate-item" data-delay="200">
+        <div class="gantt-head">
+          <div class="gantt-mhdr">Phase / Month</div>
+          <div class="gantt-mhdr">1</div><div class="gantt-mhdr">2</div><div class="gantt-mhdr">3</div>
+          <div class="gantt-mhdr">4</div><div class="gantt-mhdr">5</div><div class="gantt-mhdr">6</div>
+          <div class="gantt-mhdr">7</div><div class="gantt-mhdr">8</div><div class="gantt-mhdr">9</div>
+          <div class="gantt-mhdr">10</div><div class="gantt-mhdr">11</div><div class="gantt-mhdr">12</div>
+          <div class="gantt-mhdr">13</div><div class="gantt-mhdr">14</div><div class="gantt-mhdr">15</div>
+          <div class="gantt-mhdr">16</div><div class="gantt-mhdr">17</div><div class="gantt-mhdr">18</div>
+          <div class="gantt-mhdr">19</div><div class="gantt-mhdr">20</div>
+        </div>
+        <div class="gantt-row-g">
+          <div class="gantt-lbl">Phase 1<small>SuccessFactors HXM — All Entities</small></div>
+          <div class="gantt-track"><div class="gantt-bar gbar-p1">SF HXM · 2,700 employees · Core HR + Payroll + Talent</div></div>
+        </div>
+        <div class="gantt-row-g">
+          <div class="gantt-lbl">Phase 2<small>S/4HANA · ARDC Pilot</small></div>
+          <div class="gantt-track"><div class="gantt-bar gbar-p2">Dairy by msg + FI/CO/MM/SD/QM/EWM/MDG · ARDC Go-Live M13</div></div>
+        </div>
+        <div class="gantt-row-g">
+          <div class="gantt-lbl">Phase 3<small>S/4HANA · ENF / GF / Salwa Rollout</small></div>
+          <div class="gantt-track"><div class="gantt-bar gbar-p3">Meat &amp; Fish by msg · ENF/GF/Salwa · Full Group Go-Live + 1M Hypercare</div></div>
+        </div>
+        <div class="gantt-note">Phase 2 begins during Phase 1 (Month 4) — BTP integration platform, org design, and MDG master data framework built in Phase 1/2 form the foundation for Phase 3.</div>
+      </div>
+      <div class="two-col animate-item" data-delay="400" style="margin-top:14px;gap:12px">
+        <div style="background:#fff;border-radius:8px;padding:11px 14px;border:1px solid rgba(0,102,204,0.1);box-shadow:0 1px 6px rgba(0,0,0,0.05)">
+          <div style="font-size:10.5px;font-weight:700;color:var(--royal);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Phase 1 Key Deliverables</div>
+          <div style="font-size:11.5px;color:rgba(0,0,0,0.62);line-height:1.5">Employee Central go-live · UAE Payroll · Talent Modules · Arabic UI · ~2,700 employees across all entities</div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:11px 14px;border:1px solid rgba(56,161,105,0.2);box-shadow:0 1px 6px rgba(0,0,0,0.05)">
+          <div style="font-size:10.5px;font-weight:700;color:#1A5C35;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Phase 2 Overlap Value</div>
+          <div style="font-size:11.5px;color:rgba(0,0,0,0.62);line-height:1.5">BTP integration layer, MDG master data governance, and org hierarchy established in Phase 1 months — unlocking Phase 3 speed</div>
+        </div>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 26 — DELIVERY STAGES & WRICEF -->
+  <section class="slide slide-identity" data-slide="25">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 06 — Delivery Stages</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Delivery Stages &amp; WRICEF Governance</h1>
+      <div class="stages-cols animate-item" data-delay="200">
+        <div>
+          <div class="stage-item">
+            <div class="stage-num">Stage 1 · Months 1–2</div>
+            <div class="stage-title">Project Preparation</div>
+            <div class="stage-desc">Kick-off, governance setup, infra provisioning, data migration strategy, OCM stakeholder mapping</div>
+          </div>
+          <div class="stage-item">
+            <div class="stage-num">Stage 2 · Months 2–5</div>
+            <div class="stage-title">Business Blueprint</div>
+            <div class="stage-desc">Fit-to-Standard workshops, RICEFW register locked, integration design frozen, MDG framework designed</div>
+          </div>
+          <div class="stage-item">
+            <div class="stage-num">Stage 3 · Months 4–10</div>
+            <div class="stage-title">Realisation / Build</div>
+            <div class="stage-desc">Configuration, development, unit testing, SIT, mock data loads 1 and 2</div>
+          </div>
+          <div class="stage-item">
+            <div class="stage-num">Stage 4 · Months 10–13</div>
+            <div class="stage-title">Final Preparation</div>
+            <div class="stage-desc">UAT, Mock Cutover 1 (4 weeks before), Mock Cutover 2 (2 weeks before), Go/No-Go gate, end-user training</div>
+          </div>
+          <div class="stage-item">
+            <div class="stage-num">Stage 5 · Go-Live + 1 Month</div>
+            <div class="stage-title">Go-Live &amp; Hypercare</div>
+            <div class="stage-desc">Cutover execution · On-site hypercare: Critical 2h / High 4h / Medium 1-day SLA · AMS handover</div>
+          </div>
+        </div>
+        <div class="wricef-box">
+          <div class="wricef-title"><i class="fas fa-shield-alt" style="color:var(--crimson)"></i> WRICEF Governance</div>
+          <div class="wricef-cap">100</div>
+          <div class="wricef-cap-sub">Hard cap on RICEFW objects — ceiling, not target</div>
+          <div class="wricef-item"><i class="fas fa-check-circle"></i><span><strong>Every object requires:</strong> formal business justification, NXSYS effort estimate, ERG sign-off, Steering Committee approval</span></div>
+          <div class="wricef-item"><i class="fas fa-check-circle"></i><span>Standard S/4HANA and msg processes always presented first before any custom object is considered</span></div>
+          <div class="wricef-item"><i class="fas fa-check-circle"></i><span>Rejected objects are documented — not silently dropped</span></div>
+          <div class="wricef-item"><i class="fas fa-check-circle"></i><span><strong>Purpose:</strong> Protects timeline, budget, supportability, and future S/4HANA upgradability</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 27 — INTEGRATION ARCHITECTURE -->
+  <section class="slide slide-track" data-slide="26">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 06 — Integration</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Integration Architecture — All Within 100-Object RICEFW Cap</h1>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table">
+          <thead><tr><th style="width:26%">Integration</th><th style="width:12%">Direction</th><th style="width:18%">Technology</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Easy Feed → SAP PP-PI</strong></td><td style="text-align:center">→ Inbound</td><td>SAP BTP / API</td><td>Feed formulation recipes version-controlled in S/4HANA; changes trigger costing update</td></tr>
+            <tr><td><strong>SAP IBP ↔ S/4HANA</strong></td><td style="text-align:center">↔ Bidirectional</td><td>Standard cloud-to-cloud</td><td>Demand plan in from IBP; supply plan and confirmed orders back to IBP</td></tr>
+            <tr><td><strong>Van Sales (Ransale/RISA) ↔ SAP</strong></td><td style="text-align:center">↔ Bidirectional</td><td>SAP BTP</td><td>ARDC — real-time or batch per business decision; inventory and cash visibility</td></tr>
+            <tr><td><strong>Van Sales (SONIC) ↔ SAP</strong></td><td style="text-align:center">↔ Bidirectional</td><td>SAP BTP</td><td>ENF — end-of-day or real-time per business decision; return root cause capture</td></tr>
+            <tr><td><strong>SAP → SAC / Group Reporting</strong></td><td style="text-align:center">→ Outbound</td><td>Standard embedded</td><td>Analytics, consolidated P&amp;L, and Group Reporting replacing manual Excel consolidation</td></tr>
+            <tr><td><strong>SuccessFactors ↔ S/4HANA</strong></td><td style="text-align:center">↔ Bidirectional</td><td>Standard cloud-to-cloud</td><td>HR master data, org structure, cost centre assignments kept in sync automatically</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout-box callout-gray animate-item" data-delay="400">
+        <i class="fas fa-info-circle" style="color:rgba(0,0,0,0.4);font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span><strong>Out of scope by design:</strong> Cold chain monitoring, PLC/SCADA machine integrations, HACCP system integrations, LIMS — these require separate procurement and programme governance decisions.</span>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 28 — SECTION DIVIDER: THE HUMAN SIDE -->
+  <section class="slide slide-divider" data-slide="27">
+    <div class="pulse pulse-1"></div><div class="pulse pulse-2"></div><div class="pulse pulse-3"></div>
+    <div class="wm">07</div>
+    <div class="slide-content centered" style="position:relative;z-index:5">
+      <div class="sec-pill animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i> Section 07</div>
+      <div class="big-title">
+        <span class="word-ex w1">THE</span>
+        <span class="word-ex w2">HUMAN</span>
+        <span class="word-ex w3">SIDE</span>
+      </div>
+      <div class="sec-line"></div>
+      <p class="sec-subtitle animate-item" data-delay="900">Organisational Change Management</p>
+    </div>
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Section 07 — OCM</h4><p>"SAP has been treated as a financial posting system across all four entities. Reversing this is not a training problem — it is a cultural change problem. This section addresses that directly."</p></div></div>
+  </section>
+
+  <!-- SLIDE 29 — OCM PROGRAMME -->
+  <section class="slide slide-identity" data-slide="28">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content" style="padding-top:48px;padding-bottom:22px">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 07 — OCM</div>
+      <h1 class="s-h1 animate-item" data-delay="100">OCM — The Difference Between Go-Live and Adoption</h1>
+      <div class="ocm-cols animate-item" data-delay="200">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-bottom:5px;border-bottom:2px solid rgba(0,102,204,0.12)">Entity Change Challenges</div>
+          <div class="s-table-wrap" style="box-shadow:none;border:1px solid rgba(0,102,204,0.1)">
+            <table class="s-table" style="font-size:10.5px">
+              <thead><tr><th style="width:20%">Entity</th><th style="width:35%">Current System of Truth</th><th>Change Required</th></tr></thead>
+              <tbody>
+                <tr><td><strong>ARDC</strong></td><td>Ransale/RISA + Excel</td><td>Adopt S/4HANA for production and distribution</td></tr>
+                <tr><td><strong>ARDC QM</strong></td><td>Paper quality files</td><td>Adopt digital quality inspection in SAP QM</td></tr>
+                <tr><td><strong>ENF</strong></td><td>SONIC + post-fact orders</td><td>Plan forward in SAP — not record backward</td></tr>
+                <tr><td><strong>ENF Farms</strong></td><td>Excel for FCR &amp; mortality</td><td>SAP data entry as a daily farm discipline</td></tr>
+                <tr><td><strong>GF</strong></td><td>Easy Feed + Excel</td><td>SAP-native planning and formulation workflows</td></tr>
+                <tr><td><strong>Salwa</strong></td><td>Paper daily records</td><td>SAP data entry for daily production and flock events</td></tr>
+                <tr><td><strong>All</strong></td><td>Multiple BI tools + Excel P&amp;L</td><td>SAC and Group Reporting as primary analytics source</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-bottom:5px;border-bottom:2px solid rgba(0,102,204,0.12)">4-Phase OCM Programme</div>
+          <div class="ocm-phase-item">
+            <div class="ocm-phase-hdr">Phase 1 · Readiness Assessment (M1–3)</div>
+            <div class="ocm-phase-body">Stakeholder mapping, change impact assessment, organisational readiness baseline, sponsor alignment, communication plan</div>
+          </div>
+          <div class="ocm-phase-item">
+            <div class="ocm-phase-hdr">Phase 2 · Change Network (M2–6)</div>
+            <div class="ocm-phase-body">Change champions identified — one per function per entity. Champions trained before Blueprint. Involved in all Blueprint workshops.</div>
+          </div>
+          <div class="ocm-phase-item">
+            <div class="ocm-phase-hdr">Phase 3 · Training Design &amp; Delivery (M8–13)</div>
+            <div class="ocm-phase-body">Process-led (not transaction-led), role-based tracks, Arabic and English delivery, ERG master data in training environment, super users before UAT</div>
+          </div>
+          <div class="ocm-phase-item">
+            <div class="ocm-phase-hdr">Phase 4 · Go-Live Support &amp; Adoption (M13–14 + Hypercare)</div>
+            <div class="ocm-phase-body">Super users on the floor, daily adoption check-ins, login rate / transaction volume / workaround tracking. Formal hypercare exit includes adoption metrics.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 30 — SECTION DIVIDER: WHO OWNS WHAT -->
+  <section class="slide slide-divider" data-slide="29">
+    <div class="pulse pulse-1"></div><div class="pulse pulse-2"></div><div class="pulse pulse-3"></div>
+    <div class="wm">08</div>
+    <div class="slide-content centered" style="position:relative;z-index:5">
+      <div class="sec-pill animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:6px;color:var(--crimson)"></i> Section 08</div>
+      <div class="big-title">
+        <span class="word-ex w1">WHO</span>
+        <span class="word-ex w2">OWNS</span>
+        <span class="word-ex w3">WHAT</span>
+      </div>
+      <div class="sec-line"></div>
+      <p class="sec-subtitle animate-item" data-delay="900">RACI Matrix &amp; Governance Framework</p>
+    </div>
+    <div class="dark-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Section 08</h4><p>"Before the project starts, we agree who is accountable for what. This section removes ambiguity."</p></div></div>
+  </section>
+
+  <!-- SLIDE 31 — PROGRAMME RACI -->
+  <section class="slide slide-track" data-slide="30">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content" style="padding-top:46px;padding-bottom:20px">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 08 — Governance</div>
+      <h1 class="s-h1 animate-item" data-delay="80" style="font-size:22px">Programme-Level RACI — Key Activities</h1>
+      <div style="font-size:10px;color:rgba(0,0,0,0.4);margin-bottom:8px;display:flex;gap:16px" class="animate-item" data-delay="140">
+        <span><span class="rc-ar">A/R</span> Accountable + Responsible</span>
+        <span><span class="rc-a">A</span> Accountable</span>
+        <span><span class="rc-r">R</span> Responsible</span>
+        <span><span class="rc-c">C</span> Consulted</span>
+        <span><span class="rc-i">I</span> Informed</span>
+      </div>
+      <div class="raci-wrap animate-item" data-delay="200">
+        <table class="raci-table">
+          <thead><tr>
+            <th>Activity</th><th>NXSYS<br>Prog Dir</th><th>NXSYS<br>WS Leads</th><th>ERG<br>Prog Mgr</th><th>ERG<br>Process Owners</th><th>ERG<br>GHIT</th><th>ERG<br>GCFO</th><th>ERG<br>GCEO</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Programme governance</td><td><span class="rc-ar">A/R</span></td><td><span class="rc-i">I</span></td><td><span class="rc-r">R</span></td><td><span class="rc-i">I</span></td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-a">A</span></td></tr>
+            <tr><td>Steering Committee</td><td><span class="rc-r">R</span></td><td><span class="rc-i">I</span></td><td><span class="rc-r">R</span></td><td><span class="rc-i">I</span></td><td><span class="rc-c">C</span></td><td><span class="rc-a">A</span></td><td><span class="rc-a">A</span></td></tr>
+            <tr><td>Blueprint workshops (facilitation)</td><td><span class="rc-c">C</span></td><td><span class="rc-ar">A/R</span></td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>Blueprint sign-off</td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-a">A</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>RICEFW approval</td><td><span class="rc-ar">A/R</span></td><td><span class="rc-r">R</span></td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>System configuration</td><td><span class="rc-i">I</span></td><td><span class="rc-ar">A/R</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>Data preparation &amp; cleansing</td><td><span class="rc-i">I</span></td><td><span class="rc-c">C</span></td><td><span class="rc-a">A</span></td><td><span class="rc-r">R</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>UAT sign-off</td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-a">A</span></td><td><span class="rc-c">C</span></td><td><span class="rc-a">A</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>Go/No-Go decision</td><td><span class="rc-a">A</span></td><td><span class="rc-c">C</span></td><td><span class="rc-r">R</span></td><td><span class="rc-c">C</span></td><td><span class="rc-c">C</span></td><td><span class="rc-a">A</span></td><td><span class="rc-a">A</span></td></tr>
+            <tr><td>Cutover execution</td><td><span class="rc-ar">A/R</span></td><td><span class="rc-r">R</span></td><td><span class="rc-r">R</span></td><td><span class="rc-r">R</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>Hypercare management</td><td><span class="rc-ar">A/R</span></td><td><span class="rc-r">R</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+            <tr><td>OCM &amp; change management</td><td><span class="rc-ar">A/R</span></td><td><span class="rc-i">I</span></td><td><span class="rc-r">R</span></td><td><span class="rc-c">C</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td><td><span class="rc-i">I</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 32 — ESCALATION FRAMEWORK -->
+  <section class="slide slide-identity" data-slide="31">
+    <div class="slide-brand"><img src="NXSYS logo.png" class="nxsys-logo-img" alt="NXSYS"></div>
+    <div class="s-content">
+      <div class="s-label animate-item" data-delay="0"><i class="fas fa-circle" style="font-size:5px"></i> Section 08 — Escalation</div>
+      <h1 class="s-h1 animate-item" data-delay="100">Governance Escalation Framework</h1>
+      <div class="s-table-wrap animate-item" data-delay="200">
+        <table class="s-table">
+          <thead><tr><th style="width:24%">Issue Type</th><th style="width:26%">First Resolution</th><th style="width:22%">Escalation (if unresolved)</th><th style="width:28%">Final Escalation</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Daily config / design question</strong></td><td>NXSYS WS Lead + ERG Key User</td><td>Within 24 hours</td><td>NXSYS Programme Director</td></tr>
+            <tr><td><strong>Cross-workstream design conflict</strong></td><td>NXSYS Prog Dir + ERG PM</td><td>Within 48 hours</td><td>Steering Committee</td></tr>
+            <tr><td><strong>RICEFW scope dispute</strong></td><td>NXSYS Prog Dir + ERG PM</td><td>Within 48 hours</td><td>Steering Committee</td></tr>
+            <tr><td><strong>Data migration readiness</strong></td><td>Data Migration Lead + ERG PM</td><td>Within 48 hours</td><td>Steering Committee</td></tr>
+            <tr><td><strong>Schedule delay (ERG-caused)</strong></td><td>ERG PM notified with impact assessment</td><td>Within 5 business days</td><td>Steering Committee + impact report</td></tr>
+            <tr><td><strong>Schedule delay (NXSYS-caused)</strong></td><td>NXSYS Prog Dir with remediation plan</td><td>Within 5 business days</td><td>Steering Committee + remediation plan</td></tr>
+            <tr><td><strong>Commercial / contract dispute</strong></td><td>NXSYS Prog Dir + ERG PM</td><td>Within 5 business days</td><td>GCEO + GCFO (both parties)</td></tr>
+            <tr><td><strong>Go/No-Go disagreement</strong></td><td>Joint review with defined criteria</td><td>Steering Committee</td><td>GCEO final authority</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout-box callout-blue animate-item" data-delay="400">
+        <i class="fas fa-balance-scale" style="color:var(--royal);font-size:1rem;flex-shrink:0;margin-top:2px"></i>
+        <span>Every escalation path is <strong>pre-agreed before the project starts</strong>. No disputes about who decides — the framework defines it. When ERG causes a delay, NXSYS documents it. When NXSYS causes a delay, we present a remediation plan within 5 days.</span>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </section>
+
+  <!-- SLIDE 33 — CLOSING STATEMENT -->
+  <section class="slide slide-closing" data-slide="32">
+    <div class="closing-bg"></div>
+    <canvas class="particle-canvas" id="pCanvas2"></canvas>
+    <div class="closing-content animate-item" data-delay="0">
+      <div class="closing-quote animate-item" data-delay="100">
+        "What we have presented today is not a generic proposal<br>dressed in <em>ERG's colours</em>."
+      </div>
+      <ul class="closing-pts animate-item" data-delay="400">
+        <li>Who we are and why our credentials are specific, not generic</li>
+        <li>What we have built — in your industry, in your region, on your platforms</li>
+        <li>That we know your regulatory environment because we operate inside it</li>
+        <li>That we know your production challenges because we have solved them elsewhere</li>
+        <li>Exactly what we found in your business — entity by entity, gap by gap</li>
+        <li>How we will implement — phase by phase, with governance at every gate</li>
+        <li>How we will manage the human side of the change</li>
+        <li>Who is accountable for what — before the project starts</li>
+      </ul>
+      <div class="closing-final animate-item" data-delay="700">
+        "We are ready to start. The question is whether you are ready to give<br>your business the foundation it deserves."
+      </div>
+      <div class="closing-foot animate-item" data-delay="900">
+        <span>NXSYS &nbsp;·&nbsp; AI-Powered SAP Systems Integrator</span>
+        <span>Dubai, UAE &nbsp;·&nbsp; nxsys.com &nbsp;·&nbsp; Towards Your Next Success</span>
+      </div>
+    </div>
+    <div class="presenter-notes"><div class="notes-content"><h4>Closing</h4><p>Deliver the final line slowly. Pause after. Do not rush to questions — let the statement sit.</p><ul><li>Offer to open the floor for questions or go to any specific slide</li><li>Have reference call contacts ready</li></ul></div></div>
+  </section>
+
+</div><!-- .presentation -->
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ── State ── */
+  const slides = document.querySelectorAll('.slide');
+  const TOTAL  = slides.length;
+  let current  = 0;
+  let busy     = false;
+  let audienceWin = null;
+
+  /* ── Preloader → init (script is at bottom so DOM is ready) ── */
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('hidden');
+    activateSlide(0, true);
+    initParticles();
+  }, 2400);
+
+  /* ──────────────────────────────────────────
+     SLIDE NAVIGATION
+  ────────────────────────────────────────── */
+  function activateSlide(idx, force) {
+    if (busy && !force) return;
+    if (idx < 0 || idx >= TOTAL) return;
+    if (idx === current && slides[idx].classList.contains('active') && !force) return;
+
+    busy = true;
+    slides.forEach((s, i) => {
+      s.classList.remove('active','prev','next');
+      if (i < idx) s.classList.add('prev');
+      else if (i > idx) s.classList.add('next');
+    });
+    slides[idx].classList.add('active');
+    current = idx;
+
+    updateUI();
+    updateSidebarItems();
+    syncAudience();
+
+    /* Per-slide special effects */
+    if (idx === 0) triggerTypewriter();
+    if (idx === 32 && !document.getElementById('pCanvas2')._init) {
+      initParticlesCanvas('pCanvas2');
+      document.getElementById('pCanvas2')._init = true;
+    }
+
+    setTimeout(() => { busy = false; }, 1050);
+  }
+
+  function next() { if (current < TOTAL - 1) activateSlide(current + 1); }
+  function prev() { if (current > 0)         activateSlide(current - 1); }
+
+  /* ──────────────────────────────────────────
+     UI UPDATES
+  ────────────────────────────────────────── */
+  function updateUI() {
+    const pct = ((current + 1) / TOTAL) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.querySelector('#slideCounter .cur').textContent = String(current + 1).padStart(2,'0');
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === TOTAL - 1;
+  }
+
+  function updateSidebarItems() {
+    document.querySelectorAll('.nav-item').forEach(el => {
+      const n = parseInt(el.dataset.nav);
+      el.classList.toggle('active', n === current);
+      if (n === current) el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
+  }
+
+  /* ──────────────────────────────────────────
+     TYPEWRITER — SLIDE 1
+  ────────────────────────────────────────── */
+  let twDone = false;
+  function triggerTypewriter() {
+    const el = document.getElementById('ergTitle');
+    const text = 'Emirates Rawabi Group';
+    el.innerHTML = '';
+    el.classList.remove('revealed');
+    twDone = false;
+
+    setTimeout(() => {
+      el.classList.add('revealed');
+      const cursor = document.createElement('span');
+      cursor.className = 'erg-cursor';
+      el.appendChild(cursor);
+      let i = 0;
+      const tick = () => {
+        if (i < text.length) {
+          el.insertBefore(document.createTextNode(text[i++]), cursor);
+          setTimeout(tick, 58);
+        } else {
+          twDone = true;
+        }
+      };
+      setTimeout(tick, 120);
+    }, 600);
+  }
+
+  /* ──────────────────────────────────────────
+     PARTICLE SYSTEM — SLIDE 1
+  ────────────────────────────────────────── */
+  function initParticles() { initParticlesCanvas('pCanvas'); }
+
+  function initParticlesCanvas(id) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth  || canvas.parentElement.offsetWidth;
+      canvas.height = canvas.offsetHeight || canvas.parentElement.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const N = 65;
+    const pts = [];
+
+    class Dot {
+      constructor() { this.reset(); this.y = Math.random() * canvas.height; }
+      reset() {
+        this.x  = Math.random() * canvas.width;
+        this.y  = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.28;
+        this.vy = (Math.random() - 0.5) * 0.28;
+        this.r  = Math.random() * 1.4 + 0.4;
+        this.a  = Math.random() * 0.35 + 0.08;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        const M = 20;
+        if (this.x < -M || this.x > canvas.width + M ||
+            this.y < -M || this.y > canvas.height + M) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(100,180,255,${this.a})`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < N; i++) pts.push(new Dot());
+
+    function connect() {
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < 115) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = `rgba(0,102,204,${0.18 * (1 - d / 115)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pts.forEach(p => { p.update(); p.draw(); });
+      connect();
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  /* ──────────────────────────────────────────
+     KEYBOARD
+  ────────────────────────────────────────── */
+  document.addEventListener('keydown', e => {
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': case 'Enter':
+        e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp': case 'Backspace':
+        e.preventDefault(); prev(); break;
+      case 'Home': e.preventDefault(); activateSlide(0); break;
+      case 'End':  e.preventDefault(); activateSlide(TOTAL - 1); break;
+      case 'f': case 'F': e.preventDefault(); toggleFullscreen(); break;
+      case 'p': case 'P': e.preventDefault(); togglePresenter(); break;
+      case 'a': case 'A': e.preventDefault(); toggleAudience(); break;
+      case 'Escape': if (document.fullscreenElement) document.exitFullscreen(); break;
+    }
+  });
+
+  /* Buttons */
+  document.getElementById('prevBtn').addEventListener('click', prev);
+  document.getElementById('nextBtn').addEventListener('click', next);
+
+  /* Sidebar nav items */
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.addEventListener('click', () => activateSlide(parseInt(el.dataset.nav)));
+  });
+
+  /* ──────────────────────────────────────────
+     FULLSCREEN
+  ────────────────────────────────────────── */
+  function toggleFullscreen() {
+    if (!document.fullscreenElement)
+      document.documentElement.requestFullscreen().catch(() => {});
+    else document.exitFullscreen();
+  }
+
+  /* ──────────────────────────────────────────
+     PRESENTER MODE  (P)
+  ────────────────────────────────────────── */
+  function togglePresenter() {
+    document.body.classList.toggle('presenter-mode');
+    if (document.body.classList.contains('presenter-mode')) updateNotes();
+  }
+
+  function updateNotes() {
+    const body = document.getElementById('notesBody');
+    const nc   = slides[current].querySelector('.presenter-notes .notes-content');
+    body.innerHTML = nc ? nc.innerHTML : '<p class="no-notes">No notes for this slide.</p>';
+  }
+
+  /* ──────────────────────────────────────────
+     AUDIENCE WINDOW  (A)
+  ────────────────────────────────────────── */
+  function toggleAudience() {
+    if (audienceWin && !audienceWin.closed) {
+      audienceWin.close(); audienceWin = null;
+    } else openAudience();
+  }
+
+  function openAudience() {
+    audienceWin = window.open('', 'AudienceView', 'width=1280,height=720');
+    if (!audienceWin) { alert('Allow popups for the audience window.'); return; }
+    const d = audienceWin.document;
+    d.open();
+    d.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+<title>NXSYS — Audience View</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{overflow:hidden;background:#060612;cursor:none}
+  .presenter-notes,.presenter-notes-panel,.presenter-indicator,
+  .sidebar,.nav-arrows,.slide-counter{display:none!important}
+  .presentation{margin-left:0!important;width:100%!important}
+  .progress-bar{left:0!important;width:100%!important}
+</style>
+</head><body>
+<div class="progress-bar" id="pb" style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#C8153A,#0066CC);z-index:500;width:33.3%"></div>
+<div class="presentation" style="height:100vh;position:relative;overflow:hidden">
+${document.getElementById('presentation').innerHTML}
+</div>
+<script>
+var slides=document.querySelectorAll('.slide'),cur=${current};
+function go(i){
+  slides.forEach(function(s,j){
+    s.classList.remove('active','prev','next');
+    if(j<i)s.classList.add('prev');else if(j>i)s.classList.add('next');
+  });
+  slides[i].classList.add('active');
+  var pct=((i+1)/slides.length)*100;
+  document.getElementById('pb').style.width=pct+'%';
+}
+go(cur);
+window.addEventListener('message',function(e){if(e.data&&e.data.type==='goTo')go(e.data.i);});
+document.addEventListener('keydown',function(e){if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}});
+<\/script></body></html>`);
+    d.close();
+  }
+
+  function syncAudience() {
+    if (audienceWin && !audienceWin.closed)
+      audienceWin.postMessage({ type:'goTo', i: current }, '*');
+  }
+
+})();
+</script>
+</body>
+</html>
