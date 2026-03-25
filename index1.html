@@ -1143,6 +1143,125 @@ kbd{
 .sec-subtitle2{font-size:14px;font-weight:600;color:rgba(200,180,255,0.7);margin-top:7px;letter-spacing:0.5px}
 
 /* ============================================================
+   EXPLAIN PANEL — click-to-explain for Regional Credentials
+   ============================================================ */
+.explain-panel{
+  position:fixed;right:-420px;top:0;width:400px;height:100vh;
+  background:linear-gradient(160deg,#030310 0%,#07071A 50%,#0B0B22 100%);
+  z-index:600;
+  border-left:1px solid rgba(200,21,58,0.3);
+  box-shadow:-10px 0 50px rgba(0,0,0,0.7);
+  transition:right 0.42s cubic-bezier(0.16,1,0.3,1);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.explain-panel.open{right:0}
+
+/* Animated left-edge accent */
+.explain-panel::before{
+  content:'';position:absolute;top:0;left:0;
+  width:1px;height:100%;
+  background:linear-gradient(180deg,transparent,var(--crimson) 30%,var(--royal) 70%,transparent);
+  opacity:0.7;
+}
+
+.explain-header{
+  padding:22px 22px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:linear-gradient(135deg,rgba(200,21,58,0.1),rgba(0,102,204,0.06));
+  position:relative;flex-shrink:0;
+}
+.explain-close{
+  position:absolute;top:14px;right:14px;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+  cursor:pointer;color:rgba(255,255,255,0.5);font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s ease;
+}
+.explain-close:hover{background:var(--crimson);color:#fff;border-color:var(--crimson)}
+.explain-icon{
+  width:42px;height:42px;border-radius:11px;
+  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:#fff;margin-bottom:10px;
+  box-shadow:0 4px 16px rgba(200,21,58,0.4);
+}
+.explain-title{
+  font-size:15px;font-weight:800;color:#fff;
+  line-height:1.3;margin-bottom:6px;letter-spacing:-0.2px;padding-right:32px;
+}
+.explain-tag{
+  display:inline-block;
+  background:rgba(200,21,58,0.18);border:1px solid rgba(200,21,58,0.3);
+  border-radius:50px;padding:2px 10px;
+  font-size:9px;font-weight:700;color:var(--crimson);
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+
+.explain-body{
+  flex:1;overflow-y:auto;padding:20px 22px 28px;
+}
+.explain-body::-webkit-scrollbar{width:2px}
+.explain-body::-webkit-scrollbar-thumb{background:var(--crimson);border-radius:2px}
+
+.explain-what{
+  font-size:13px;color:rgba(255,255,255,0.80);
+  line-height:1.78;margin-bottom:20px;
+}
+.explain-why-lbl{
+  display:flex;align-items:center;gap:8px;
+  font-size:9px;font-weight:800;text-transform:uppercase;
+  letter-spacing:2px;color:var(--crimson);margin-bottom:8px;
+}
+.explain-why-lbl::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(200,21,58,0.4),transparent);
+}
+.explain-why{
+  font-size:12px;color:rgba(255,255,255,0.62);line-height:1.72;
+  background:rgba(200,21,58,0.07);
+  border-left:3px solid var(--crimson);
+  border-radius:0 6px 6px 0;padding:12px 14px;
+}
+
+/* Clickable items — bullet rows */
+.region-item[data-explain]{
+  cursor:pointer;border-radius:6px;padding:4px 6px 4px 0;
+  transition:background 0.18s ease,padding-left 0.18s ease;
+  position:relative;
+}
+.region-item[data-explain]:hover{
+  background:rgba(0,102,204,0.07);padding-left:6px;
+}
+.region-item[data-explain]:hover .region-item-text::after{
+  content:' ⓘ';color:var(--royal);font-size:10px;
+}
+
+/* Clickable table rows */
+tr[data-explain]{cursor:pointer}
+tr[data-explain]:hover td{background:rgba(0,102,204,0.07)!important}
+tr[data-explain]:hover td:last-child::after{
+  content:' ⓘ';color:var(--royal);font-size:10px;
+}
+
+/* Clickable value chain boxes */
+.vc-box[data-explain]{
+  cursor:pointer;
+  transition:transform 0.18s ease,box-shadow 0.18s ease,border-color 0.18s ease;
+}
+.vc-box[data-explain]:hover{
+  transform:scale(1.04);
+  box-shadow:0 4px 18px rgba(0,102,204,0.3);
+  border-color:var(--royal)!important;
+}
+.vc-box[data-explain]:hover::after{
+  content:' ⓘ';color:var(--royal);font-size:9px;font-weight:700;
+}
+/* Clickable gaps box */
+.vc-gaps-box{cursor:pointer;transition:background 0.18s ease}
+.vc-gaps-box:hover{background:rgba(0,102,204,0.12)!important;border-color:var(--royal)!important}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media(max-width:1024px){
@@ -1255,6 +1374,11 @@ kbd{
 </div>
 <div class="presenter-indicator">PRESENTER MODE — P: exit &nbsp;|&nbsp; A: Audience window &nbsp;|&nbsp; F: Fullscreen</div>
 
+<!-- ── Explain Panel (Regional Credentials slide) ── -->
+<div class="explain-panel" id="explainPanel">
+  <div class="explain-header">
+    <button class="explain-close" id="explainClose"><i class="fas fa-times"></i></button>
+    <div class="explain-icon" id="explainIcon"><i class="fas fa-info"></i></div>
     <div class="explain-title" id="explainTitle"></div>
     <span class="explain-tag" id="explainTag"></span>
   </div>
@@ -3120,6 +3244,277 @@ document.addEventListener('keydown',function(e){if(e.key==='f'||e.key==='F'){if(
 
 })();
 
+/* ══════════════════════════════════════════
+   EXPLAIN PANEL — Regional Credentials
+══════════════════════════════════════════ */
+(function() {
+  const EXPLAIN = {
+    'uae-ct': {
+      icon:'fa-landmark', tag:'Tax Regulation',
+      title:'UAE Corporate Tax (2023)',
+      what:'The UAE introduced a 9% corporate tax in June 2023 — the first in its history. Every company must now pay tax on profits above AED 375,000. Crucially, when companies within the same group sell goods or services to each other, they must document and justify the prices charged. If the prices look artificial — too high or too low — the tax authority can reject them and impose penalties.',
+      why:'ERG has four entities trading with each other every day: GF sells feed to ENF, Salwa sells eggs to ENF, ARDC sells products to customers. Every one of these intercompany prices is now a tax document. Without SAP automatically generating transfer pricing records, ERG is exposed on every internal transaction the moment the FTA audits them.'
+    },
+    'uae-vat': {
+      icon:'fa-receipt', tag:'Tax Compliance',
+      title:'UAE VAT — Multi-Entity',
+      what:'The UAE introduced 5% Value Added Tax in 2018. Businesses charge VAT on sales and claim it back on purchases. When multiple companies are part of the same group, they can register as a single "VAT group" so they do not charge VAT to each other on internal invoices — simplifying their accounting enormously. But this requires precise configuration in SAP.',
+      why:'ERG\'s four entities invoice each other constantly. If VAT is applied incorrectly — either charged where it shouldn\'t be, or missed where it should be — ERG overpays tax or faces FTA penalties. NXSYS has configured multi-entity VAT groups for UAE businesses before and replicates this exactly for ERG.'
+    },
+    'esma': {
+      icon:'fa-shield-alt', tag:'Food Safety',
+      title:'UAE Food Safety & ESMA — 4-Hour Rule',
+      what:'ESMA (Emirates Authority for Standardisation and Metrology) regulates food safety in the UAE. Their critical rule: if a contamination or safety incident is found in any food product, the company has exactly 4 hours to produce a complete traceability report — identifying which farms supplied the raw material, which batches were affected, which finished products were made, and where those products are right now. Both backward (to the farm) and forward (to the consumer).',
+      why:'ARDC today cannot comply with this rule. Their batch tracking is broken in SAP — the chain from farm to product does not exist in the system. If a contaminated milk batch were found today, ARDC would be searching through Excel files and paper records for days. This is a live, daily regulatory risk. SAP Dairy by msg builds this chain natively.'
+    },
+    'ads': {
+      icon:'fa-hand-holding-usd', tag:'Government Subsidy',
+      title:'ADS Subsidy Programme',
+      what:'The Abu Dhabi government subsidises animal feed costs for livestock producers operating in Abu Dhabi. For every kilogram of qualifying feed used, the government pays a significant portion of the cost. To claim this money, producers must submit accurate documentation: how much feed was purchased, from which supplier, delivered to which location, and consumed in which production. Any gap in documentation means the subsidy claim can be rejected or reversed.',
+      why:'Approximately 90% of ENF and GF\'s feed qualifies for ADS subsidy — this is a substantial amount of money. But GF delivers feed to ENF silos with only a paper delivery note. ENF does not confirm receipt in SAP. There is no system-verified audit trail. If the ADS authority audits and the records don\'t reconcile, ERG loses the subsidy and may need to repay previous claims.'
+    },
+    'ias41': {
+      icon:'fa-paw', tag:'Accounting Standard',
+      title:'IAS 41 — Biological Assets',
+      what:'IAS 41 is an international accounting standard that requires living animals and plants to be treated as "biological assets" on the company\'s balance sheet — valued at fair market value, with changes in value recorded in profit and loss. This is fundamentally different from how you account for a machine or building. A growing chicken flock, a dairy herd, or a breeder flock are all biological assets under this standard.',
+      why:'ENF has thousands of broiler chickens growing across 13 farms. Salwa has breeder flocks. Neither entity currently tracks these as biological assets in SAP — they are treated as inventory. This means ERG\'s financial statements may not be IAS 41 compliant, which is a problem for external auditors, banks, or any future financing. SAP Meat & Fish by msg includes biological asset accounting natively.'
+    },
+    'tp': {
+      icon:'fa-balance-scale', tag:'Transfer Pricing',
+      title:'UAE CT Transfer Pricing',
+      what:'Transfer pricing is the practice of setting prices for transactions between related companies within a group. Tax authorities scrutinise these prices because companies could manipulate them — for example, charging artificially high prices to shift profit from a higher-tax to a lower-tax entity. The OECD guidelines set the global standard for what constitutes a fair "arm\'s length" price that two unrelated parties would agree on.',
+      why:'With UAE Corporate Tax now in force, the FTA can challenge any intercompany transaction between ARDC, ENF, GF, and Salwa. The burden of proof is on ERG to demonstrate that every internal price is justifiable. NXSYS configures SAP to automatically generate the transfer pricing documentation from transaction data — removing the manual evidence-gathering burden entirely.'
+    },
+    'arabic': {
+      icon:'fa-language', tag:'Change Management',
+      title:'Arabic Training Delivery',
+      what:'Most operational staff in food manufacturing, logistics, and van sales in the UAE work primarily in Arabic. Training them to use SAP in English alone almost always fails — people revert to their old ways within weeks of go-live because the training didn\'t connect with how they actually communicate and think. Effective SAP adoption requires training materials, system messages, and instruction all delivered in Arabic by Arabic-speaking trainers.',
+      why:'ERG\'s farm workers at ENF and Salwa, van drivers, warehouse operators, and quality inspectors are predominantly Arabic-speaking. A conventional English-only training programme would result in low adoption — staff would bypass SAP and return to paper and Excel within months of go-live. NXSYS delivers all operational training in Arabic with native-language materials and trainers.'
+    },
+    /* ── Industry Benchmarks ── */
+    'bm-fcr': {
+      icon:'fa-seedling', tag:'Benchmark — Poultry',
+      title:'ENF Feed Conversion Ratio (FCR)',
+      what:'FCR measures how many kilograms of feed are needed to produce 1 kilogram of live bird weight. Lower is better. An FCR of 1.4 means 1.4kg of feed produces 1kg of growth. ENF\'s FCR of 1.7–1.8 means it is using 20–28% more feed than the best-performing competitors to grow the same weight of chicken. Feed is 95–98% of the total cost of producing a broiler, so FCR is the single most important efficiency number in the entire business.',
+      why:'Every 0.1 FCR point above benchmark costs approximately AED 500,000 per year in excess feed. ENF is 0.3–0.4 points above benchmark — meaning AED 1.5–2 million per year in feed that is being consumed without producing additional growth. S/4HANA with Meat & Fish by msg tracks FCR by farm, house, feed batch, and growing cycle, enabling ENF to identify and fix the specific causes of the gap.'
+    },
+    'bm-return': {
+      icon:'fa-undo-alt', tag:'Benchmark — Distribution',
+      title:'ENF Fresh Product Return Rate',
+      what:'The fresh product return rate measures what percentage of fresh poultry products loaded onto delivery vans comes back unsold at the end of the day. Industry best practice is below 5%. A return means the product was loaded, transported, not sold, brought back, and either re-sold the next day or written off. Every returned unit carries a full logistics cost with zero revenue. At 13%, ENF is returning more than 1 in 8 fresh products every single day.',
+      why:'ENF has no system visibility of returns during the day — SONIC operates offline. When vans return in the evening, nobody can identify which routes, customers, or products are driving the 13% rate. Without root cause tracking, the rate cannot be reduced. S/4HANA integration with SONIC captures every return in real time, links it to the source production batch, and enables systematic action to bring the rate below 5%.'
+    },
+    'bm-trace': {
+      icon:'fa-search-location', tag:'Benchmark — Compliance',
+      title:'ARDC Traceability Speed',
+      what:'ESMA (UAE food safety authority) requires any food producer to be able to trace a product recall — identifying which raw material batches are affected, which products were made, and where those products are now — within 4 hours of a recall request. This applies in both directions: backward to the farm, and forward to the end customer. "Hours (paper-based)" means ARDC would currently have to search through Excel files and paper records manually.',
+      why:'ARDC is non-compliant with this requirement today. If a contamination is found in a milk batch, ARDC cannot produce the ESMA traceability report within 4 hours. This is not a future risk — it is a live daily compliance failure. Every product recall that ESMA could request would expose ARDC to enforcement action. SAP Dairy by msg builds the complete traceability chain automatically from raw milk reception to finished product delivery.'
+    },
+    'bm-mill': {
+      icon:'fa-cogs', tag:'Benchmark — Operations',
+      title:'GF Feed Mill Utilisation',
+      what:'Mill utilisation is the percentage of the feed mill\'s total production capacity that is actually being used. A mill running at 40% utilisation means 60% of its physical capacity — and a proportional share of its fixed overhead costs — is sitting idle. Industry benchmark for an efficient feed mill is 75–85%. The fixed costs of running a mill (depreciation, staff, utilities, maintenance) are paid whether the mill produces at 40% or at 85%.',
+      why:'GF\'s mill running at 35–60% means its fixed overhead is being spread across a much smaller volume than it was designed for. Every kilogram of feed produced carries more overhead than a competitor\'s mill running at 80%. This excess cost is charged to ENF in every feed invoice, and embedded in every chicken ENF grows. Connecting GF\'s planning to ENF\'s actual farm schedule in SAP enables GF to produce closer to optimal capacity.'
+    },
+    'bm-close': {
+      icon:'fa-calendar-check', tag:'Benchmark — Finance',
+      title:'Group Financial Close',
+      what:'Financial close is when the finance team completes all accounting entries, reconciles intercompany transactions, and produces the group profit and loss statement for the previous month. Best-practice companies close on the 5th of the following month. ERG closes on the 15th — ten days later. During those 10 extra days, senior management is making decisions based on the previous month\'s numbers, without visibility of the most recent period.',
+      why:'ERG\'s 15th-of-month close is caused by manual Excel consolidation across four entities with no real-time intercompany reconciliation. Every month, finance staff manually collect trial balances from ARDC, ENF, GF, and Salwa, eliminate intercompany transactions, and build the group P&L by hand. SAP Group Reporting automates this entire process — the group close happens automatically as each entity posts its entries.'
+    },
+    'bm-qm': {
+      icon:'fa-shield-alt', tag:'Benchmark — Quality',
+      title:'SAP QM Active — ARDC & ENF',
+      what:'SAP Quality Management (QM) is the module that manages inspection lots, quality checks, and certificates of analysis within SAP. When QM is active and properly configured, every batch of raw material is inspected before use, every production batch has a quality result, and products cannot be released for delivery until they pass inspection. At 0% activation, quality management happens entirely outside SAP — on paper, in separate spreadsheets, or not at all.',
+      why:'Both ARDC and ENF have SAP QM installed but entirely inactive. At ARDC, products are sometimes shipped before microbiological test results are available — meaning potentially non-compliant product reaches customers. At ENF, disease traceability across 13 farms is impossible without QM. This is not a system enhancement; it is a basic food safety and regulatory compliance requirement that must be addressed in the S/4HANA implementation.'
+    },
+
+    /* ── ERG Value Chain ── */
+    'vc-ext': {
+      icon:'fa-plane-arrival', tag:'External Supplier',
+      title:'External Suppliers — Saudi Arabia (DOCs)',
+      what:'ERG\'s poultry chain begins with Day-Old Chicks (DOCs) imported from Saudi Arabia. These are newly hatched chicks from parent breeder stock that will grow into the parent flocks at Salwa. The genetics, health status, and age of these DOCs when they arrive directly affect the performance of Salwa\'s entire breeding flock — and ultimately, the hatchability of eggs and the FCR of ENF\'s growing birds. A poor batch of DOCs creates a performance problem that ripples through the entire chain for months.',
+      why:'There is currently no integrated system tracking of DOC supplier quality, arrival condition, or downstream performance outcomes. ERG cannot correlate which supplier\'s DOCs produce better-performing breeder flocks. Without this data, supplier selection is based on price and availability rather than proven performance.'
+    },
+    'vc-salwa': {
+      icon:'fa-egg', tag:'Breeder Farm',
+      title:'Salwa @ Liwa — Breeder Farm',
+      what:'Salwa is ERG\'s breeder farm in Liwa, Abu Dhabi. It houses the parent flocks — the birds that produce the fertilised eggs that hatch into ENF\'s broiler chickens. At peak production Salwa produces 52,000 eggs per day. The hatchability of those eggs — what percentage successfully produce viable day-old chicks — is the most critical output metric. Every 1% drop in hatchability across 52,000 daily eggs means 520 fewer chicks per day entering ENF\'s growing farms.',
+      why:'Salwa tracks everything on paper. Flock performance, egg production by house, and mortality events have no SAP visibility. Eggs are collected on a fixed 4-day schedule regardless of ENF\'s actual hatchery demand — meaning eggs sit and age at Salwa, reducing hatchability. There is also no system feedback from ENF to Salwa on which of Salwa\'s houses is producing the best-hatching eggs.'
+    },
+    'vc-gf': {
+      icon:'fa-warehouse', tag:'Feed Mill',
+      title:'GF Feed Mill — Greenfields for Feed',
+      what:'GF is ERG\'s animal feed manufacturing entity. It sources raw materials globally — grains, proteins, minerals — and produces compound feed for ENF\'s growing farms and Salwa\'s breeder flocks. Feed accounts for 95–98% of the total cost of producing a broiler chicken. GF is therefore the single biggest cost driver across the entire ERG poultry chain. A 1% change in feed cost or feed efficiency has an immediate and significant impact on ENF\'s profitability.',
+      why:'GF\'s mill runs at only 35–60% utilisation — well below the 75–85% industry benchmark. The fixed overhead cost of the mill (depreciation, utilities, staff) is being spread across a smaller volume, meaning every kilogram of feed is more expensive than it should be. GF plans production from historical consumption, not ENF\'s forward farm schedule. When ENF needs to flex production, GF is not ready.'
+    },
+    'vc-hatchery': {
+      icon:'fa-egg', tag:'ENF Hatchery',
+      title:'ENF Hatchery',
+      what:'The hatchery is where Salwa\'s fertilised eggs are incubated for 21 days and hatched into day-old chicks. Eggs must be set in strict age order — oldest first — because egg age directly affects hatch rate. The hatchery\'s key metric is hatchability: what percentage of set eggs produce viable chicks. A hatchery managing 52,000 eggs per day must track incubator allocation, egg ages, setter/hatcher performance, and output by source flock.',
+      why:'ENF\'s hatchery is managed largely manually. There is no SAP tracking of which egg batch from which Salwa house at what age produced which hatch outcome. Without this data, ENF cannot distinguish between poor hatchability caused by Salwa (egg quality, age) versus the hatchery\'s own management. Root cause analysis requires system data that doesn\'t currently exist.'
+    },
+    'vc-growing': {
+      icon:'fa-seedling', tag:'ENF Growing Farms',
+      title:'ENF Growing Farms — 13 Farms',
+      what:'ENF\'s 13 growing farms house day-old chicks from hatch until they reach target slaughter weight — approximately 2.1kg at 35 days. This is where the Feed Conversion Ratio (FCR) is generated. Every house on every farm has slightly different conditions: ventilation, stocking density, water quality, feed access. These differences directly affect FCR, mortality, and bird uniformity — which in turn affect slaughter yield and product quality.',
+      why:'All 13 farms are tracked on paper and Excel. There is no live SAP visibility of birds on farm, daily mortality events, feed consumption, or FCR by farm or house. ENF cannot identify which of its 13 farms is driving the 0.3–0.4 FCR gap above industry benchmark — a gap worth AED 1.5–2 million per year. S/4HANA with Meat & Fish by msg tracks every house, every growing cycle, every day.'
+    },
+    'vc-slaughter': {
+      icon:'fa-industry', tag:'ENF Processing',
+      title:'ENF Slaughter & Processing',
+      what:'Live birds from the growing farms are delivered to ENF\'s slaughter and processing facility where they become Al Rawdah (fresh) and Al Salwa (frozen) branded products. The conversion of live bird to finished product involves stunning, slaughter, plucking, evisceration, chilling, and portioning or whole-bird packing. Carcass yield — the percentage of live weight that becomes saleable product — is the facility\'s key efficiency metric.',
+      why:'ENF creates production orders AFTER slaughter rather than before — recording what happened instead of planning what should happen. This reverse planning makes standard costing meaningless, prevents supply planning, and means no pre-production quality checks happen. The 13% fresh product return rate originates here: without forward traceability in SAP, returned products cannot be linked back to their source batch, growing farm, or production run.'
+    },
+    'vc-sonic': {
+      icon:'fa-truck', tag:'ENF Van Sales',
+      title:'Van Sales (SONIC) — ENF Distribution',
+      what:'ENF distributes fresh and frozen poultry to retail customers through a van sales operation using SONIC handheld devices. Drivers load vans in the morning, visit customers on their route, take orders or deliver pre-packed product, and collect payment. SONIC records these transactions. However, SONIC operates offline throughout the day — it only syncs with SAP at end of day. During the day, SAP has zero visibility of any van.',
+      why:'ENF\'s 13% fresh product return rate is 2–3 times the industry benchmark of less than 5%. Every morning, vans load with fresh product. Every evening, returns come back. Nobody in management knows during the day which routes, which customers, or which products are generating returns — because SONIC is offline and SAP sees nothing until the end-of-day sync. By then, the product is back in the warehouse and the opportunity to intervene is gone.'
+    },
+    'vc-ardc': {
+      icon:'fa-glass-cheers', tag:'ARDC Dairy',
+      title:'ARDC — Al Rawabi Dairy Company',
+      what:'ARDC is ERG\'s dairy business. It collects raw milk from farms, processes it into a full range of dairy products — fresh milk, cream, yoghurt, laban, flavoured milk — and distributes through van sales. ARDC runs on SAP but uses PP Discrete, a production planning module designed for discrete manufacturing (cars, electronics) where every unit is identical. Dairy is the opposite: every tanker of milk has a different fat%, protein%, and SNF composition.',
+      why:'SAP at ARDC has become a financial posting ledger. Every operational decision — milk balancing, demand forecasting, quality management, traceability — happens outside SAP in Excel. The production module cannot do component-based planning, milk balancing, or batch genealogy. These are not gaps that can be configured away; they require replacing PP Discrete with Dairy by msg from the ground up.'
+    },
+    'vc-ransale': {
+      icon:'fa-route', tag:'ARDC Van Sales',
+      title:'Van Sales — Ransale/RISA (ARDC)',
+      what:'ARDC\'s distribution operation is run through Ransale/RISA — a specialist van sales system that manages routes, customer orders, invoicing, collections, and delivery confirmation. Ransale/RISA is effectively the operational brain of ARDC\'s entire commercial operation. SAP is connected to Ransale/RISA but receives only an end-of-day batch upload of summarised transactions — not live order-level data.',
+      why:'Because SAP only sees ARDC\'s distribution activity at end of day, management has zero intraday visibility of what is on each van, which routes are performing, how much cash has been collected, or whether deliveries are being completed. Route profitability cannot be calculated because costs sit in SAP and revenue sits in Ransale/RISA, reconciled only at month-end. The S/4HANA integration will connect them in real time.'
+    },
+    'vc-gaps': {
+      icon:'fa-exclamation-triangle', tag:'Critical Gaps',
+      title:'Key Integration Gaps Between Entities',
+      what:'These three gaps represent the points where ERG\'s four entities fail to communicate through SAP. (1) GF delivers feed to ENF silos with only a paper delivery note — ENF never confirms receipt in SAP, so quantities are unverified. (2) Salwa collects eggs on a fixed 4-day schedule, not based on ENF hatchery demand — eggs age unnecessarily. (3) Group financials are consolidated manually in Excel — the process takes until the 15th of the following month before management sees group profit.',
+      why:'These gaps mean ERG\'s group P&L is built on estimates, manual reconciliation, and paper records rather than system-verified data. The S/4HANA programme\'s first design task is to close all three: silo receipt confirmation in SAP, demand-driven egg collection scheduling, and real-time group consolidation through SAP Group Reporting. Once closed, ERG\'s financial close moves from the 15th to the 5th of the month.'
+    },
+
+    /* ── SAP Dairy by msg ── */
+    'dairy-pp': {
+      icon:'fa-industry', tag:'SAP Dairy by msg',
+      title:'Production Planning — Component-Based',
+      what:'Standard SAP plans production by volume — "make 1,000 litres of milk". Dairy by msg plans by fat, protein, and solids content instead. Milk is not a uniform liquid: one tanker delivers 3.8% fat, another delivers 4.2%. The system must balance these components across the day\'s production to hit the right fat content in each finished product. This is called component-based production planning.',
+      why:'ARDC currently runs PP Discrete — a module designed for manufacturing cars and electronics, where every unit is identical. It has no concept of fat%, protein%, or SNF. The person who spends their entire working day balancing milk components on Excel exists because SAP cannot do it. Dairy by msg replaces that Excel file with a real-time, automated system balance.'
+    },
+    'dairy-mb': {
+      icon:'fa-balance-scale', tag:'SAP Dairy by msg',
+      title:'Milk Balancing',
+      what:'Every day a dairy receives raw milk with different fat and protein percentages from different farms. As it processes that milk — separating cream, making fresh milk, producing yoghurt — it must track where every gram of fat and protein goes. If the fat going into products doesn\'t equal the fat that came in from farms, something is lost or unaccounted for. This daily reconciliation is called milk balancing.',
+      why:'At ARDC, this is done manually in Excel by one person, every single day. If that person is absent, no balance happens. Dairy by msg does this automatically in real time — showing exactly how much fat was received, where it went, and what the daily loss is. It turns a single point of failure into a system-controlled process.'
+    },
+    'dairy-cp': {
+      icon:'fa-project-diagram', tag:'SAP Dairy by msg',
+      title:'Co-product Management',
+      what:'When raw milk is processed, you don\'t just get fresh milk. You get cream, skim milk, whey, and other by-products — all produced simultaneously from the same raw material. Costing each of these correctly requires knowing how much of the raw milk\'s value was "used up" producing each co-product. Standard SAP handles this poorly. Dairy by msg does it natively.',
+      why:'ARDC produces cream and other dairy co-products. Without proper co-product costing, the cost of producing cream is either zero (understated) or lumped into the main product (overstated). Management cannot see the true profitability of each product line. Dairy by msg allocates costs across every co-product automatically using the component values.'
+    },
+    'dairy-bg': {
+      icon:'fa-sitemap', tag:'SAP Dairy by msg',
+      title:'Batch Genealogy',
+      what:'Batch genealogy means you can trace any finished product back to every raw material it came from, and trace any raw material forward to every product it went into. For dairy: which farm collected the milk? Which tanker delivered it? Which separation batch was it in? Which finished product was made from it? And if needed — which customer bought that product? This chain must be traceable in both directions within 4 hours under UAE food safety law.',
+      why:'ARDC\'s batch chain is currently broken in SAP. PP Discrete does not build it. If a milk quality incident occurs today, ARDC cannot produce the required traceability report within the 4-hour ESMA requirement. Dairy by msg builds the complete farm-to-product chain automatically with every production step.'
+    },
+    'dairy-ym': {
+      icon:'fa-chart-line', tag:'SAP Dairy by msg',
+      title:'Yield Management',
+      what:'Yield is the ratio of output to input: if you put in 100 litres of raw milk, how much saleable product do you actually get out? The gap between the standard expected yield and the actual yield is called yield loss — and it represents real money. Tracking this daily, by component and by production line, allows management to spot problems immediately.',
+      why:'ARDC currently has no system-based yield tracking. Month-end costing reveals losses, but by then it\'s too late to investigate the cause. Dairy by msg tracks actual vs standard yield every day, by fat%, protein%, and SNF — so if a separation run underperforms, management knows the same day.'
+    },
+    'dairy-sp': {
+      icon:'fa-calendar-alt', tag:'SAP Dairy by msg',
+      title:'Seasonal Planning',
+      what:'Dairy demand is highly seasonal. Ramadan increases consumption of certain products by 50–60%. Summer heat changes consumer preferences. Standard SAP\'s MRP (Material Requirements Planning) simply looks at historical averages — it has no concept of seasonal demand patterns. Dairy by msg allows demand planners to build Ramadan uplift factors, summer profile adjustments, and holiday patterns into the planning engine.',
+      why:'At ARDC, the Ramadan +60% demand uplift is currently managed from memory by one planner. If that person leaves, the knowledge is gone. Dairy by msg captures those patterns in the system permanently, so every production and procurement plan automatically accounts for Ramadan, Eid, and summer peaks — without relying on tribal knowledge.'
+    },
+    'dairy-rm': {
+      icon:'fa-flask', tag:'SAP Dairy by msg',
+      title:'Raw Milk Reception',
+      what:'When a tanker of raw milk arrives at the dairy, two things need to happen: the Goods Receipt (recording that the milk arrived) and the quality check (measuring the fat%, protein%, and SNF of that specific tanker). In standard SAP, the goods receipt happens but the quality check is a separate manual step that may or may not get linked. Dairy by msg links the lab result directly to the goods receipt batch — so the milk\'s component values are recorded at the moment of delivery.',
+      why:'At ARDC, lab results exist on paper but are not linked to production batches in SAP. This means there is no system trace of which farm\'s milk — with which composition — went into which product. Dairy by msg captures this at the point of reception, making the entire downstream chain traceable from the first moment.'
+    },
+
+    /* ── SAP Meat & Fish by msg ── */
+    'mf-lm': {
+      icon:'fa-paw', tag:'SAP Meat & Fish by msg',
+      title:'Livestock Management',
+      what:'Standard SAP has no concept of a chicken flock, a farm, or a growing house. SAP treats poultry as inventory — a unit of stock with no life cycle. Meat & Fish by msg adds the ability to track each farm, each house within the farm, the number of birds placed, the mortality rate, weight uniformity, and daily performance. This is the foundation for everything else on this slide.',
+      why:'ENF has 13 farms with 150,000 bird capacity — all tracked on paper and Excel. There is no system visibility of which farm is outperforming, which house is driving higher mortality, or which growing cycle produced the best FCR. Without livestock management in SAP, ENF is making major operational decisions blind.'
+    },
+    'mf-pc': {
+      icon:'fa-link', tag:'SAP Meat & Fish by msg',
+      title:'5-Stage Production Chain',
+      what:'Poultry production is a chain, not a single step. A breeder egg from Salwa becomes a day-old chick (DOC) in the hatchery. The DOC goes to a growing farm and becomes a broiler. The broiler goes to slaughter and becomes a carcass. The carcass is processed into finished goods — fresh portions, frozen whole birds, by-products. Each stage has its own costs, losses, and outputs. Standard SAP can only handle one production order at a time, with no linkage between stages.',
+      why:'ENF currently creates production orders AFTER output is known — meaning they record what happened yesterday, not plan what should happen tomorrow. This backwards approach makes standard costing completely meaningless: you cannot cost a chicken before you know how many you processed. The 5-stage chain means costs flow correctly from breeder egg to finished product, and planning drives production rather than recording it.'
+    },
+    'mf-fcr': {
+      icon:'fa-seedling', tag:'SAP Meat & Fish by msg',
+      title:'FCR Tracking — Feed Conversion Ratio',
+      what:'FCR (Feed Conversion Ratio) is the single most important efficiency metric in poultry: how many kilograms of feed does it take to produce 1 kilogram of live bird weight? A lower FCR means more efficient birds. Industry benchmark is 1.4–1.5kg of feed per 1kg of growth. ENF is at 1.7–1.8. Every 0.1 point of FCR above benchmark costs approximately AED 500,000 per year in wasted feed. Meat & Fish by msg tracks FCR by farm, feed batch, and growing cycle.',
+      why:'ENF tracks FCR manually in Excel — meaning they can see the overall company FCR but cannot pinpoint which farm, which feed batch, or which growing cycle is causing the gap. The difference between ENF\'s current FCR and industry benchmark represents AED 1.5–2 million per year in recoverable cost. Real-time FCR tracking shows exactly where to focus to close that gap.'
+    },
+    'mf-hatch': {
+      icon:'fa-egg', tag:'SAP Meat & Fish by msg',
+      title:'Hatchery Management',
+      what:'A hatchery receives eggs from breeder farms (like Salwa), sets them in incubators in strict FIFO order (oldest eggs must be set first — egg age directly affects hatch rate), and tracks hatchability — what percentage of set eggs actually hatch into viable day-old chicks. Managing 52,000 eggs per day manually means errors in egg age tracking, no analytics on which farm or which flock produces the best-hatching eggs, and no feedback loop to improve.',
+      why:'Salwa delivers eggs on a fixed 4-day collection schedule regardless of hatchery demand. This means eggs sit and age at Salwa before collection, reducing hatchability at ENF. Meat & Fish by msg tracks every egg batch by age and hatch outcome — so ENF can show Salwa exactly which egg ages and which flock sources produce the best results, enabling a demand-driven collection schedule.'
+    },
+    'mf-cw': {
+      icon:'fa-weight', tag:'SAP Meat & Fish by msg',
+      title:'Catch Weight Management',
+      what:'Catch weight means the actual weight of each animal or processed product varies — you cannot say "1 chicken weighs exactly 2.1kg" because it might weigh 1.8kg or 2.4kg. Standard SAP uses fixed unit prices, which breaks down completely when weights vary: you invoice for 100 chickens at a fixed price, but the actual value depends on their total weight. Meat & Fish by msg manages both the unit count and the actual variable weight simultaneously throughout the supply chain.',
+      why:'Al Rawdah and Al Salwa products are sold by weight, not by unit. Without catch weight management, ERG\'s invoicing, inventory valuation, and product costing are all based on average assumed weights — creating constant reconciliation errors, margin inaccuracies, and disputes with customers or intercompany entities over actual quantities delivered.'
+    },
+    'mf-slaughter': {
+      icon:'fa-cut', tag:'SAP Meat & Fish by msg',
+      title:'Slaughter Management',
+      what:'When broilers reach slaughter weight, the whole bird becomes multiple products simultaneously: whole carcass, breast fillet, wings, giblets, feet, and various by-products. The carcass yield is the percentage of live bird weight that becomes saleable product. Managing a slaughter line means tracking how each batch of birds performs, capturing all by-products correctly, and optimising how the carcasses are split — which cuts to produce based on current demand and prices.',
+      why:'ENF\'s slaughter line produces Al Rawdah and Al Salwa branded products. Currently there is no system tracking of daily carcass yield by batch. If yield drops — due to feed quality, bird health, or line issues — management does not find out until month-end stock count. Real-time slaughter management means every day\'s output is accounted for, every by-product is captured, and yield performance is visible immediately.'
+    },
+    'mf-bio': {
+      icon:'fa-chart-area', tag:'SAP Meat & Fish by msg',
+      title:'Biological Assets — IAS 41',
+      what:'IAS 41 is the international accounting standard that requires living animals to be treated as "biological assets" on the company\'s balance sheet. A growing chicken flock increases in value as the birds gain weight, and decreases when birds die. These changes in value must be recognised in the profit and loss account — not just recorded as inventory movements. This is fundamentally different from accounting for a machine or a pallet of goods.',
+      why:'ENF\'s broiler flocks and Salwa\'s breeder flocks are biological assets under IAS 41. Neither entity currently accounts for them this way in SAP — they are treated as inventory. This means ERG\'s financial statements may not be compliant with IFRS standards, which matters for external auditors, banks considering any financing, and any future investor due diligence. Meat & Fish by msg includes IAS 41 biological asset accounting natively.'
+    },
+
+    'gpssa': {
+      icon:'fa-user-shield', tag:'HR Compliance',
+      title:'GPSSA — Emirati Pension Contributions',
+      what:'GPSSA (General Pension and Social Security Authority) is the UAE government pension fund for Emirati nationals. Every employer with Emirati staff must contribute a percentage of their salary to GPSSA each month. The contribution rates, eligibility rules, salary caps, and reporting formats are specific and different from how expatriate payroll is processed. Getting this wrong is a labour law violation.',
+      why:'ERG has Emirati staff across all four entities. Their SuccessFactors payroll must correctly calculate GPSSA contributions for each Emirati employee every pay cycle. Incorrect configuration means non-compliance with UAE labour law and potential financial penalties. NXSYS has configured UAE payroll including GPSSA for multi-entity groups in this exact market.'
+    }
+  };
+
+  const panel  = document.getElementById('explainPanel');
+  const eClose = document.getElementById('explainClose');
+
+  function openExplain(key) {
+    const d = EXPLAIN[key]; if (!d) return;
+    document.getElementById('explainIcon').innerHTML = `<i class="fas ${d.icon}"></i>`;
+    document.getElementById('explainTitle').textContent = d.title;
+    document.getElementById('explainTag').textContent   = d.tag;
+    document.getElementById('explainWhat').textContent  = d.what;
+    document.getElementById('explainWhy').textContent   = d.why;
+    panel.classList.add('open');
+  }
+
+  function closeExplain() { panel.classList.remove('open'); }
+
+  eClose.addEventListener('click', closeExplain);
+
+  /* Close when navigating away from the slide */
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowLeft','ArrowDown','ArrowUp',' '].includes(e.key)) closeExplain();
+  });
+
+  /* Delegate clicks on [data-explain] */
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-explain]');
+    if (el) { e.stopPropagation(); openExplain(el.dataset.explain); }
+  });
+})();
 </script>
 </body>
 </html>
