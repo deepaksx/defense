@@ -2222,37 +2222,37 @@ tr[data-explain]:hover td:last-child::after{
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr data-explain="dairy-pp">
               <td><strong>Production Planning</strong></td>
               <td>Discrete manufacturing — volume-based</td>
               <td class="hi">Component-based: fat%, protein%, SNF, lactose</td>
             </tr>
-            <tr>
+            <tr data-explain="dairy-mb">
               <td><strong>Milk Balancing</strong></td>
               <td>Not possible</td>
               <td class="hi">Daily fat balance, cream separation, component allocation</td>
             </tr>
-            <tr>
+            <tr data-explain="dairy-cp">
               <td><strong>Co-product Management</strong></td>
               <td>Limited</td>
               <td class="hi">Full co-product costing: cream, skim milk, whey</td>
             </tr>
-            <tr>
+            <tr data-explain="dairy-bg">
               <td><strong>Batch Genealogy</strong></td>
               <td>Generic</td>
               <td class="hi">Farm → tanker → separation → product batch chain</td>
             </tr>
-            <tr>
+            <tr data-explain="dairy-ym">
               <td><strong>Yield Management</strong></td>
               <td>Not available</td>
               <td class="hi">Actual vs standard yield by component, daily loss tracking</td>
             </tr>
-            <tr>
+            <tr data-explain="dairy-sp">
               <td><strong>Seasonal Planning</strong></td>
               <td>Standard MRP</td>
               <td class="hi">Demand pattern recognition — Ramadan, summer peaks</td>
             </tr>
-            <tr>
+            <tr data-explain="dairy-rm">
               <td><strong>Raw Milk Reception</strong></td>
               <td>GR without quality</td>
               <td class="hi">Lab results (fat%, protein%, SNF) linked to GR batch</td>
@@ -2293,13 +2293,13 @@ tr[data-explain]:hover td:last-child::after{
         <table class="s-table">
           <thead><tr><th style="width:22%">Capability</th><th style="width:35%">Standard S/4HANA</th><th class="hi" style="width:43%">SAP Meat &amp; Fish by msg</th></tr></thead>
           <tbody>
-            <tr><td><strong>Livestock Management</strong></td><td>Not available</td><td class="hi">Farm-level flock tracking, mortality rates, uniformity per house</td></tr>
-            <tr><td><strong>Production Chain</strong></td><td>Single production order</td><td class="hi">5-stage chain: egg → DOC → broiler → carcass → finished goods</td></tr>
-            <tr><td><strong>FCR Tracking</strong></td><td>Not available</td><td class="hi">System FCR by farm, feed batch, and growing cycle — benchmarked daily</td></tr>
-            <tr><td><strong>Hatchery Management</strong></td><td>Not available</td><td class="hi">Incubator tracking, FIFO egg setting, hatchability analytics</td></tr>
-            <tr><td><strong>Catch Weight</strong></td><td>Not available</td><td class="hi">Variable weight management for all poultry products</td></tr>
-            <tr><td><strong>Slaughter Management</strong></td><td>Not available</td><td class="hi">Carcass yield, by-product capture, split optimisation per line</td></tr>
-            <tr><td><strong>Biological Assets</strong></td><td>Not available</td><td class="hi">IAS 41 compliant flock asset accounting — breeder depreciation linked to mortality</td></tr>
+            <tr data-explain="mf-lm"><td><strong>Livestock Management</strong></td><td>Not available</td><td class="hi">Farm-level flock tracking, mortality rates, uniformity per house</td></tr>
+            <tr data-explain="mf-pc"><td><strong>Production Chain</strong></td><td>Single production order</td><td class="hi">5-stage chain: egg → DOC → broiler → carcass → finished goods</td></tr>
+            <tr data-explain="mf-fcr"><td><strong>FCR Tracking</strong></td><td>Not available</td><td class="hi">System FCR by farm, feed batch, and growing cycle — benchmarked daily</td></tr>
+            <tr data-explain="mf-hatch"><td><strong>Hatchery Management</strong></td><td>Not available</td><td class="hi">Incubator tracking, FIFO egg setting, hatchability analytics</td></tr>
+            <tr data-explain="mf-cw"><td><strong>Catch Weight</strong></td><td>Not available</td><td class="hi">Variable weight management for all poultry products</td></tr>
+            <tr data-explain="mf-slaughter"><td><strong>Slaughter Management</strong></td><td>Not available</td><td class="hi">Carcass yield, by-product capture, split optimisation per line</td></tr>
+            <tr data-explain="mf-bio"><td><strong>Biological Assets</strong></td><td>Not available</td><td class="hi">IAS 41 compliant flock asset accounting — breeder depreciation linked to mortality</td></tr>
           </tbody>
         </table>
       </div>
@@ -3274,6 +3274,94 @@ document.addEventListener('keydown',function(e){if(e.key==='f'||e.key==='F'){if(
       what:'Most operational staff in food manufacturing, logistics, and van sales in the UAE work primarily in Arabic. Training them to use SAP in English alone almost always fails — people revert to their old ways within weeks of go-live because the training didn\'t connect with how they actually communicate and think. Effective SAP adoption requires training materials, system messages, and instruction all delivered in Arabic by Arabic-speaking trainers.',
       why:'ERG\'s farm workers at ENF and Salwa, van drivers, warehouse operators, and quality inspectors are predominantly Arabic-speaking. A conventional English-only training programme would result in low adoption — staff would bypass SAP and return to paper and Excel within months of go-live. NXSYS delivers all operational training in Arabic with native-language materials and trainers.'
     },
+    /* ── SAP Dairy by msg ── */
+    'dairy-pp': {
+      icon:'fa-industry', tag:'SAP Dairy by msg',
+      title:'Production Planning — Component-Based',
+      what:'Standard SAP plans production by volume — "make 1,000 litres of milk". Dairy by msg plans by fat, protein, and solids content instead. Milk is not a uniform liquid: one tanker delivers 3.8% fat, another delivers 4.2%. The system must balance these components across the day\'s production to hit the right fat content in each finished product. This is called component-based production planning.',
+      why:'ARDC currently runs PP Discrete — a module designed for manufacturing cars and electronics, where every unit is identical. It has no concept of fat%, protein%, or SNF. The person who spends their entire working day balancing milk components on Excel exists because SAP cannot do it. Dairy by msg replaces that Excel file with a real-time, automated system balance.'
+    },
+    'dairy-mb': {
+      icon:'fa-balance-scale', tag:'SAP Dairy by msg',
+      title:'Milk Balancing',
+      what:'Every day a dairy receives raw milk with different fat and protein percentages from different farms. As it processes that milk — separating cream, making fresh milk, producing yoghurt — it must track where every gram of fat and protein goes. If the fat going into products doesn\'t equal the fat that came in from farms, something is lost or unaccounted for. This daily reconciliation is called milk balancing.',
+      why:'At ARDC, this is done manually in Excel by one person, every single day. If that person is absent, no balance happens. Dairy by msg does this automatically in real time — showing exactly how much fat was received, where it went, and what the daily loss is. It turns a single point of failure into a system-controlled process.'
+    },
+    'dairy-cp': {
+      icon:'fa-project-diagram', tag:'SAP Dairy by msg',
+      title:'Co-product Management',
+      what:'When raw milk is processed, you don\'t just get fresh milk. You get cream, skim milk, whey, and other by-products — all produced simultaneously from the same raw material. Costing each of these correctly requires knowing how much of the raw milk\'s value was "used up" producing each co-product. Standard SAP handles this poorly. Dairy by msg does it natively.',
+      why:'ARDC produces cream and other dairy co-products. Without proper co-product costing, the cost of producing cream is either zero (understated) or lumped into the main product (overstated). Management cannot see the true profitability of each product line. Dairy by msg allocates costs across every co-product automatically using the component values.'
+    },
+    'dairy-bg': {
+      icon:'fa-sitemap', tag:'SAP Dairy by msg',
+      title:'Batch Genealogy',
+      what:'Batch genealogy means you can trace any finished product back to every raw material it came from, and trace any raw material forward to every product it went into. For dairy: which farm collected the milk? Which tanker delivered it? Which separation batch was it in? Which finished product was made from it? And if needed — which customer bought that product? This chain must be traceable in both directions within 4 hours under UAE food safety law.',
+      why:'ARDC\'s batch chain is currently broken in SAP. PP Discrete does not build it. If a milk quality incident occurs today, ARDC cannot produce the required traceability report within the 4-hour ESMA requirement. Dairy by msg builds the complete farm-to-product chain automatically with every production step.'
+    },
+    'dairy-ym': {
+      icon:'fa-chart-line', tag:'SAP Dairy by msg',
+      title:'Yield Management',
+      what:'Yield is the ratio of output to input: if you put in 100 litres of raw milk, how much saleable product do you actually get out? The gap between the standard expected yield and the actual yield is called yield loss — and it represents real money. Tracking this daily, by component and by production line, allows management to spot problems immediately.',
+      why:'ARDC currently has no system-based yield tracking. Month-end costing reveals losses, but by then it\'s too late to investigate the cause. Dairy by msg tracks actual vs standard yield every day, by fat%, protein%, and SNF — so if a separation run underperforms, management knows the same day.'
+    },
+    'dairy-sp': {
+      icon:'fa-calendar-alt', tag:'SAP Dairy by msg',
+      title:'Seasonal Planning',
+      what:'Dairy demand is highly seasonal. Ramadan increases consumption of certain products by 50–60%. Summer heat changes consumer preferences. Standard SAP\'s MRP (Material Requirements Planning) simply looks at historical averages — it has no concept of seasonal demand patterns. Dairy by msg allows demand planners to build Ramadan uplift factors, summer profile adjustments, and holiday patterns into the planning engine.',
+      why:'At ARDC, the Ramadan +60% demand uplift is currently managed from memory by one planner. If that person leaves, the knowledge is gone. Dairy by msg captures those patterns in the system permanently, so every production and procurement plan automatically accounts for Ramadan, Eid, and summer peaks — without relying on tribal knowledge.'
+    },
+    'dairy-rm': {
+      icon:'fa-flask', tag:'SAP Dairy by msg',
+      title:'Raw Milk Reception',
+      what:'When a tanker of raw milk arrives at the dairy, two things need to happen: the Goods Receipt (recording that the milk arrived) and the quality check (measuring the fat%, protein%, and SNF of that specific tanker). In standard SAP, the goods receipt happens but the quality check is a separate manual step that may or may not get linked. Dairy by msg links the lab result directly to the goods receipt batch — so the milk\'s component values are recorded at the moment of delivery.',
+      why:'At ARDC, lab results exist on paper but are not linked to production batches in SAP. This means there is no system trace of which farm\'s milk — with which composition — went into which product. Dairy by msg captures this at the point of reception, making the entire downstream chain traceable from the first moment.'
+    },
+
+    /* ── SAP Meat & Fish by msg ── */
+    'mf-lm': {
+      icon:'fa-paw', tag:'SAP Meat & Fish by msg',
+      title:'Livestock Management',
+      what:'Standard SAP has no concept of a chicken flock, a farm, or a growing house. SAP treats poultry as inventory — a unit of stock with no life cycle. Meat & Fish by msg adds the ability to track each farm, each house within the farm, the number of birds placed, the mortality rate, weight uniformity, and daily performance. This is the foundation for everything else on this slide.',
+      why:'ENF has 13 farms with 150,000 bird capacity — all tracked on paper and Excel. There is no system visibility of which farm is outperforming, which house is driving higher mortality, or which growing cycle produced the best FCR. Without livestock management in SAP, ENF is making major operational decisions blind.'
+    },
+    'mf-pc': {
+      icon:'fa-link', tag:'SAP Meat & Fish by msg',
+      title:'5-Stage Production Chain',
+      what:'Poultry production is a chain, not a single step. A breeder egg from Salwa becomes a day-old chick (DOC) in the hatchery. The DOC goes to a growing farm and becomes a broiler. The broiler goes to slaughter and becomes a carcass. The carcass is processed into finished goods — fresh portions, frozen whole birds, by-products. Each stage has its own costs, losses, and outputs. Standard SAP can only handle one production order at a time, with no linkage between stages.',
+      why:'ENF currently creates production orders AFTER output is known — meaning they record what happened yesterday, not plan what should happen tomorrow. This backwards approach makes standard costing completely meaningless: you cannot cost a chicken before you know how many you processed. The 5-stage chain means costs flow correctly from breeder egg to finished product, and planning drives production rather than recording it.'
+    },
+    'mf-fcr': {
+      icon:'fa-seedling', tag:'SAP Meat & Fish by msg',
+      title:'FCR Tracking — Feed Conversion Ratio',
+      what:'FCR (Feed Conversion Ratio) is the single most important efficiency metric in poultry: how many kilograms of feed does it take to produce 1 kilogram of live bird weight? A lower FCR means more efficient birds. Industry benchmark is 1.4–1.5kg of feed per 1kg of growth. ENF is at 1.7–1.8. Every 0.1 point of FCR above benchmark costs approximately AED 500,000 per year in wasted feed. Meat & Fish by msg tracks FCR by farm, feed batch, and growing cycle.',
+      why:'ENF tracks FCR manually in Excel — meaning they can see the overall company FCR but cannot pinpoint which farm, which feed batch, or which growing cycle is causing the gap. The difference between ENF\'s current FCR and industry benchmark represents AED 1.5–2 million per year in recoverable cost. Real-time FCR tracking shows exactly where to focus to close that gap.'
+    },
+    'mf-hatch': {
+      icon:'fa-egg', tag:'SAP Meat & Fish by msg',
+      title:'Hatchery Management',
+      what:'A hatchery receives eggs from breeder farms (like Salwa), sets them in incubators in strict FIFO order (oldest eggs must be set first — egg age directly affects hatch rate), and tracks hatchability — what percentage of set eggs actually hatch into viable day-old chicks. Managing 52,000 eggs per day manually means errors in egg age tracking, no analytics on which farm or which flock produces the best-hatching eggs, and no feedback loop to improve.',
+      why:'Salwa delivers eggs on a fixed 4-day collection schedule regardless of hatchery demand. This means eggs sit and age at Salwa before collection, reducing hatchability at ENF. Meat & Fish by msg tracks every egg batch by age and hatch outcome — so ENF can show Salwa exactly which egg ages and which flock sources produce the best results, enabling a demand-driven collection schedule.'
+    },
+    'mf-cw': {
+      icon:'fa-weight', tag:'SAP Meat & Fish by msg',
+      title:'Catch Weight Management',
+      what:'Catch weight means the actual weight of each animal or processed product varies — you cannot say "1 chicken weighs exactly 2.1kg" because it might weigh 1.8kg or 2.4kg. Standard SAP uses fixed unit prices, which breaks down completely when weights vary: you invoice for 100 chickens at a fixed price, but the actual value depends on their total weight. Meat & Fish by msg manages both the unit count and the actual variable weight simultaneously throughout the supply chain.',
+      why:'Al Rawdah and Al Salwa products are sold by weight, not by unit. Without catch weight management, ERG\'s invoicing, inventory valuation, and product costing are all based on average assumed weights — creating constant reconciliation errors, margin inaccuracies, and disputes with customers or intercompany entities over actual quantities delivered.'
+    },
+    'mf-slaughter': {
+      icon:'fa-cut', tag:'SAP Meat & Fish by msg',
+      title:'Slaughter Management',
+      what:'When broilers reach slaughter weight, the whole bird becomes multiple products simultaneously: whole carcass, breast fillet, wings, giblets, feet, and various by-products. The carcass yield is the percentage of live bird weight that becomes saleable product. Managing a slaughter line means tracking how each batch of birds performs, capturing all by-products correctly, and optimising how the carcasses are split — which cuts to produce based on current demand and prices.',
+      why:'ENF\'s slaughter line produces Al Rawdah and Al Salwa branded products. Currently there is no system tracking of daily carcass yield by batch. If yield drops — due to feed quality, bird health, or line issues — management does not find out until month-end stock count. Real-time slaughter management means every day\'s output is accounted for, every by-product is captured, and yield performance is visible immediately.'
+    },
+    'mf-bio': {
+      icon:'fa-chart-area', tag:'SAP Meat & Fish by msg',
+      title:'Biological Assets — IAS 41',
+      what:'IAS 41 is the international accounting standard that requires living animals to be treated as "biological assets" on the company\'s balance sheet. A growing chicken flock increases in value as the birds gain weight, and decreases when birds die. These changes in value must be recognised in the profit and loss account — not just recorded as inventory movements. This is fundamentally different from accounting for a machine or a pallet of goods.',
+      why:'ENF\'s broiler flocks and Salwa\'s breeder flocks are biological assets under IAS 41. Neither entity currently accounts for them this way in SAP — they are treated as inventory. This means ERG\'s financial statements may not be compliant with IFRS standards, which matters for external auditors, banks considering any financing, and any future investor due diligence. Meat & Fish by msg includes IAS 41 biological asset accounting natively.'
+    },
+
     'gpssa': {
       icon:'fa-user-shield', tag:'HR Compliance',
       title:'GPSSA — Emirati Pension Contributions',
