@@ -2002,7 +2002,7 @@ tr[data-explain]:hover td:last-child::after{
             <div class="ai-head-title">Analytics Migration</div>
           </div>
           <div class="ai-body">
-            <p class="ai-app">AI-assisted report migration from ClickView / Business Objects to SAP Fiori and SAC</p>
+            <p class="ai-app">AI-assisted report migration from Business Objects to SAP Fiori and SAC</p>
             <div class="ai-benefit">Reduces manual report redesign effort significantly</div>
           </div>
         </div>
@@ -2105,10 +2105,6 @@ tr[data-explain]:hover td:last-child::after{
             <div class="region-dot"></div>
             <div class="region-item-text"><strong>UAE Food Safety &amp; ESMA</strong> Traceability from farm to product within 4 hours, Halal certification integration in QM</div>
           </div>
-          <div class="region-item" data-explain="ads">
-            <div class="region-dot"></div>
-            <div class="region-item-text"><strong>ADS Subsidy Programme</strong> Feed subsidy tracking for ENF and GF — documentation and reconciliation for ADS audit</div>
-          </div>
           <div class="region-item" data-explain="ias41">
             <div class="region-dot"></div>
             <div class="region-item-text"><strong>IAS 41 Biological Assets</strong> Livestock accounting for breeder flocks and dairy herds — compliant asset treatment in S/4HANA</div>
@@ -2130,10 +2126,6 @@ tr[data-explain]:hover td:last-child::after{
                 <tr data-explain="tp">
                   <td>UAE CT transfer pricing (ARDC–ENF–GF–Salwa)</td>
                   <td>UAE Corporate Tax Law, OECD TP guidelines</td>
-                </tr>
-                <tr data-explain="ads">
-                  <td>ADS feed subsidy (ENF/GF)</td>
-                  <td>ADS programme rules, documentation, reconciliation</td>
                 </tr>
                 <tr data-explain="esma">
                   <td>Food safety traceability (4-hour rule)</td>
@@ -2165,7 +2157,6 @@ tr[data-explain]:hover td:last-child::after{
         <h4>Regional Credentials</h4>
         <p>The 4-hour ESMA traceability requirement is non-negotiable — ARDC is currently non-compliant. State this clearly.</p>
         <ul>
-          <li><strong>ADS subsidy:</strong> Most competitors don't know what ADS is — we do, and we have tracked it in SAP</li>
           <li><strong>UAE CT:</strong> This is a new requirement (2023) that most SAP implementations pre-date</li>
         </ul>
       </div>
@@ -2332,7 +2323,7 @@ tr[data-explain]:hover td:last-child::after{
           <thead><tr><th style="width:26%">Metric</th><th style="width:18%">ERG Current State</th><th style="width:17%">Industry Benchmark</th><th style="width:39%">Gap &amp; Implication</th></tr></thead>
           <tbody>
             <tr><td><strong>ENF Feed Conversion Ratio</strong></td><td>1.7–1.8</td><td>1.4–1.5</td><td class="td-gap">0.3–0.4 FCR points = AED 1.5–2M/year in unrecovered feed cost</td></tr>
-            <tr><td><strong>ENF Fresh Product Return Rate</strong></td><td>13%</td><td>3–5%</td><td class="td-gap">8–10 percentage points of revenue returned with no root cause tracking</td></tr>
+            <tr><td><strong>ENF Fresh Product Return Rate</strong></td><td>13%</td><td>&lt; 5%</td><td class="td-gap">8+ percentage points above benchmark — returned with no root cause tracking</td></tr>
             <tr><td><strong>ARDC Traceability Speed</strong></td><td>Hours (paper-based)</td><td>4 hours (regulatory)</td><td class="td-gap">Non-compliant today — ESMA enforcement risk on every product recall</td></tr>
             <tr><td><strong>GF Mill Utilisation</strong></td><td>35–60%</td><td>75–85%</td><td class="td-gap">15–40 percentage points idle capacity embedded in ENF's feed cost</td></tr>
             <tr><td><strong>Group Financial Close</strong></td><td>15th of next month</td><td>5th of next month</td><td class="td-gap">10-day management visibility lag on group profitability</td></tr>
@@ -2492,7 +2483,6 @@ tr[data-explain]:hover td:last-child::after{
             <tr><td><strong>Feed Verification</strong></td><td>GF delivery note only — no silo receiving confirmation</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Feed quantity disputes unresolvable; ADS compliance risk</td></tr>
             <tr><td><strong>Quality Mgmt</strong></td><td>SAP QM inactive; HACCP not in production orders</td><td><span class="sev sev-r"><span class="sev-dot"></span>Fundamental</span></td><td>Disease traceability impossible across 13 farms</td></tr>
             <tr><td><strong>Van Sales</strong></td><td>SONIC offline all day; 13% fresh product return rate</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Return rate 2–3× industry benchmark, no root cause data</td></tr>
-            <tr><td><strong>ADS Subsidy</strong></td><td>90% of feed qualifies; tracking is manual</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Compliance risk if ADS audit fails on documentation</td></tr>
             <tr><td><strong>Biological Assets</strong></td><td>No IAS 41 compliance for breeder flock accounting</td><td><span class="sev sev-o"><span class="sev-dot"></span>Severe</span></td><td>Financial statements potentially non-compliant</td></tr>
           </tbody>
         </table>
@@ -2680,7 +2670,7 @@ tr[data-explain]:hover td:last-child::after{
         </div>
         <div class="gantt-row-g">
           <div class="gantt-lbl">Phase 3<small>S/4HANA · ENF / GF / Salwa Rollout</small></div>
-          <div class="gantt-track"><div class="gantt-bar gbar-p3">Meat &amp; Fish by msg · ENF/GF/Salwa · Full Group Go-Live + 1M Hypercare</div></div>
+          <div class="gantt-track"><div class="gantt-bar gbar-p3">Meat &amp; Fish by msg · ENF/GF/Salwa · Full Group Go-Live + 2M Hypercare</div></div>
         </div>
         <div class="gantt-note">Phase 2 begins during Phase 1 (Month 4) — BTP integration platform, org design, and MDG master data framework built in Phase 1/2 form the foundation for Phase 3.</div>
       </div>
@@ -2727,9 +2717,9 @@ tr[data-explain]:hover td:last-child::after{
             <div class="stage-desc">UAT, Mock Cutover 1 (4 weeks before), Mock Cutover 2 (2 weeks before), Go/No-Go gate, end-user training</div>
           </div>
           <div class="stage-item">
-            <div class="stage-num">Stage 5 · Go-Live + 1 Month</div>
+            <div class="stage-num">Stage 5 · Go-Live + 2 Months</div>
             <div class="stage-title">Go-Live &amp; Hypercare</div>
-            <div class="stage-desc">Cutover execution · On-site hypercare: Critical 2h / High 4h / Medium 1-day SLA · AMS handover</div>
+            <div class="stage-desc">Cutover execution · On-site hypercare (60 days): Critical 2h / High 4h / Medium 1-day SLA · AMS handover</div>
           </div>
         </div>
         <div class="wricef-box">
@@ -2830,7 +2820,7 @@ tr[data-explain]:hover td:last-child::after{
             <div class="ocm-phase-body">Process-led (not transaction-led), role-based tracks, Arabic and English delivery, ERG master data in training environment, super users before UAT</div>
           </div>
           <div class="ocm-phase-item">
-            <div class="ocm-phase-hdr">Phase 4 · Go-Live Support &amp; Adoption (M13–14 + Hypercare)</div>
+            <div class="ocm-phase-hdr">Phase 4 · Go-Live Support &amp; Adoption (M13–15 + 2-Month Hypercare)</div>
             <div class="ocm-phase-body">Super users on the floor, daily adoption check-ins, login rate / transaction volume / workaround tracking. Formal hypercare exit includes adoption metrics.</div>
           </div>
         </div>
@@ -2934,6 +2924,7 @@ tr[data-explain]:hover td:last-child::after{
       </div>
       <ul class="closing-pts animate-item" data-delay="400">
         <li>Who we are and why our credentials are specific, not generic</li>
+        <li>That we understand ERG's specific business and operational needs — evidenced by 378 pre-discovery observations across all four entities</li>
         <li>What we have built — in your industry, in your region, on your platforms</li>
         <li>That we know your regulatory environment because we operate inside it</li>
         <li>That we know your production challenges because we have solved them elsewhere</li>
