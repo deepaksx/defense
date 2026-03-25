@@ -84,7 +84,7 @@ body{
    ============================================================ */
 /* Progress bar */
 .progress-bar{
-  position:fixed;top:0;left:220px;height:3px;
+  position:fixed;top:0;left:240px;height:3px;
   background:linear-gradient(90deg,var(--crimson),var(--royal));
   z-index:500;transition:width var(--t-smooth);
   box-shadow:0 0 14px var(--crimson-glow);
@@ -120,42 +120,117 @@ body{
 .nav-btn:disabled:hover{transform:none}
 
 /* ============================================================
-   LEFT NAV SIDEBAR
+   LEFT NAV SIDEBAR — PREMIUM
    ============================================================ */
 .sidebar{
-  position:fixed;left:0;top:0;width:220px;height:100vh;
-  background:linear-gradient(180deg,#05050F 0%,#0A0A1E 100%);
+  position:fixed;left:0;top:0;width:240px;height:100vh;
+  background:linear-gradient(160deg,#030310 0%,#07071A 45%,#0B0B22 100%);
   z-index:1000;overflow-y:auto;
-  border-right:1px solid rgba(200,21,58,0.2);
-  box-shadow:4px 0 28px rgba(0,0,0,0.5);
   display:flex;flex-direction:column;
+  box-shadow:8px 0 48px rgba(0,0,0,0.75);
 }
-.sidebar::-webkit-scrollbar{width:3px}
-.sidebar::-webkit-scrollbar-thumb{background:var(--crimson);border-radius:2px}
 
+/* Animated right-edge gradient accent */
+.sidebar::after{
+  content:'';position:absolute;top:0;right:0;
+  width:1px;height:100%;
+  background:linear-gradient(180deg,
+    transparent 0%,
+    var(--crimson) 25%,
+    var(--royal) 60%,
+    transparent 100%);
+  opacity:0.7;animation:edgeShimmer 6s ease-in-out infinite;
+}
+@keyframes edgeShimmer{
+  0%,100%{opacity:0.4}50%{opacity:0.9}
+}
+
+/* Subtle dot-grid texture */
+.sidebar::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(200,21,58,0.07) 1px,transparent 1px);
+  background-size:18px 18px;pointer-events:none;z-index:0;
+}
+
+.sidebar::-webkit-scrollbar{width:2px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{
+  background:linear-gradient(var(--crimson),var(--royal));border-radius:2px;
+}
+
+/* ── Logo area ── */
 .sidebar-logo{
-  padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);
+  position:relative;z-index:1;
+  padding:22px 20px 18px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  background:linear-gradient(135deg,rgba(200,21,58,0.07),rgba(0,102,204,0.05));
 }
 .sidebar-logo img{
-  background:#ffffff;padding:6px 10px;border-radius:5px;
+  background:#fff;padding:6px 10px;border-radius:5px;
   width:120px;height:auto;display:block;
+  box-shadow:0 4px 20px rgba(200,21,58,0.25),0 2px 8px rgba(0,0,0,0.5);
+  transition:transform 0.3s ease,box-shadow 0.3s ease;
+}
+.sidebar-logo img:hover{
+  transform:scale(1.03);
+  box-shadow:0 6px 28px rgba(200,21,58,0.4),0 3px 12px rgba(0,0,0,0.5);
 }
 
+/* ── Section labels ── */
 .nav-section-label{
-  font-size:0.6rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:2px;color:var(--crimson);
-  padding:14px 16px 5px;
+  position:relative;z-index:1;
+  display:flex;align-items:center;gap:8px;
+  font-size:0.53rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:2.5px;color:var(--crimson);
+  padding:18px 20px 6px;
 }
+.nav-section-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(200,21,58,0.4),transparent);
+}
+
+/* ── Nav items ── */
 .nav-item{
-  font-size:0.72rem;color:rgba(255,255,255,0.45);
-  padding:8px 16px 8px 22px;cursor:pointer;
-  transition:all 0.2s ease;border-left:2px solid transparent;
-  line-height:1.3;
+  position:relative;z-index:1;
+  font-size:0.72rem;color:rgba(255,255,255,0.4);
+  padding:9px 18px 9px 32px;cursor:pointer;
+  transition:all 0.22s cubic-bezier(0.4,0,0.2,1);
+  border-left:2px solid transparent;
+  line-height:1.4;letter-spacing:0.2px;
 }
-.nav-item:hover{color:#fff;background:rgba(200,21,58,0.08)}
+
+/* Dot indicator */
+.nav-item::before{
+  content:'';position:absolute;
+  left:18px;top:50%;transform:translateY(-50%);
+  width:4px;height:4px;border-radius:50%;
+  background:rgba(255,255,255,0.15);
+  transition:all 0.22s ease;
+}
+
+.nav-item:hover{
+  color:rgba(255,255,255,0.9);
+  background:linear-gradient(90deg,rgba(200,21,58,0.12),transparent);
+  border-left-color:rgba(200,21,58,0.5);
+  padding-left:36px;
+}
+.nav-item:hover::before{
+  background:var(--crimson);
+  box-shadow:0 0 8px rgba(200,21,58,0.8);
+  width:5px;height:5px;
+}
+
 .nav-item.active{
-  color:#fff;background:rgba(200,21,58,0.14);
-  border-left-color:var(--crimson);font-weight:600;
+  color:#fff;font-weight:600;letter-spacing:0.3px;
+  background:linear-gradient(90deg,rgba(200,21,58,0.2),rgba(200,21,58,0.04),transparent);
+  border-left:2px solid var(--crimson);
+  padding-left:36px;
+  text-shadow:0 0 24px rgba(255,255,255,0.25);
+}
+.nav-item.active::before{
+  background:var(--crimson);
+  box-shadow:0 0 12px rgba(200,21,58,1),0 0 24px rgba(200,21,58,0.4);
+  width:5px;height:5px;
 }
 
 /* ============================================================
@@ -204,7 +279,7 @@ body.presenter-mode .presenter-indicator{display:block}
    ============================================================ */
 .presentation{
   height:100vh;position:relative;overflow:hidden;
-  margin-left:220px;width:calc(100% - 220px);
+  margin-left:240px;width:calc(100% - 240px);
 }
 
 /* ============================================================
@@ -1071,9 +1146,9 @@ kbd{
    RESPONSIVE
    ============================================================ */
 @media(max-width:1024px){
-  .presentation{margin-left:0;width:100%}
+  .presentation{margin-left:0!important;width:100%!important}
   .sidebar{display:none}
-  .progress-bar{left:0;width:100%!important}
+  .progress-bar{left:0!important;width:100%!important}
 }
 </style>
 </head>
