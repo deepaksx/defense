@@ -1143,6 +1143,108 @@ kbd{
 .sec-subtitle2{font-size:14px;font-weight:600;color:rgba(200,180,255,0.7);margin-top:7px;letter-spacing:0.5px}
 
 /* ============================================================
+   EXPLAIN PANEL — click-to-explain for Regional Credentials
+   ============================================================ */
+.explain-panel{
+  position:fixed;right:-420px;top:0;width:400px;height:100vh;
+  background:linear-gradient(160deg,#030310 0%,#07071A 50%,#0B0B22 100%);
+  z-index:600;
+  border-left:1px solid rgba(200,21,58,0.3);
+  box-shadow:-10px 0 50px rgba(0,0,0,0.7);
+  transition:right 0.42s cubic-bezier(0.16,1,0.3,1);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.explain-panel.open{right:0}
+
+/* Animated left-edge accent */
+.explain-panel::before{
+  content:'';position:absolute;top:0;left:0;
+  width:1px;height:100%;
+  background:linear-gradient(180deg,transparent,var(--crimson) 30%,var(--royal) 70%,transparent);
+  opacity:0.7;
+}
+
+.explain-header{
+  padding:22px 22px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:linear-gradient(135deg,rgba(200,21,58,0.1),rgba(0,102,204,0.06));
+  position:relative;flex-shrink:0;
+}
+.explain-close{
+  position:absolute;top:14px;right:14px;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+  cursor:pointer;color:rgba(255,255,255,0.5);font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s ease;
+}
+.explain-close:hover{background:var(--crimson);color:#fff;border-color:var(--crimson)}
+.explain-icon{
+  width:42px;height:42px;border-radius:11px;
+  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:#fff;margin-bottom:10px;
+  box-shadow:0 4px 16px rgba(200,21,58,0.4);
+}
+.explain-title{
+  font-size:15px;font-weight:800;color:#fff;
+  line-height:1.3;margin-bottom:6px;letter-spacing:-0.2px;padding-right:32px;
+}
+.explain-tag{
+  display:inline-block;
+  background:rgba(200,21,58,0.18);border:1px solid rgba(200,21,58,0.3);
+  border-radius:50px;padding:2px 10px;
+  font-size:9px;font-weight:700;color:var(--crimson);
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+
+.explain-body{
+  flex:1;overflow-y:auto;padding:20px 22px 28px;
+}
+.explain-body::-webkit-scrollbar{width:2px}
+.explain-body::-webkit-scrollbar-thumb{background:var(--crimson);border-radius:2px}
+
+.explain-what{
+  font-size:13px;color:rgba(255,255,255,0.80);
+  line-height:1.78;margin-bottom:20px;
+}
+.explain-why-lbl{
+  display:flex;align-items:center;gap:8px;
+  font-size:9px;font-weight:800;text-transform:uppercase;
+  letter-spacing:2px;color:var(--crimson);margin-bottom:8px;
+}
+.explain-why-lbl::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(200,21,58,0.4),transparent);
+}
+.explain-why{
+  font-size:12px;color:rgba(255,255,255,0.62);line-height:1.72;
+  background:rgba(200,21,58,0.07);
+  border-left:3px solid var(--crimson);
+  border-radius:0 6px 6px 0;padding:12px 14px;
+}
+
+/* Clickable items — bullet rows */
+.region-item[data-explain]{
+  cursor:pointer;border-radius:6px;padding:4px 6px 4px 0;
+  transition:background 0.18s ease,padding-left 0.18s ease;
+  position:relative;
+}
+.region-item[data-explain]:hover{
+  background:rgba(0,102,204,0.07);padding-left:6px;
+}
+.region-item[data-explain]:hover .region-item-text::after{
+  content:' ⓘ';color:var(--royal);font-size:10px;
+}
+
+/* Clickable table rows */
+tr[data-explain]{cursor:pointer}
+tr[data-explain]:hover td{background:rgba(0,102,204,0.07)!important}
+tr[data-explain]:hover td:last-child::after{
+  content:' ⓘ';color:var(--royal);font-size:10px;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media(max-width:1024px){
@@ -1254,6 +1356,21 @@ kbd{
   <div class="notes-body" id="notesBody"><p class="no-notes">No notes for this slide.</p></div>
 </div>
 <div class="presenter-indicator">PRESENTER MODE — P: exit &nbsp;|&nbsp; A: Audience window &nbsp;|&nbsp; F: Fullscreen</div>
+
+<!-- ── Explain Panel (Regional Credentials slide) ── -->
+<div class="explain-panel" id="explainPanel">
+  <div class="explain-header">
+    <button class="explain-close" id="explainClose"><i class="fas fa-times"></i></button>
+    <div class="explain-icon" id="explainIcon"><i class="fas fa-info"></i></div>
+    <div class="explain-title" id="explainTitle"></div>
+    <span class="explain-tag" id="explainTag"></span>
+  </div>
+  <div class="explain-body">
+    <div class="explain-what" id="explainWhat"></div>
+    <div class="explain-why-lbl">Why it matters for ERG</div>
+    <div class="explain-why" id="explainWhy"></div>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════
      PRESENTATION
@@ -1976,23 +2093,23 @@ kbd{
         <!-- Left: Regulatory environment list -->
         <div>
           <div class="region-list-title">Regulatory Environment We Navigate Daily</div>
-          <div class="region-item">
+          <div class="region-item" data-explain="uae-ct">
             <div class="region-dot"></div>
             <div class="region-item-text"><strong>UAE Corporate Tax (2023)</strong> Transfer pricing documentation between ARDC, ENF, GF and Salwa — intercompany pricing that survives a CT audit</div>
           </div>
-          <div class="region-item">
+          <div class="region-item" data-explain="uae-vat">
             <div class="region-dot"></div>
             <div class="region-item-text"><strong>UAE VAT</strong> Multi-entity VAT, intercompany invoice automation, FTA compliance — full tax group configuration</div>
           </div>
-          <div class="region-item">
+          <div class="region-item" data-explain="esma">
             <div class="region-dot"></div>
             <div class="region-item-text"><strong>UAE Food Safety &amp; ESMA</strong> Traceability from farm to product within 4 hours, Halal certification integration in QM</div>
           </div>
-          <div class="region-item">
+          <div class="region-item" data-explain="ads">
             <div class="region-dot"></div>
             <div class="region-item-text"><strong>ADS Subsidy Programme</strong> Feed subsidy tracking for ENF and GF — documentation and reconciliation for ADS audit</div>
           </div>
-          <div class="region-item">
+          <div class="region-item" data-explain="ias41">
             <div class="region-dot"></div>
             <div class="region-item-text"><strong>IAS 41 Biological Assets</strong> Livestock accounting for breeder flocks and dairy herds — compliant asset treatment in S/4HANA</div>
           </div>
@@ -2010,27 +2127,27 @@ kbd{
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr data-explain="tp">
                   <td>UAE CT transfer pricing (ARDC–ENF–GF–Salwa)</td>
                   <td>UAE Corporate Tax Law, OECD TP guidelines</td>
                 </tr>
-                <tr>
+                <tr data-explain="ads">
                   <td>ADS feed subsidy (ENF/GF)</td>
                   <td>ADS programme rules, documentation, reconciliation</td>
                 </tr>
-                <tr>
+                <tr data-explain="esma">
                   <td>Food safety traceability (4-hour rule)</td>
                   <td>ESMA / Dubai Municipality standards, SAP QM config</td>
                 </tr>
-                <tr>
+                <tr data-explain="arabic">
                   <td>Arabic training for operational staff</td>
                   <td>Native Arabic training delivery, localised materials</td>
                 </tr>
-                <tr>
+                <tr data-explain="uae-vat">
                   <td>Multi-entity VAT</td>
                   <td>FTA requirements, tax group, IC VAT treatment</td>
                 </tr>
-                <tr>
+                <tr data-explain="gpssa">
                   <td>GPSSA/pension for Emirati staff</td>
                   <td>UAE pension scheme configuration in SuccessFactors</td>
                 </tr>
@@ -3117,6 +3234,90 @@ document.addEventListener('keydown',function(e){if(e.key==='f'||e.key==='F'){if(
       audienceWin.postMessage({ type:'goTo', i: current }, '*');
   }
 
+})();
+
+/* ══════════════════════════════════════════
+   EXPLAIN PANEL — Regional Credentials
+══════════════════════════════════════════ */
+(function() {
+  const EXPLAIN = {
+    'uae-ct': {
+      icon:'fa-landmark', tag:'Tax Regulation',
+      title:'UAE Corporate Tax (2023)',
+      what:'The UAE introduced a 9% corporate tax in June 2023 — the first in its history. Every company must now pay tax on profits above AED 375,000. Crucially, when companies within the same group sell goods or services to each other, they must document and justify the prices charged. If the prices look artificial — too high or too low — the tax authority can reject them and impose penalties.',
+      why:'ERG has four entities trading with each other every day: GF sells feed to ENF, Salwa sells eggs to ENF, ARDC sells products to customers. Every one of these intercompany prices is now a tax document. Without SAP automatically generating transfer pricing records, ERG is exposed on every internal transaction the moment the FTA audits them.'
+    },
+    'uae-vat': {
+      icon:'fa-receipt', tag:'Tax Compliance',
+      title:'UAE VAT — Multi-Entity',
+      what:'The UAE introduced 5% Value Added Tax in 2018. Businesses charge VAT on sales and claim it back on purchases. When multiple companies are part of the same group, they can register as a single "VAT group" so they do not charge VAT to each other on internal invoices — simplifying their accounting enormously. But this requires precise configuration in SAP.',
+      why:'ERG\'s four entities invoice each other constantly. If VAT is applied incorrectly — either charged where it shouldn\'t be, or missed where it should be — ERG overpays tax or faces FTA penalties. NXSYS has configured multi-entity VAT groups for UAE businesses before and replicates this exactly for ERG.'
+    },
+    'esma': {
+      icon:'fa-shield-alt', tag:'Food Safety',
+      title:'UAE Food Safety & ESMA — 4-Hour Rule',
+      what:'ESMA (Emirates Authority for Standardisation and Metrology) regulates food safety in the UAE. Their critical rule: if a contamination or safety incident is found in any food product, the company has exactly 4 hours to produce a complete traceability report — identifying which farms supplied the raw material, which batches were affected, which finished products were made, and where those products are right now. Both backward (to the farm) and forward (to the consumer).',
+      why:'ARDC today cannot comply with this rule. Their batch tracking is broken in SAP — the chain from farm to product does not exist in the system. If a contaminated milk batch were found today, ARDC would be searching through Excel files and paper records for days. This is a live, daily regulatory risk. SAP Dairy by msg builds this chain natively.'
+    },
+    'ads': {
+      icon:'fa-hand-holding-usd', tag:'Government Subsidy',
+      title:'ADS Subsidy Programme',
+      what:'The Abu Dhabi government subsidises animal feed costs for livestock producers operating in Abu Dhabi. For every kilogram of qualifying feed used, the government pays a significant portion of the cost. To claim this money, producers must submit accurate documentation: how much feed was purchased, from which supplier, delivered to which location, and consumed in which production. Any gap in documentation means the subsidy claim can be rejected or reversed.',
+      why:'Approximately 90% of ENF and GF\'s feed qualifies for ADS subsidy — this is a substantial amount of money. But GF delivers feed to ENF silos with only a paper delivery note. ENF does not confirm receipt in SAP. There is no system-verified audit trail. If the ADS authority audits and the records don\'t reconcile, ERG loses the subsidy and may need to repay previous claims.'
+    },
+    'ias41': {
+      icon:'fa-paw', tag:'Accounting Standard',
+      title:'IAS 41 — Biological Assets',
+      what:'IAS 41 is an international accounting standard that requires living animals and plants to be treated as "biological assets" on the company\'s balance sheet — valued at fair market value, with changes in value recorded in profit and loss. This is fundamentally different from how you account for a machine or building. A growing chicken flock, a dairy herd, or a breeder flock are all biological assets under this standard.',
+      why:'ENF has thousands of broiler chickens growing across 13 farms. Salwa has breeder flocks. Neither entity currently tracks these as biological assets in SAP — they are treated as inventory. This means ERG\'s financial statements may not be IAS 41 compliant, which is a problem for external auditors, banks, or any future financing. SAP Meat & Fish by msg includes biological asset accounting natively.'
+    },
+    'tp': {
+      icon:'fa-balance-scale', tag:'Transfer Pricing',
+      title:'UAE CT Transfer Pricing',
+      what:'Transfer pricing is the practice of setting prices for transactions between related companies within a group. Tax authorities scrutinise these prices because companies could manipulate them — for example, charging artificially high prices to shift profit from a higher-tax to a lower-tax entity. The OECD guidelines set the global standard for what constitutes a fair "arm\'s length" price that two unrelated parties would agree on.',
+      why:'With UAE Corporate Tax now in force, the FTA can challenge any intercompany transaction between ARDC, ENF, GF, and Salwa. The burden of proof is on ERG to demonstrate that every internal price is justifiable. NXSYS configures SAP to automatically generate the transfer pricing documentation from transaction data — removing the manual evidence-gathering burden entirely.'
+    },
+    'arabic': {
+      icon:'fa-language', tag:'Change Management',
+      title:'Arabic Training Delivery',
+      what:'Most operational staff in food manufacturing, logistics, and van sales in the UAE work primarily in Arabic. Training them to use SAP in English alone almost always fails — people revert to their old ways within weeks of go-live because the training didn\'t connect with how they actually communicate and think. Effective SAP adoption requires training materials, system messages, and instruction all delivered in Arabic by Arabic-speaking trainers.',
+      why:'ERG\'s farm workers at ENF and Salwa, van drivers, warehouse operators, and quality inspectors are predominantly Arabic-speaking. A conventional English-only training programme would result in low adoption — staff would bypass SAP and return to paper and Excel within months of go-live. NXSYS delivers all operational training in Arabic with native-language materials and trainers.'
+    },
+    'gpssa': {
+      icon:'fa-user-shield', tag:'HR Compliance',
+      title:'GPSSA — Emirati Pension Contributions',
+      what:'GPSSA (General Pension and Social Security Authority) is the UAE government pension fund for Emirati nationals. Every employer with Emirati staff must contribute a percentage of their salary to GPSSA each month. The contribution rates, eligibility rules, salary caps, and reporting formats are specific and different from how expatriate payroll is processed. Getting this wrong is a labour law violation.',
+      why:'ERG has Emirati staff across all four entities. Their SuccessFactors payroll must correctly calculate GPSSA contributions for each Emirati employee every pay cycle. Incorrect configuration means non-compliance with UAE labour law and potential financial penalties. NXSYS has configured UAE payroll including GPSSA for multi-entity groups in this exact market.'
+    }
+  };
+
+  const panel  = document.getElementById('explainPanel');
+  const eClose = document.getElementById('explainClose');
+
+  function openExplain(key) {
+    const d = EXPLAIN[key]; if (!d) return;
+    document.getElementById('explainIcon').innerHTML = `<i class="fas ${d.icon}"></i>`;
+    document.getElementById('explainTitle').textContent = d.title;
+    document.getElementById('explainTag').textContent   = d.tag;
+    document.getElementById('explainWhat').textContent  = d.what;
+    document.getElementById('explainWhy').textContent   = d.why;
+    panel.classList.add('open');
+  }
+
+  function closeExplain() { panel.classList.remove('open'); }
+
+  eClose.addEventListener('click', closeExplain);
+
+  /* Close when navigating away from the slide */
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowLeft','ArrowDown','ArrowUp',' '].includes(e.key)) closeExplain();
+  });
+
+  /* Delegate clicks on [data-explain] */
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-explain]');
+    if (el) { e.stopPropagation(); openExplain(el.dataset.explain); }
+  });
 })();
 </script>
 </body>
